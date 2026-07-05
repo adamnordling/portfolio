@@ -21,6 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Dynamic collapsible Bio Toggle
+    const bioToggle = document.querySelector('.bio-toggle');
+    const bioExpandable = document.querySelector('.bio-expandable');
+
+    if (bioToggle && bioExpandable) {
+        bioToggle.addEventListener('click', () => {
+            const isExpanded = bioExpandable.classList.toggle('is-expanded');
+
+            // Update accessibility attributes & text
+            bioToggle.setAttribute('aria-expanded', isExpanded);
+            bioToggle.textContent = isExpanded ? '[Read less]' : '[Read more]';
+        });
+    }
+
     // 2. 3D Tilt & Mouse Tracking Spotlight Effect
     const container = document.querySelector('.profile-card-container');
     const card = document.querySelector('.profile-card-inner');

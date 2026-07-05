@@ -975,3 +975,139 @@ body {
 }
 
 
+
+
+/* Education List Structure */
+.education-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.education-list li {
+  margin-bottom: 12px; /* Slightly reduced spacing to account for block padding */
+}
+
+/* The Link Wrapper Hover Animation */
+.edu-link {
+  display: block;
+  text-decoration: none !important; /* Removes default underline completely */
+  color: inherit;
+  padding: 10px 14px;
+  margin: 0 -14px; /* Pulls padding back so text aligns perfectly with standard headers */
+  border-radius: 8px;
+  border-left: 2px solid transparent;
+
+  /* Smooth transition for slide, background tint, and left border indicator */
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+  background-color 200ms ease,
+  border-color 200ms ease;
+}
+
+/* Active Hover State (Triggers whole block transformation) */
+.edu-link:hover {
+  transform: translateX(6px);
+  background-color: rgba(255, 255, 255, 0.03); /* Subtle glass highlight background */
+  border-left-color: var(--text-secondary);     /* Subtle vertical tick line on the left */
+}
+
+.edu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.edu-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-secondary); /* Rest state color */
+  transition: color 200ms ease;
+}
+
+.edu-date {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted); /* Rest state color */
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+
+.edu-school {
+  font-size: 0.88rem;
+  color: var(--text-muted); /* Rest state color */
+  margin-top: 4px;
+  transition: color 200ms ease;
+}
+
+/* --- Nested Hover States (Elements brighten in unison) --- */
+.edu-link:hover .edu-title {
+  color: var(--text-primary); /* Bright white highlight */
+}
+
+.edu-link:hover .edu-date {
+  color: var(--text-secondary); /* Mid-level white highlight */
+}
+
+.edu-link:hover .edu-school {
+  color: var(--text-secondary); /* Mid-level white highlight */
+}
+
+
+/* Intro Quote Reset & Layout */
+.intro-quote {
+  border-left: 2px solid var(--text-muted);
+  padding-left: 16px;
+  margin: 24px 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.bio-teaser {
+  text-align: justify;
+  line-height: 1.6;
+}
+
+/* Minimalist toggle link */
+.bio-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: monospace;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 4px;
+  display: inline-block;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.bio-toggle:hover {
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+/* Modern, ultra-smooth CSS Grid Height transition (no height calculation needed) */
+.bio-expandable {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Active expanded state */
+.bio-expandable.is-expanded {
+  grid-template-rows: 1fr;
+}
+
+/* Container inner child (required for the grid-template-rows transition to work) */
+.bio-expandable-content {
+  min-height: 0;
+}
+
+.bio-expandable-content p {
+  margin-top: 14px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  text-align: justify;
+  line-height: 1.6;
+}

@@ -451,13 +451,33 @@ body {
   margin-bottom: 24px;
 }
 
-/* 3D Container & Inner Card Sizing (Set to 50% width of parent header) */
+/* --- 3D CONTAINER (Handles the Entrance Animation on Load) --- */
 .profile-card-container {
   flex: 0 0 50%;
   max-width: 300px; /* Constrains it on very wide screens */
-  aspect-ratio: 1 / 1;
+
+  /* Initial state before the entrance animation runs */
+  opacity: 0;
+
+  /* Running the spring-elastic entrance animation on the outer parent wrapper */
+  animation: parentIntro 1200ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 200ms; /* Subtle delay for highly polished entry */
 }
 
+/* Parent entrance keyframes (handles layout entry without locking child hover properties) */
+@keyframes parentIntro {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* --- INNER CARD (Handles only 3D Mouse Tracking and Hover Styles) --- */
 .profile-card-inner {
   position: relative;
   width: 100%;
@@ -466,8 +486,11 @@ body {
   transform-style: preserve-3d;
   backface-visibility: hidden;
 
-  /* Box shadow and spring elastic transition matching your copy-paste reference */
-  box-shadow: rgba(0, 0, 0, 0.29) 0px 4px 25px 0px;
+  /* Small, clean white resting shadow + subtle 1px white border stroke */
+  box-shadow: rgba(255, 255, 255, 0.08) 0px 4px 25px 0px,
+  rgba(255, 255, 255, 0.04) 0px 0px 0px 1px;
+
+  /* Transition states for when the user starts hovering/tilting */
   transition: transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
   box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
   opacity 400ms;
@@ -497,12 +520,22 @@ body {
   background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 60%);
 }
 
-/* Stacked text details next to image */
-.profile-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* --- ENTRANCE ANIMATION (On Page Load) --- */
+@keyframes cardIntro {
+  0% {
+    opacity: 0;
+    /* Starts slightly lower, smaller, and tilted away to create depth on enter */
+    transform: perspective(800px) rotateX(12deg) rotateY(-8deg) scale(0.9) translateY(20px);
+    box-shadow: rgba(255, 255, 255, 0) 0px 0px 0px 0px;
+  }
+  100% {
+    opacity: 1;
+    /* Swings smoothly back to flat resting state */
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0);
+    /* Resting State: Small white shadow + subtle 1px white border stroke */
+    box-shadow: rgba(255, 255, 255, 0.08) 0px 4px 25px 0px,
+    rgba(255, 255, 255, 0.04) 0px 0px 0px 1px;
+  }
 }
 
 /* Clean minimal layout for header icons */

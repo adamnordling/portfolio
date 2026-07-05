@@ -1,60 +1,66 @@
-import './style.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.js'
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Projects Filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.app-card');
 
-document.querySelector('#app').innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
 
-<div class="ticks"></div>
+            const filterValue = button.getAttribute('data-filter');
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (filterValue === 'all' || cardCategory === filterValue) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+    // 2. 3D Tilt & Mouse Tracking Spotlight Effect
+    const container = document.querySelector('.profile-card-container');
+    const card = document.querySelector('.profile-card-inner');
+    const spotlight = document.querySelector('.spotlight');
 
-setupCounter(document.querySelector('#counter'))
+    if (container && card) {
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+
+            // Cursor position inside the element bounds
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Percentage boundaries relative to center coords
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Limits tilting rotation to a soft 12 degrees
+            const rotateX = -((y - centerY) / centerY) * 12;
+            const rotateY = ((x - centerX) / centerX) * 12;
+
+            // Apply 3D matrix transforms
+            card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+            card.style.boxShadow = 'rgba(255, 255, 255, 0.08) 0px 15px 35px 0px';
+
+            // Dynamically center radial spotlight directly underneath cursor
+            if (spotlight) {
+                spotlight.style.opacity = '1';
+                spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.18), transparent 55%)`;
+            }
+        });
+
+        // Spring back gracefully on mouse leave
+        container.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+            card.style.boxShadow = 'rgba(0, 0, 0, 0.29) 0px 4px 25px 0px';
+
+            if (spotlight) {
+                spotlight.style.opacity = '0';
+            }
+        });
+    }
+});

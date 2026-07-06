@@ -78,6 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+    // 4. Dark/Light Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+        });
+    }
+
+
     // 3. Dynamic Font Switching Logic
     const fontButtons = document.querySelectorAll('.font-btn');
 

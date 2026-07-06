@@ -1188,3 +1188,77 @@ body {
   flex-direction: column;
   gap: 12px;
 }
+
+
+
+
+
+
+
+
+
+/* --- LIGHT MODE VARIABLE OVERRIDES --- */
+body.light-theme {
+  --bg-color: #f4f4f5;
+  --card-bg: #ffffff;
+  --border-color: #e4e4e7;
+  --text-primary: #09090b;
+  --text-secondary: #27272a;
+  --text-muted: #71717a;
+}
+
+/* Tweak transparency highlights for light backgrounds */
+body.light-theme .profile-card-inner {
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 25px 0px, rgba(0, 0, 0, 0.04) 0px 0px 0px 1px;
+}
+body.light-theme .edu-link:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+body.light-theme .profile-img {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+body.light-theme .font-btn:hover,
+body.light-theme .font-btn.active,
+body.light-theme .theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* --- THEME TOGGLE BUTTON STYLING --- */
+.theme-toggle {
+  position: fixed;
+  top: 24px;
+  left: 24px; /* Change to right: 24px; if you prefer the top-right corner */
+  z-index: 100;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Icon Toggling logic (Default Dark theme: show Sun. Light theme: show Moon) */
+.theme-toggle .sun-icon {
+  display: block;
+}
+.theme-toggle .moon-icon {
+  display: none;
+}
+
+body.light-theme .theme-toggle .sun-icon {
+  display: none;
+}
+body.light-theme .theme-toggle .moon-icon {
+  display: block;
+}

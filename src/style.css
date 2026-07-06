@@ -7,7 +7,10 @@
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
   --accent: #3b82f6;
-  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-stack: var(--font-default);
 }
 
 /* Reset & Base Styles */
@@ -399,7 +402,10 @@ body {
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
   --accent: #3b82f6;
-  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-stack: var(--font-default);
 }
 
 /* Reset & Base Styles */
@@ -1110,4 +1116,75 @@ body {
   font-size: 0.95rem;
   text-align: justify;
   line-height: 1.6;
+}
+
+/* --- FOOTER CONTROLS & DYNAMIC FONT SWITCHER --- */
+.footer-controls {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.font-switcher {
+  display: flex;
+  gap: 10px;
+}
+
+.font-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Display each button option in its exact font preview */
+.font-btn[data-font="default"] {
+  font-family: var(--font-default);
+}
+
+.font-btn[data-font="serif"] {
+  font-family: var(--font-serif);
+  font-weight: normal; /* Classic elegant weight styling */
+}
+
+.font-btn[data-font="monospace"] {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+/* Active buttons highlight to look hovered */
+.font-btn:hover,
+.font-btn.active {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.copyright {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* --- FOOTER CONTROLS & DYNAMIC FONT SWITCHER --- */
+.footer-controls {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

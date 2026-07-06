@@ -77,4 +77,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 3. Dynamic Font Switching Logic
+    const fontButtons = document.querySelectorAll('.font-btn');
+
+    fontButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            fontButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const fontSelection = button.getAttribute('data-font');
+            let cssVariableValue = 'var(--font-default)';
+
+            if (fontSelection === 'serif') {
+                cssVariableValue = 'var(--font-serif)';
+            } else if (fontSelection === 'monospace') {
+                cssVariableValue = 'var(--font-mono)';
+            }
+
+            // Update CSS custom variable on document root element
+            document.documentElement.style.setProperty('--font-stack', cssVariableValue);
+        });
+    });
 });

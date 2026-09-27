@@ -3,6 +3,7 @@ import { qs, qsa, on } from '../utils/dom';
 export type SiteTheme = 'light' | 'dark';
 export type FontType = 'default' | 'serif' | 'monospace';
 
+// src/ts/core/theme.ts
 export function initTheme(): void {
     const themeToggle = qs('.theme-toggle');
     const savedTheme = localStorage.getItem('site_theme') as SiteTheme | null;
@@ -14,11 +15,17 @@ export function initTheme(): void {
     }
 
     on(themeToggle, 'click', () => {
-        const isLight = document.body.classList.toggle('light-theme');
-        localStorage.setItem('site_theme', isLight ? 'light' : 'dark');
+        toggleTheme();
     });
 
     initFonts();
+}
+
+export function toggleTheme(): void {
+    const isLight = document.body.classList.toggle('light-theme');
+    const theme = isLight ? 'light' : 'dark';
+    localStorage.setItem('site_theme', theme);
+    window.dispatchEvent(new CustomEvent('site:themechange', { detail: { theme } }));
 }
 
 function initFonts(): void {
@@ -43,9 +50,4 @@ function initFonts(): void {
             document.documentElement.style.setProperty('--font-stack', cssVariableValue);
         });
     });
-}
-
-export function toggleTheme(): void {
-    const isLight = document.body.classList.toggle('light-theme');
-    localStorage.setItem('site_theme', isLight ? 'light' : 'dark');
 }

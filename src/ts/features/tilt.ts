@@ -55,7 +55,11 @@ export function initCardTilt(): void {
         const rotateY = ((x - centerX) / centerX) * 10;
 
         cardElement.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(1.02)`;
-        cardElement.style.boxShadow = 'rgba(0, 0, 0, 0.45) 0 16px 36px 0, rgba(255, 255, 255, 0.08) 0 0 0 1px';
+
+        // Apply dynamic blue glow on hover in BOTH dark and light mode
+        const isLight = document.body.classList.contains('light-theme');
+        const glowColor = isLight ? 'rgba(29, 78, 216, 0.35)' : 'rgba(59, 130, 246, 0.4)';
+        cardElement.style.boxShadow = `0 0 0 2px var(--accent), 0 14px 34px -2px ${glowColor}`;
 
         if (spotlight) {
             spotlight.style.opacity = '1';

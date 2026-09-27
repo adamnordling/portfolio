@@ -6,6 +6,19 @@ interface CachedRect {
     width: number;
     height: number;
     isRightPanel: boolean;
+    isSticky?: boolean;
+    isCircle?: boolean;
+}
+
+interface ActiveExclusion {
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
+    isCircle: boolean;
+    cx: number;
+    cy: number;
+    radius: number;
 }
 
 interface PrecomputedDot {
@@ -36,14 +49,13 @@ export function initCanvasBackground(): void {
     let wrapperRight = 0;
     let wrapperTop = 0;
     let wrapperBottom = 0;
-    let dockTop = 0;
 
     let leftPanelRight = 0;
     let rightPanelLeft = 0;
     let hasCenterGutter = false;
 
     let cachedExclusionRects: CachedRect[] = [];
-    let activeViewportExclusions: DOMRect[] = [];
+    let activeViewportExclusions: ActiveExclusion[] = [];
     let cachedGridDots: PrecomputedDot[] = [];
     const textRange = document.createRange();
 
@@ -156,8 +168,6 @@ export function initCanvasBackground(): void {
         const windowScrollY = window.scrollY;
         const leftScrollY = isDesktop && leftPanelEl ? leftPanelEl.scrollTop : 0;
         const rightScrollY = isDesktop && rightPanelEl ? rightPanelEl.scrollTop : 0;
-
-        // Viewport cutoff window
         const viewHeight = window.innerHeight;
 
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
@@ -165,9 +175,15 @@ export function initCanvasBackground(): void {
             if (!isElementVisible(el)) return;
             const inRightPanel = isDesktop && !!el.closest('.right-panel');
             const inLeftPanel = isDesktop && !!el.closest('.left-panel');
-            const currentScrollY = inRightPanel ? rightScrollY : inLeftPanel ? leftScrollY : windowScrollY;
+            const isSticky = !!el.closest('.right-header');
+            const currentScrollY = isSticky
+                ? 0
+                : inRightPanel
+                  ? rightScrollY
+                  : inLeftPanel
+                    ? leftScrollY
+                    : windowScrollY;
 
-            // Quick bounding check: skip elements that are far off-screen
             const initialBox = el.getBoundingClientRect();
             if (initialBox.top > viewHeight + 300 || initialBox.bottom < -300) return;
 
@@ -182,7 +198,9 @@ export function initCanvasBackground(): void {
                             pageTop: r.top + currentScrollY,
                             width: r.width,
                             height: r.height,
-                            isRightPanel: inRightPanel
+                            isRightPanel: inRightPanel,
+                            isSticky,
+                            isCircle: false
                         });
                     }
                 }
@@ -193,7 +211,9 @@ export function initCanvasBackground(): void {
                         pageTop: initialBox.top + currentScrollY,
                         width: initialBox.width,
                         height: initialBox.height,
-                        isRightPanel: inRightPanel
+                        isRightPanel: inRightPanel,
+                        isSticky,
+                        isCircle: false
                     });
                 }
             }
@@ -204,18 +224,30 @@ export function initCanvasBackground(): void {
             if (!isElementVisible(el as HTMLElement)) return;
             const inRightPanel = isDesktop && !!el.closest('.right-panel');
             const inLeftPanel = isDesktop && !!el.closest('.left-panel');
-            const currentScrollY = inRightPanel ? rightScrollY : inLeftPanel ? leftScrollY : windowScrollY;
+            const isSticky = !!el.closest('.right-header');
+            const currentScrollY = isSticky
+                ? 0
+                : inRightPanel
+                  ? rightScrollY
+                  : inLeftPanel
+                    ? leftScrollY
+                    : windowScrollY;
 
             const r = el.getBoundingClientRect();
             if (r.top > viewHeight + 300 || r.bottom < -300) return;
 
             if (r.width > 0 && r.height > 0) {
+                // Circle detection for the circular profile avatar
+                const isCircle = el.classList.contains('profile-img') || !!el.closest('.profile-card-inner');
+
                 cachedExclusionRects.push({
                     pageLeft: r.left,
                     pageTop: r.top + currentScrollY,
                     width: r.width,
                     height: r.height,
-                    isRightPanel: inRightPanel
+                    isRightPanel: inRightPanel,
+                    isSticky,
+                    isCircle
                 });
             }
         });
@@ -235,12 +267,30 @@ export function initCanvasBackground(): void {
         activeViewportExclusions = [];
         for (let i = 0; i < cachedExclusionRects.length; i++) {
             const item = cachedExclusionRects[i];
-            const scrollOffset = isDesktop ? (item.isRightPanel ? rightScrollY : leftScrollY) : windowScrollY;
+            const scrollOffset = item.isSticky
+                ? 0
+                : isDesktop
+                  ? item.isRightPanel
+                      ? rightScrollY
+                      : leftScrollY
+                  : windowScrollY;
+
             const top = item.pageTop - scrollOffset;
             const bottom = top + item.height;
 
             if (bottom >= -15 && top <= height + 15) {
-                activeViewportExclusions.push(new DOMRect(item.pageLeft, top, item.width, item.height));
+                const left = item.pageLeft;
+                const right = left + item.width;
+                activeViewportExclusions.push({
+                    left,
+                    top,
+                    right,
+                    bottom,
+                    isCircle: !!item.isCircle,
+                    cx: left + item.width / 2,
+                    cy: top + item.height / 2,
+                    radius: item.width / 2
+                });
             }
         }
 
@@ -271,15 +321,9 @@ export function initCanvasBackground(): void {
                         dotFade = Math.min(1, Math.max(0, (wrapperLeft - x) / FADE_MARGIN));
                     } else if (isRightFlank) {
                         dotFade = Math.min(1, Math.max(0, (x - wrapperRight) / FADE_MARGIN));
-                    } else if (y < wrapperTop && x >= wrapperLeft && x <= wrapperRight) {
-                        const distToWrapper = wrapperTop - y;
-                        dotFade = Math.min(1, Math.max(0, distToWrapper / 25)) * 0.7;
-                    } else if (y > wrapperBottom && y < dockTop && x >= wrapperLeft && x <= wrapperRight) {
-                        const distFromWrapper = y - wrapperBottom;
-                        const distToDock = dockTop - y;
-                        dotFade = Math.min(1, Math.max(0, Math.min(distFromWrapper, distToDock) / 16)) * 0.7;
                     } else {
-                        dotFade = 0.55;
+                        // Dots directly above/below wrapper and panels remain visible
+                        dotFade = 0.65;
                     }
                 } else {
                     dotFade = 0.65;
@@ -295,9 +339,17 @@ export function initCanvasBackground(): void {
                         if (x < r.left - maxZone || x > r.right + maxZone) continue;
                         if (y < r.top - maxZone || y > r.bottom + maxZone) continue;
 
-                        const dx = Math.max(0, r.left - x, x - r.right);
-                        const dy = Math.max(0, r.top - y, y - r.bottom);
-                        const dSq = dx * dx + dy * dy;
+                        let dSq: number;
+                        if (r.isCircle) {
+                            // Precise Euclidean circle boundary distance
+                            const distFromCenter = Math.hypot(x - r.cx, y - r.cy);
+                            const distToEdge = Math.max(0, distFromCenter - r.radius);
+                            dSq = distToEdge * distToEdge;
+                        } else {
+                            const dx = Math.max(0, r.left - x, x - r.right);
+                            const dy = Math.max(0, r.top - y, y - r.bottom);
+                            dSq = dx * dx + dy * dy;
+                        }
 
                         if (dSq < minTextDistSq) {
                             minTextDistSq = dSq;
@@ -331,9 +383,6 @@ export function initCanvasBackground(): void {
         wrapperRight = rect.right;
         wrapperTop = rect.top;
         wrapperBottom = rect.bottom;
-
-        const dock = document.querySelector<HTMLElement>('.status-dock');
-        dockTop = dock ? dock.getBoundingClientRect().top : height - 42;
 
         const leftPanel = document.querySelector<HTMLElement>('.left-panel');
         const rightPanel = document.querySelector<HTMLElement>('.right-panel');
@@ -385,8 +434,6 @@ export function initCanvasBackground(): void {
 
     initCanvasDimensions();
 
-    // Replace the window load event listener in canvas-bg.ts:
-
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         hasMeasuredExclusions = true;
@@ -394,7 +441,6 @@ export function initCanvasBackground(): void {
         draw();
     }
 
-    // 1. Only run when the browser is completely done and genuinely idle
     if ('requestIdleCallback' in window) {
         window.requestIdleCallback(
             () => {
@@ -406,7 +452,6 @@ export function initCanvasBackground(): void {
         setTimeout(runDeferredExclusionUpdate, 1500);
     }
 
-    // 2. Or immediately when the user takes their very first action
     window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
     window.addEventListener('touchstart', runDeferredExclusionUpdate, { once: true, passive: true });
     window.addEventListener('scroll', runDeferredExclusionUpdate, { once: true, passive: true });
@@ -430,15 +475,9 @@ export function initCanvasBackground(): void {
     const rightPanel = document.querySelector<HTMLElement>('.right-panel');
     if (rightPanel) on(rightPanel, 'scroll', handleSmoothScroll, { passive: true });
 
-    const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
-    if (mainWrapper) {
-        on(mainWrapper, 'transitionend', () => {
-            if (hasMeasuredExclusions) {
-                cacheDocumentExclusions();
-                draw();
-            }
-        });
-    }
+    window.addEventListener('site:themechange', () => {
+        draw();
+    });
 
     function renderLoop(): void {
         if (!isAnimating) return;

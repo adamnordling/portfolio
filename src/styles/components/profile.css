@@ -1,201 +1,118 @@
 @layer components {
+    /* =========================================================================
+       1. PROFILE HEADER LOCKUP
+       ========================================================================= */
     .profile-header {
         display: flex;
-        align-items: center;
-        gap: 32px;
+        align-items: center; /* Keeps text vertically centered with circle */
+        gap: 24px;
         margin-bottom: 24px;
+        position: relative;
+        z-index: 120; /* Always stays above the bio card */
+        padding: 6px 0 0 6px; /* 6px clearance so top/left shadows never clip */
     }
 
-    .profile-info {
-        align-self: stretch;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-
+    /* 220px Circular Container on Desktop */
     .profile-card-container {
-        flex: 0 0 50%;
-        max-width: 300px;
-        opacity: 1;
+        flex: 0 0 220px;
+        width: 220px;
+        height: 220px;
+        max-width: 220px;
         perspective: 1000px;
-    }
-
-    @keyframes parentIntro {
-        0% {
-            opacity: 0;
-            transform: translateY(20px) scale(0.9);
-        }
-        100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
+        position: relative;
+        z-index: 125;
+        padding: 4px; /* Internal safety margin for the halo ring */
     }
 
     .profile-card-inner {
         position: relative;
         width: 100%;
         height: 100%;
-        border-radius: 12px;
-        overflow: hidden;
-        isolation: isolate; /* Native GPU boundary clipping without expensive radial masks */
+        border-radius: 50% !important;
+        cursor: pointer;
         transform: translateZ(0);
         will-change: transform;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
+        overflow: visible;
+
+        /* DARK MODE: Pro Luminescent Backlight + Deep Elevation */
         box-shadow:
-            rgba(255, 255, 255, 0.08) 0 4px 25px 0,
-            rgba(255, 255, 255, 0.04) 0 0 0 1px;
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            0 12px 28px -4px rgba(0, 0, 0, 0.75),
+            0 0 24px -2px rgba(59, 130, 246, 0.18);
+
         transition:
             transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
-            box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
-            opacity 400ms;
+            box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Prevents inline <picture> element from collapsing and keeps corners clipped */
+    /* LIGHT MODE: Soft Multi-Layered Drop Shadow (No hard edges) */
+    body.light-theme .profile-card-inner {
+        box-shadow:
+            0 0 0 1px rgba(0, 0, 0, 0.08),
+            0 6px 16px -2px rgba(0, 0, 0, 0.12),
+            0 16px 32px -4px rgba(0, 0, 0, 0.08);
+    }
+
+    .profile-card-inner:hover,
+    body.light-theme .profile-card-inner:hover {
+        box-shadow:
+            0 0 0 2px var(--accent),
+            0 14px 34px -2px rgba(59, 130, 246, 0.35);
+    }
+
+    /* Circular Tab Targeting (100% Round Halo without Outline Clipping) */
+    .profile-card-inner:focus-visible {
+        outline: none !important; /* Eliminates square browser outline artifacts */
+        border-radius: 50% !important;
+        box-shadow:
+            0 0 0 3px var(--bg-color),
+            0 0 0 6px var(--accent),
+            0 0 24px rgba(59, 130, 246, 0.6) !important;
+    }
+
+    /* The picture element securely clips the photo to a circle */
     .profile-card-inner picture {
         display: block;
         width: 100%;
         height: 100%;
-        border-radius: 12px;
+        border-radius: 50% !important;
         overflow: hidden;
-    }
-
-    body.light-theme .profile-card-inner {
-        box-shadow:
-            rgba(0, 0, 0, 0.06) 0 4px 25px 0,
-            rgba(0, 0, 0, 0.04) 0 0 0 1px;
+        isolation: isolate;
     }
 
     .profile-img {
         display: block;
         width: 100%;
-        height: 255px;
-        aspect-ratio: 293 / 255;
+        height: 100%;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50% !important;
+        border: none;
         image-rendering: -webkit-optimize-contrast;
-    }
-
-    body.light-theme .profile-img {
-        border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .spotlight {
         position: absolute;
         inset: 0;
-        border-radius: 12px;
+        border-radius: 50% !important;
         pointer-events: none;
         opacity: 0;
         mix-blend-mode: screen;
         transition: opacity 300ms ease;
-        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 60%);
+        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.18), transparent 60%);
     }
 
-    .name-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        line-height: 1.2;
-    }
-
-    .subtitle {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        margin-top: 4px;
-        font-weight: 500;
-    }
-
-    /* Anchors social icons cleanly above the name */
-    .profile-links {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        min-height: 24px;
-        margin-top: auto;
-        margin-bottom: 4px;
-    }
-
-    .profile-links a,
-    .profile-links button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-muted);
-        transform: translateZ(0);
-        will-change: transform;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-        transition:
-            transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-            color 200ms ease;
-    }
-
-    .profile-links svg {
-        width: 20px !important;
-        height: 20px !important;
-        min-width: 20px !important;
-        min-height: 20px !important;
-        display: block !important;
-        stroke: var(--text-muted) !important;
-        fill: none !important;
-        stroke-width: 2px !important;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        transform: translateZ(0);
-        will-change: transform;
-        transform-origin: center;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-    }
-
-    .profile-links a:hover svg,
-    .profile-links button:hover svg {
-        stroke: var(--text-primary) !important;
-    }
-
-    .profile-links a:hover,
-    .profile-links button:hover {
-        color: var(--text-primary);
-        transform: scale(1.3);
-    }
-
-    .profile-links:hover svg {
-        animation-play-state: paused !important;
-    }
-
-    /* 15s total duration with pauses strictly under 2.0s */
-    /* Delay wave animations until well after initial paint */
-    .profile-links .contact-btn-1 svg {
-        animation: wave-button-1 15s ease-in-out infinite;
-        animation-delay: 1.3s;
-    }
-
-    .profile-links .contact-btn-2 svg {
-        animation: wave-button-2 15s ease-in-out infinite;
-        animation-delay: 1.3s;
-    }
-
-    .profile-links .contact-btn-3 svg {
-        animation: wave-button-3 15s ease-in-out infinite;
-        animation-delay: 1.3s;
-    }
-
-    /* Profile Image Trigger & Menu */
-    /* Replace the .profile-card-inner:focus-visible rule with: */
-    .profile-card-inner:focus-visible {
-        outline: 2px solid var(--accent) !important;
-        outline-offset: -3px !important;
-        box-shadow:
-            inset 0 0 0 2px var(--accent),
-            0 0 14px rgba(59, 130, 246, 0.45) !important;
-    }
-
+    /* =========================================================================
+       2. RIGHT-CLICK / POPUP ACTION MENU (Overlays Bio Card)
+       ========================================================================= */
     .profile-img-menu {
         position: absolute;
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
+        top: calc(100% + 10px);
+        left: 50%;
+        bottom: auto;
+        right: auto;
+        transform: translateX(-50%) translateY(6px);
+        width: 180px;
         background: rgba(28, 29, 35, 0.96);
         backdrop-filter: blur(10px);
         border: 1px solid var(--border-color);
@@ -206,24 +123,35 @@
         gap: 3px;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(6px);
+        pointer-events: none;
         transition:
             opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
             transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
             visibility 0.2s;
-        z-index: 50;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        z-index: 300; /* Floats above the bio card */
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Invisible hover bridge */
+    .profile-img-menu::before {
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 0;
+        right: 0;
+        height: 12px;
     }
 
     body.light-theme .profile-img-menu {
         background: rgba(255, 255, 255, 0.96);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
     }
 
     .profile-card-inner.profile-menu-open .profile-img-menu {
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
     }
 
     .profile-menu-item {
@@ -242,6 +170,7 @@
         cursor: pointer;
         text-align: left;
         width: 100%;
+        user-select: none;
         transition:
             background 0.15s ease,
             color 0.15s ease;
@@ -265,14 +194,194 @@
     }
 
     /* =========================================================================
-       BUTTON 1: 1 -> 2 -> 3 -> 2 -> 1 across 15s (pauses strictly under 2.0s)
+       3. TEXT LOCKUP (Centered Icons -> Name -> Subtitle -> CV Pill)
+       ========================================================================= */
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        flex: 1;
+        gap: 3px;
+    }
+
+    .profile-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        min-height: 24px;
+        margin-bottom: 4px;
+    }
+
+    .profile-links a,
+    .profile-links button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        transform: translateZ(0);
+        will-change: transform;
+        transition:
+            transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+            color 200ms ease;
+    }
+
+    .profile-links svg {
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
+        display: block !important;
+        stroke: var(--text-muted) !important;
+        fill: none !important;
+        stroke-width: 2px !important;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .profile-links a:hover svg,
+    .profile-links button:hover svg {
+        stroke: var(--text-primary) !important;
+    }
+
+    .profile-links a:hover,
+    .profile-links button:hover {
+        color: var(--text-primary);
+        transform: scale(1.3);
+    }
+
+    .profile-links:hover svg {
+        animation-play-state: paused !important;
+    }
+
+    /* Wave animation delays */
+    .profile-links .contact-btn-1 svg {
+        animation: wave-button-1 15s ease-in-out infinite;
+        animation-delay: 1.3s;
+    }
+
+    .profile-links .contact-btn-2 svg {
+        animation: wave-button-2 15s ease-in-out infinite;
+        animation-delay: 1.3s;
+    }
+
+    .profile-links .contact-btn-3 svg {
+        animation: wave-button-3 15s ease-in-out infinite;
+        animation-delay: 1.3s;
+    }
+
+    .name-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.2;
+        text-align: center;
+        margin: 0;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        text-align: center;
+        margin-top: 1px;
+        margin-bottom: 10px;
+    }
+
+    .cv-action-wrapper {
+        margin: 0 auto;
+        align-self: center;
+    }
+
+    /* =========================================================================
+       4. RESPONSIVE BREAKPOINTS (Fixes the 950px–1150px Gap & Stable Mobile)
+       ========================================================================= */
+    /* Around 950px to 1150px: locks image and text together and centers the pair */
+    @media (min-width: 957px) and (max-width: 1150px) {
+        .profile-header {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 22px !important;
+            width: fit-content !important; /* Prevents 800px stretch */
+            margin: 0 auto 24px auto !important;
+            padding: 6px !important;
+        }
+
+        .profile-card-container {
+            flex: 0 0 185px !important;
+            width: 185px !important;
+            height: 185px !important;
+            max-width: 185px !important;
+        }
+
+        .profile-info {
+            flex: 0 0 auto !important; /* Eliminates the empty gap */
+        }
+    }
+
+    /* Tablet Portrait & Mobile: Stacked with a stable 175px circle */
+    @media (max-width: 956px) {
+        .profile-header {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            gap: 12px !important;
+            margin-bottom: 20px !important;
+            padding: 6px 0 0 0 !important;
+        }
+
+        .profile-card-container {
+            flex: 0 0 175px !important;
+            width: 175px !important;
+            height: 175px !important;
+            max-width: 175px !important;
+            margin: 0 auto !important;
+            padding: 4px !important;
+        }
+
+        .profile-card-inner {
+            border-radius: 50% !important;
+        }
+
+        .profile-card-inner picture,
+        .profile-img {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50% !important;
+        }
+
+        .profile-info {
+            width: 100% !important;
+            align-items: center !important;
+        }
+
+        .profile-links {
+            justify-content: center !important;
+            margin-bottom: 4px !important;
+        }
+
+        .name-title,
+        .subtitle {
+            text-align: center !important;
+        }
+
+        .cv-action-wrapper {
+            margin: 4px auto 0 auto !important;
+        }
+    }
+
+    /* =========================================================================
+       5. SOCIAL ICON WAVE KEYFRAMES
        ========================================================================= */
     @keyframes wave-button-1 {
         0%,
         2% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 1: POPS (0.3s – 2.1s) --- */
         3.25% {
             transform: scale(1.35) translateY(0);
         }
@@ -285,9 +394,8 @@
         }
         14%,
         27% {
-            transform: scale(1) translateY(0); /* 1.95s pause */
+            transform: scale(1) translateY(0);
         }
-        /* --- WAVE 2: JUMPS (4.0s – 5.8s) --- */
         28.25% {
             transform: scale(1) translateY(-8px);
         }
@@ -300,9 +408,8 @@
         }
         39%,
         52% {
-            transform: scale(1) translateY(0); /* 1.95s pause */
+            transform: scale(1) translateY(0);
         }
-        /* --- WAVE 3: POPS (7.8s – 9.6s) --- */
         53.25% {
             transform: scale(1.35) translateY(0);
         }
@@ -315,9 +422,8 @@
         }
         64%,
         77% {
-            transform: scale(1) translateY(0); /* 1.95s pause */
+            transform: scale(1) translateY(0);
         }
-        /* --- WAVE 4: JUMPS (11.5s – 13.3s) --- */
         78.25% {
             transform: scale(1) translateY(-8px);
         }
@@ -330,19 +436,15 @@
         }
         89%,
         100% {
-            transform: scale(1) translateY(0); /* 1.95s pause back to 2% */
+            transform: scale(1) translateY(0);
         }
     }
 
-    /* =========================================================================
-       BUTTON 2: Bridges 1 and 3 in both directions
-       ========================================================================= */
     @keyframes wave-button-2 {
         0%,
         4% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 1: POPS --- */
         5.25% {
             transform: scale(1.35) translateY(0);
         }
@@ -357,7 +459,6 @@
         29% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 2: JUMPS --- */
         30.25% {
             transform: scale(1) translateY(-8px);
         }
@@ -372,7 +473,6 @@
         54% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 3: POPS --- */
         55.25% {
             transform: scale(1.35) translateY(0);
         }
@@ -387,7 +487,6 @@
         79% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 4: JUMPS --- */
         80.25% {
             transform: scale(1) translateY(-8px);
         }
@@ -404,15 +503,11 @@
         }
     }
 
-    /* =========================================================================
-       BUTTON 3: Apex / Crest of each wave
-       ========================================================================= */
     @keyframes wave-button-3 {
         0%,
         6.25% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 1: POPS (Apex) --- */
         8% {
             transform: scale(1.35) translateY(0);
         }
@@ -420,7 +515,6 @@
         31.25% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 2: JUMPS (Apex) --- */
         33% {
             transform: scale(1) translateY(-8px);
         }
@@ -428,7 +522,6 @@
         56.25% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 3: POPS (Apex) --- */
         58% {
             transform: scale(1.35) translateY(0);
         }
@@ -436,7 +529,6 @@
         81.25% {
             transform: scale(1) translateY(0);
         }
-        /* --- WAVE 4: JUMPS (Apex) --- */
         83% {
             transform: scale(1) translateY(-8px);
         }

@@ -114,3 +114,7 @@ language - more languages?
 Projects > hover the project to see a 10 sec video?
 
 copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
+
+BUG: Projects when scrolling hides projects title
+
+Change footer to sometihng better?

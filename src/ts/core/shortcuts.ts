@@ -46,7 +46,8 @@ function getMainContentElements(): HTMLElement[] {
         return (
             el.offsetWidth > 0 &&
             el.offsetHeight > 0 &&
-            window.getComputedStyle(el).visibility !== 'hidden' &&
+            !el.hidden &&
+            el.offsetParent !== null &&
             !el.closest('[aria-hidden="true"]')
         );
     });
@@ -87,16 +88,22 @@ export function initShortcuts(): void {
         });
     }
 
+    let cachedDividerX = window.innerWidth / 2;
+    const updateDividerPos = (): void => {
+        const divider = qs('.panel-divider');
+        cachedDividerX = divider
+            ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
+            : window.innerWidth / 2;
+    };
+    updateDividerPos();
+    on(window, 'resize', updateDividerPos, { passive: true });
+
     on(
         window,
         'mousemove',
         (e: MouseEvent) => {
             if (window.innerWidth > 1150) {
-                const divider = qs('.panel-divider');
-                const dividerX = divider
-                    ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
-                    : window.innerWidth / 2;
-                activeScrollTarget = e.clientX < dividerX ? leftPanel : rightPanel;
+                activeScrollTarget = e.clientX < cachedDividerX ? leftPanel : rightPanel;
             }
         },
         { passive: true }

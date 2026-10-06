@@ -336,13 +336,15 @@ export function initCanvasBackground(): void {
 
                     for (let i = 0; i < activeViewportExclusions.length; i++) {
                         const r = activeViewportExclusions[i];
+                        // Fast early rejection: skip if dot is further than maxZone
                         if (x < r.left - maxZone || x > r.right + maxZone) continue;
                         if (y < r.top - maxZone || y > r.bottom + maxZone) continue;
 
                         let dSq: number;
                         if (r.isCircle) {
-                            // Precise Euclidean circle boundary distance
-                            const distFromCenter = Math.hypot(x - r.cx, y - r.cy);
+                            const dx = x - r.cx;
+                            const dy = y - r.cy;
+                            const distFromCenter = Math.sqrt(dx * dx + dy * dy);
                             const distToEdge = Math.max(0, distFromCenter - r.radius);
                             dSq = distToEdge * distToEdge;
                         } else {
@@ -353,7 +355,7 @@ export function initCanvasBackground(): void {
 
                         if (dSq < minTextDistSq) {
                             minTextDistSq = dSq;
-                            if (minTextDistSq === 0) break;
+                            if (minTextDistSq <= clearSq) break; // Exit immediately once inside exclusion
                         }
                     }
 
@@ -436,6 +438,13 @@ export function initCanvasBackground(): void {
 
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
+        // On small mobile screens, skip the expensive DOM text-range tree traversal
+        if (window.innerWidth <= 768) {
+            hasMeasuredExclusions = true;
+            rebuildDotGridCache();
+            draw();
+            return;
+        }
         hasMeasuredExclusions = true;
         cacheDocumentExclusions();
         draw();

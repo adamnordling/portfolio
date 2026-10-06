@@ -6,7 +6,7 @@
         <title>Privacy Policy, Terms & Accessibility — Adam Nordling</title>
         <meta
             name="description"
-            content="Privacy policy, terms of service, GDPR Article 13 disclosures, and accessibility statement for Adam Nordling's portfolio."
+            content="Privacy policy, terms of service, acceptable use, refund policy, GDPR Article 13 disclosures, and accessibility statement for Adam Nordling's portfolio."
         />
         <meta name="author" content="Adam Nordling" />
         <meta name="robots" content="index, follow" />
@@ -44,10 +44,10 @@
 
             .policy-card {
                 background-color: var(--card);
-                border: 1px solid var(--border);
+                border: 1px solid var(--border-color, #2e303b);
                 border-radius: 12px;
                 padding: 40px 32px;
-                max-width: 720px;
+                max-width: 760px;
                 width: 100%;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             }
@@ -74,11 +74,6 @@
                 color: var(--text-muted);
                 font-size: 0.92rem;
                 margin-bottom: 8px;
-            }
-
-            ul {
-                padding-left: 20px;
-                margin-bottom: 12px;
             }
 
             nav {
@@ -110,12 +105,14 @@
         <main class="policy-card">
             <h1>Privacy Policy, Terms & Accessibility</h1>
 
+            <!-- 1. DATA CONTROLLER -->
             <h2>1. Data Controller Identity & Contact Details</h2>
             <p>
                 The Data Controller responsible for this personal portfolio website is Adam Nordling. Inquiries
                 regarding data privacy can be directed via GitHub security advisory or LinkedIn.
             </p>
 
+            <!-- 2. DPO CONTACT -->
             <h2>2. Data Protection Officer (DPO) Contact</h2>
             <p>
                 Given the personal nature of this portfolio and absence of large-scale processing under Article 37 GDPR,
@@ -123,6 +120,7 @@
                 the Data Controller.
             </p>
 
+            <!-- 3. LEGAL BASIS & RETENTION -->
             <h2>3. Legal Basis for Processing & Data Retention Period</h2>
             <p>
                 This website processes minimal technical log data strictly under legitimate interests (Article 6(1)(f)
@@ -130,18 +128,21 @@
                 edge routing and discarded immediately.
             </p>
 
-            <h2>4. Cookie Policy & Tracking Technologies</h2>
+            <!-- 4. COOKIE POLICY -->
+            <h2 id="cookies">4. Cookie Policy & Tracking Technologies</h2>
             <p>
                 This website employs zero cookies, zero local storage tracking, and zero advertising or analytics
                 tracking pixels. All digital tools execute 100% client-side inside the visitor's local browser sandbox.
             </p>
 
+            <!-- 5. DATA SUBJECT RIGHTS -->
             <h2>5. Data Subject Rights</h2>
             <p>
                 Under GDPR, visitors hold data subject rights including the right of access, rectification, erasure,
                 restriction of processing, data portability, and the right to object.
             </p>
 
+            <!-- 6. RECIPIENTS & TRANSFERS -->
             <h2>6. Recipients of Personal Data & International Data Transfers</h2>
             <p>
                 There are zero third-party recipients of personal data. Data is never sold, leased, or transferred.
@@ -149,28 +150,49 @@
                 (SCCs).
             </p>
 
+            <!-- 7. SUPERVISORY AUTHORITY -->
             <h2>7. Right to Lodge a Complaint with a Supervisory Authority</h2>
             <p>
                 Visitors have the right to lodge a complaint with their supervisory authority, such as the Swedish
                 Authority for Privacy Protection (Integritetsskyddsmyndigheten — IMY).
             </p>
 
-            <h2 id="terms">8. Terms of Service & Acceptable Use Policy</h2>
+            <!-- 8. TERMS OF SERVICE -->
+            <h2 id="terms">8. Terms of Service</h2>
             <p>
                 All open-source source code repositories, research papers, and applications presented on this portfolio
                 are provided for educational demonstration under the MIT License.
             </p>
 
-            <h2 id="copyright">9. DMCA & Copyright Notice</h2>
+            <!-- 9. ACCEPTABLE USE -->
+            <h2 id="acceptable-use">9. Acceptable Use Policy</h2>
             <p>
-                Original content and designs are &copy; 2026 Adam Nordling. Open-source source code is subject to
-                respective software repository licenses.
+                Visitors may view, inspect, and fork open-source demo projects in accordance with their respective
+                open-source licenses. Automated crawling that causes denial of service or network degradation is
+                strictly prohibited.
             </p>
 
-            <h2 id="accessibility">10. Accessibility Statement</h2>
+            <!-- 10. DMCA & COPYRIGHT -->
+            <h2 id="copyright">10. DMCA &amp; Copyright Notice</h2>
+            <p>
+                Original content, vector graphics, and designs are &copy; 2026 Adam Nordling. Open-source source code is
+                subject to respective software repository licenses.
+            </p>
+
+            <!-- 11. REFUND & RETURNS -->
+            <h2 id="refunds">11. Refund &amp; Returns Policy</h2>
+            <p>
+                This portfolio is a personal engineering showcase and does not sell goods, commercial services, or paid
+                subscriptions. Because no financial transactions occur on this site, no refund or returns policies are
+                applicable.
+            </p>
+
+            <!-- 12. ACCESSIBILITY -->
+            <h2 id="accessibility">12. Accessibility Statement</h2>
             <p>
                 This website is committed to digital accessibility in accordance with WCAG 2.1 Level AA standards and
-                the EU Web Accessibility Directive (Directive 2016/2102).
+                the EU Web Accessibility Directive (Directive 2016/2102). Features include skip-navigation landmarks,
+                contrast compliance, screen-reader descriptors, and native keyboard navigation loops.
             </p>
 
             <nav aria-label="Policy navigation">

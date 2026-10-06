@@ -822,6 +822,38 @@
     }
 
     @media (max-width: 1150px) {
+        /* Maybe fixes to initial mobile loading with edu skills etc with auto */
+        /* Defers off-screen layout calculations until user scrolls near them */
+        .section-edu {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 450px;
+        }
+
+        /* 2. THE FIX: When a bubble opens, immediately disable containment and elevate z-index */
+        .section-edu:has(.has-bubble-open),
+        .section-edu.has-active-bubble {
+            content-visibility: visible !important;
+            contain: none !important;
+            z-index: 1000 !important;
+        }
+
+        .section-skills {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 500px;
+        }
+
+        .section-skills:has(.has-bubble-open),
+        .section-skills.has-active-bubble {
+            content-visibility: visible !important;
+            contain: none !important;
+            z-index: 1000 !important;
+        }
+
+        .right-panel {
+            content-visibility: auto;
+            contain-intrinsic-size: 0 800px;
+        }
+
         /* Mobile Top Bar (Clean 48px sticky header) */
         .site-header {
             position: fixed !important;

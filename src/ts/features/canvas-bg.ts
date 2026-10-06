@@ -439,7 +439,7 @@ export function initCanvasBackground(): void {
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         // On small mobile screens, skip the expensive DOM text-range tree traversal
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1150) {
             hasMeasuredExclusions = true;
             rebuildDotGridCache();
             draw();

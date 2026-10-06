@@ -40,6 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
         initPerformanceMonitoring();
     });
 
+    // Toggles the smooth top-edge gradient mask when panels scroll down
+    const scrollPanels = document.querySelectorAll<HTMLElement>('.left-panel, .right-panel');
+    scrollPanels.forEach(panel => {
+        panel.addEventListener(
+            'scroll',
+            () => {
+                panel.classList.toggle('is-scrolled-top', panel.scrollTop > 8);
+            },
+            { passive: true }
+        );
+    });
+
     initLazyGitHubActivity();
 
     if ('serviceWorker' in navigator) {

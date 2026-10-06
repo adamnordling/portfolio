@@ -7,7 +7,7 @@ const fontTypes = ['default', 'serif', 'monospace'] as const;
 let currentFontIndex = 0;
 let lastFocusedElement: HTMLElement | null = null;
 
-// Track last focused interactive element for tab memory
+// Track last focused interactive element
 document.addEventListener('focusin', e => {
     const target = e.target as HTMLElement | null;
     if (target && target !== document.body && !target.classList.contains('skip-link')) {
@@ -15,7 +15,7 @@ document.addEventListener('focusin', e => {
     }
 });
 
-// Helper: Safely find the first currently VISIBLE project card
+// Helper: Find first visible project card
 function getFirstVisibleProjectCard(): HTMLElement | null {
     const cards = qsa('.app-card');
     const visible = cards.find(card => card.style.display !== 'none' && card.offsetWidth > 0);
@@ -24,21 +24,28 @@ function getFirstVisibleProjectCard(): HTMLElement | null {
     return null;
 }
 
-// Helper: Focusable elements in the main portfolio wrapper
+// Helper: Focusable elements in Top Header
+function getTopHeaderElements(): HTMLElement[] {
+    const header = qs('.site-header');
+    if (!header) return [];
+    return Array.from(
+        header.querySelectorAll<HTMLElement>('button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+    ).filter(el => !el.closest('.lang-menu'));
+}
+
+// Helper: Focusable elements in Main Portfolio Wrapper (including the Metacard)
 function getMainContentElements(): HTMLElement[] {
     const wrapper = qs('.portfolio-wrapper');
     if (!wrapper) return [];
     return Array.from(
         wrapper.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
     ).filter(el => {
-        // Exclude closed profile menu items
         if (
             el.closest('.profile-img-menu') &&
             !el.closest('.profile-card-inner')?.classList.contains('profile-menu-open')
         ) {
             return false;
         }
-        // Exclude hidden cards
         const card = el.closest<HTMLElement>('.app-card');
         if (card && card.style.display === 'none') {
             return false;
@@ -47,26 +54,8 @@ function getMainContentElements(): HTMLElement[] {
             el.offsetWidth > 0 &&
             el.offsetHeight > 0 &&
             !el.hidden &&
-            el.offsetParent !== null &&
+            window.getComputedStyle(el).visibility !== 'hidden' &&
             !el.closest('[aria-hidden="true"]')
-        );
-    });
-}
-
-// Helper: Focusable elements in the footer dock
-function getFooterDockElements(): HTMLElement[] {
-    const dock = qs('.status-dock');
-    if (!dock) return [];
-    return Array.from(
-        dock.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
-    ).filter(el => {
-        return (
-            el.offsetWidth > 0 &&
-            el.offsetHeight > 0 &&
-            !el.classList.contains('theme-toggle') &&
-            !el.classList.contains('lang-trigger') &&
-            !el.closest('.lang-menu') &&
-            window.getComputedStyle(el).visibility !== 'hidden'
         );
     });
 }
@@ -76,7 +65,6 @@ export function initShortcuts(): void {
     const rightPanel = qs('.right-panel');
     let activeScrollTarget: HTMLElement | null = leftPanel;
 
-    // 1. Mouse Tracking
     if (leftPanel) {
         on(leftPanel, 'mouseenter', () => {
             activeScrollTarget = leftPanel;
@@ -88,6 +76,7 @@ export function initShortcuts(): void {
         });
     }
 
+    // Cached divider X position (zero reflow during mousemove)
     let cachedDividerX = window.innerWidth / 2;
     const updateDividerPos = (): void => {
         const divider = qs('.panel-divider');
@@ -109,12 +98,10 @@ export function initShortcuts(): void {
         { passive: true }
     );
 
-    // 2. Keyboard Tracking
     document.addEventListener('focusin', e => {
         const target = e.target as HTMLElement | null;
         if (target && target !== document.body && !target.classList.contains('skip-link')) {
             lastFocusedElement = target;
-
             if (rightPanel && target.closest('.right-panel')) {
                 activeScrollTarget = rightPanel;
             } else if (leftPanel && target.closest('.left-panel')) {
@@ -141,7 +128,7 @@ export function initShortcuts(): void {
             return;
         }
 
-        // 2. Escape: closes open menus and untargets focus
+        // 2. Escape: closes open menus
         if (e.key === 'Escape') {
             const cardTrigger = qs('#profile-card-trigger');
             const shouldRefocusCard = cardTrigger !== null && cardTrigger.classList.contains('profile-menu-open');
@@ -185,7 +172,7 @@ export function initShortcuts(): void {
             return;
         }
 
-        // 5. CATEGORY SELECTION WITH ENTER: Selects category & moves directly to visible project card
+        // 5. Category Selection with Enter
         if ((e.key === 'Enter' || e.key === ' ') && activeEl && activeEl.classList.contains('filter-btn')) {
             e.preventDefault();
             activeEl.click();
@@ -196,7 +183,7 @@ export function initShortcuts(): void {
             return;
         }
 
-        // 6. CATEGORY NAVIGATION (Tab / Shift+Tab and ArrowDown / ArrowUp)
+        // 6. Category Navigation (Tab / Arrows)
         if (
             activeEl &&
             activeEl.classList.contains('filter-btn') &&
@@ -213,7 +200,6 @@ export function initShortcuts(): void {
                         filterBtns[currentIndex + 1].focus();
                         return;
                     } else {
-                        // Pass through forward past Security: default to "All", then focus first visible project card
                         e.preventDefault();
                         if (!filterBtns[0].classList.contains('active')) {
                             filterBtns[0].click();
@@ -230,7 +216,6 @@ export function initShortcuts(): void {
                         filterBtns[currentIndex - 1].focus();
                         return;
                     } else {
-                        // Pass through backward past All: default to "All", then return to Left Panel
                         e.preventDefault();
                         if (!filterBtns[0].classList.contains('active')) {
                             filterBtns[0].click();
@@ -247,7 +232,7 @@ export function initShortcuts(): void {
             }
         }
 
-        // 7. Backward navigation from first VISIBLE project card into Category (Security)
+        // 7. Backward navigation from first visible project card into Category filter
         if (
             activeEl &&
             (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) &&
@@ -258,28 +243,27 @@ export function initShortcuts(): void {
             if (filterBtns.length > 0) {
                 e.preventDefault();
                 const dropdown = qs('.filter-dropdown');
-                if (dropdown) dropdown.classList.remove('menu-closed');
+                if (dropdown) dropdown.classList.add('menu-open');
                 filterBtns[filterBtns.length - 1].focus();
                 return;
             }
         }
 
-        // 8. Global Desktop Navigation Sequence
+        // 8. Global Desktop Tab & Arrow Sequence
         if (window.innerWidth > 1150 && (e.key === 'Tab' || e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
             const isForward = e.key === 'Tab' ? !e.shiftKey : e.key === 'ArrowDown';
             const skipLink = qs('.skip-link');
-            const themeToggle = qs('.theme-toggle');
-            const langTrigger = qs('.lang-trigger');
-            const profileCard = qs('#profile-card-trigger');
-            const firstContactBtn = qs('.contact-btn-1');
-
+            const topHeaderElements = getTopHeaderElements();
             const mainElements = getMainContentElements();
-            const footerElements = getFooterDockElements();
+
+            const topCount = topHeaderElements.length;
             const mainCount = mainElements.length;
-            const footerCount = footerElements.length;
 
             // Profile photo menu item navigation
             if (activeEl && activeEl.closest('.profile-img-menu')) {
+                const profileCard = qs('#profile-card-trigger');
+                const firstContactBtn = qs('.contact-btn-1');
+
                 if (isForward && activeEl.id === 'copy-img-link-btn') {
                     e.preventDefault();
                     if (profileCard) profileCard.classList.remove('profile-menu-open');
@@ -295,24 +279,9 @@ export function initShortcuts(): void {
                     if (profileCard) profileCard.focus();
                     return;
                 }
-                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    const menuContainer = activeEl.closest<HTMLElement>('.profile-img-menu');
-                    if (menuContainer) {
-                        const menuItems = qsa('.profile-menu-item', menuContainer);
-                        const currentIndex = menuItems.indexOf(activeEl);
-                        if (currentIndex !== -1 && menuItems.length > 0) {
-                            const nextIndex = isForward
-                                ? (currentIndex + 1) % menuItems.length
-                                : (currentIndex - 1 + menuItems.length) % menuItems.length;
-                            menuItems[nextIndex].focus();
-                        }
-                    }
-                    return;
-                }
             }
 
-            // Scroll panel if whole panel is targeted
+            // Scroll panel if whole panel target is focused
             if (rightPanel && activeEl === rightPanel && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
                 e.preventDefault();
                 rightPanel.scrollBy({ top: isForward ? 140 : -140, behavior: 'smooth' });
@@ -324,7 +293,7 @@ export function initShortcuts(): void {
                 return;
             }
 
-            // Scroll active panel if no element is focused
+            // Scroll active panel if body is focused
             if ((!activeEl || activeEl === document.body) && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
                 e.preventDefault();
                 if (activeScrollTarget) {
@@ -333,101 +302,51 @@ export function initShortcuts(): void {
                 return;
             }
 
-            // Forward navigation from rightPanel directly into Category All
-            if (isForward && rightPanel && activeEl === rightPanel) {
-                const filterBtns = qsa('.filter-btn');
-                if (filterBtns.length > 0) {
-                    e.preventDefault();
-                    const dropdown = qs('.filter-dropdown');
-                    if (dropdown) dropdown.classList.remove('menu-closed');
-                    filterBtns[0].focus();
-                    return;
-                }
-            }
-
-            // FORWARD SEQUENCING (Tab or ArrowDown)
+            // FORWARD SEQUENCING
             if (isForward) {
-                if (activeEl === skipLink && themeToggle) {
+                if (activeEl === skipLink && topCount > 0) {
                     e.preventDefault();
-                    themeToggle.focus();
+                    topHeaderElements[0].focus();
                     return;
                 }
-                if (activeEl === themeToggle && langTrigger) {
+                if (topCount > 0 && activeEl === topHeaderElements[topCount - 1] && mainCount > 0) {
                     e.preventDefault();
-                    langTrigger.focus();
+                    mainElements[0].focus();
                     return;
                 }
-                if (activeEl === langTrigger) {
-                    e.preventDefault();
-                    if (mainCount > 0) {
-                        mainElements[0].focus();
-                    } else if (profileCard) {
-                        profileCard.focus();
-                    }
-                    return;
-                }
-                if (mainCount > 0 && activeEl === mainElements[mainCount - 1] && footerCount > 0) {
-                    e.preventDefault();
-                    footerElements[0].focus();
-                    return;
-                }
-                if (footerCount > 0 && activeEl === footerElements[footerCount - 1]) {
+                // Wrap around at the end of all projects
+                if (mainCount > 0 && activeEl === mainElements[mainCount - 1]) {
                     e.preventDefault();
                     if (skipLink) {
                         skipLink.focus();
-                    } else if (themeToggle) {
-                        themeToggle.focus();
+                    } else if (topCount > 0) {
+                        topHeaderElements[0].focus();
                     }
                     return;
                 }
             }
 
-            // BACKWARD SEQUENCING (Shift+Tab or ArrowUp)
+            // BACKWARD SEQUENCING
             if (!isForward) {
-                if ((activeEl === skipLink || activeEl === themeToggle) && footerCount > 0) {
-                    e.preventDefault();
-                    footerElements[footerCount - 1].focus();
-                    return;
-                }
-                if (activeEl === langTrigger && themeToggle) {
-                    e.preventDefault();
-                    themeToggle.focus();
-                    return;
-                }
-                if (((mainCount > 0 && activeEl === mainElements[0]) || activeEl === profileCard) && langTrigger) {
-                    e.preventDefault();
-                    langTrigger.focus();
-                    return;
-                }
-                if (footerCount > 0 && activeEl === footerElements[0] && mainCount > 0) {
+                if (activeEl === skipLink && mainCount > 0) {
                     e.preventDefault();
                     mainElements[mainCount - 1].focus();
                     return;
                 }
-            }
-
-            // General Arrow navigation through focusable list
-            if (activeEl && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
-                const combined: HTMLElement[] = [];
-                if (skipLink) combined.push(skipLink);
-                if (themeToggle) combined.push(themeToggle);
-                if (langTrigger) combined.push(langTrigger);
-                combined.push(...mainElements);
-                combined.push(...footerElements);
-
-                const currentIndex = combined.indexOf(activeEl);
-                if (currentIndex !== -1 && combined.length > 0) {
+                if (topCount > 0 && activeEl === topHeaderElements[0] && skipLink) {
                     e.preventDefault();
-                    const nextIndex = isForward
-                        ? (currentIndex + 1) % combined.length
-                        : (currentIndex - 1 + combined.length) % combined.length;
-                    combined[nextIndex].focus();
+                    skipLink.focus();
+                    return;
+                }
+                if (mainCount > 0 && activeEl === mainElements[0] && topCount > 0) {
+                    e.preventDefault();
+                    topHeaderElements[topCount - 1].focus();
                     return;
                 }
             }
         }
 
-        // Hotkeys (t, l, c, f, 1-3)
+        // Hotkeys (T, L, C, F, 1-3)
         if (key === 't') toggleTheme();
         if (key === 'l') {
             const currentLang = document.documentElement.lang;

@@ -1,16 +1,12 @@
 @layer components {
     /* ==========================================================================
-       CUSTOM STUDIO HUD TOOLTIPS (Replaces Native OS Tooltips)
+       1. STUDIO HUD TOOLTIPS (Bilingual EN / SV)
        ========================================================================== */
-    /* ==========================================================================
-          BILINGUAL STUDIO HUD TOOLTIPS (Pure CSS EN / SV)
-          ========================================================================== */
     [data-tooltip],
     [data-tooltip-en] {
         position: relative;
     }
 
-    /* Standard / Engelska */
     [data-tooltip]::before {
         content: attr(data-tooltip);
     }
@@ -19,9 +15,17 @@
         content: attr(data-tooltip-en);
     }
 
-    /* Svenska: Slår automatiskt över när html har lang="sv" */
     html[lang='sv'] [data-tooltip-sv]::before {
         content: attr(data-tooltip-sv);
+    }
+
+    /* Disable off-screen tooltips on the top font buttons */
+    .font-switcher [data-tooltip]::before,
+    .font-switcher [data-tooltip]::after,
+    .font-switcher [data-tooltip-en]::before,
+    .font-switcher [data-tooltip-en]::after {
+        display: none !important;
+        content: none !important;
     }
 
     [data-tooltip]::before,
@@ -52,7 +56,6 @@
         z-index: 200;
     }
 
-    /* Pil / Caret */
     [data-tooltip]::after,
     [data-tooltip-en]::after {
         content: '';
@@ -72,7 +75,6 @@
         z-index: 200;
     }
 
-    /* Hover reveal */
     [data-tooltip]:hover::before,
     [data-tooltip]:hover::after,
     [data-tooltip-en]:hover::before,
@@ -83,7 +85,6 @@
         transition-delay: 80ms;
     }
 
-    /* Vänsterjusterad (så den inte klipper vänsterkanten) */
     [data-tooltip-align='start']::before {
         left: 0 !important;
         transform: translateX(0) translateY(4px) !important;
@@ -99,7 +100,6 @@
         transform: translateX(0) translateY(0) !important;
     }
 
-    /* Högerjusterad (så den inte klipper högerkanten vid hotkeys) */
     [data-tooltip-align='end']::before {
         left: auto !important;
         right: 0 !important;
@@ -124,19 +124,13 @@
     }
 
     /* ==========================================================================
-       1. RECENT ACTIVITY WIDGET
+       2. RECENT ACTIVITY WIDGET
        ========================================================================== */
     .section-activity {
         content-visibility: auto;
         contain-intrinsic-size: 0 400px;
     }
 
-    /* ==========================================================================
-       GITHUB TELEMETRY BAR (Ovanför commits)
-       ========================================================================== */
-    /* ==========================================================================
-           GITHUB TELEMETRY BAR (Ren telemetri - Inte klickbar)
-           ========================================================================== */
     .activity-stats-bar {
         display: flex;
         align-items: center;
@@ -158,15 +152,9 @@
         color: var(--text-secondary);
         flex: 1;
         justify-content: center;
-        /* Inte klickbara: vanlig pil, ingen pointer */
         cursor: default;
         user-select: none;
         -webkit-user-select: none;
-    }
-
-    /* Ingen klick/hover-effekt */
-    .stat-pill:hover {
-        border-color: var(--border-color);
     }
 
     .stat-num {
@@ -201,20 +189,6 @@
     .stat-icon {
         color: var(--text-muted);
         flex-shrink: 0;
-    }
-
-    /* SVG Commit Icon istället för emoji */
-    .activity-item .activity-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-muted);
-        margin-top: 3px;
-        transition: color 0.2s ease;
-    }
-
-    .activity-item:hover .activity-icon {
-        color: var(--accent);
     }
 
     .activity-feed {
@@ -340,7 +314,7 @@
     }
 
     /* ==========================================================================
-       2. EMAIL COPIED TOAST
+       3. EMAIL COPIED TOAST
        ========================================================================== */
     .email-wrapper {
         position: relative;
@@ -403,82 +377,97 @@
     }
 
     /* ==========================================================================
-       3. SYSTEM STATUS DOCK / HEADER
+       4. UNIFIED SITE HEADER (Top-Left on Desktop, Top Bar on Mobile)
        ========================================================================== */
-    .status-dock {
+    .site-header {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 42px;
-        z-index: 100;
+        top: 24px;
+        left: 24px;
+        z-index: 1000; /* Stays above the profile portrait (125) */
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 0 16px;
-        background: var(--card-bg);
-        border-top: 1px solid var(--border-color);
-        box-shadow:
-            0 -6px 20px rgba(0, 0, 0, 0.35),
-            0 -1px 0 rgba(255, 255, 255, 0.03) inset;
-        font-family: var(--font-mono), monospace;
-        user-select: none;
-        -webkit-user-select: none;
-        transition:
-            background-color 0.25s ease,
-            border-color 0.25s ease;
+        gap: 8px;
     }
 
-    body.light-theme .status-dock {
-        box-shadow:
-            0 -6px 18px rgba(0, 0, 0, 0.05),
-            0 -1px 0 rgba(0, 0, 0, 0.04) inset;
-    }
-
-    .dock-segment {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        height: 100%;
-    }
-
-    .dock-divider {
-        width: 1px;
-        height: 16px;
-        background-color: var(--border-color);
-    }
-
-    .dock-svg-icon {
-        flex-shrink: 0;
-        stroke: currentColor;
-    }
-
-    .dock-mobile-only {
-        display: none !important;
-    }
-
-    /* --- LEFT: Cloudflare Edge & Fonts --- */
-    .dock-system-status {
+    .header-cluster-left {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
+        gap: 8px;
     }
 
-    .dock-pulse-dot {
-        position: relative;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background-color: #10b981;
-        box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-muted);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        transition:
+            border-color 0.2s,
+            color 0.2s;
     }
 
-    .dock-status-label {
-        font-size: 0.75rem !important;
-        font-weight: 700;
-        letter-spacing: 0.06em;
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
         color: var(--text-primary);
+        border-color: var(--accent);
+    }
+
+    body.light-theme .theme-toggle {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .theme-toggle .sun-icon {
+        display: block;
+    }
+
+    .theme-toggle .moon-icon {
+        display: none;
+    }
+
+    body.light-theme .theme-toggle .sun-icon {
+        display: none;
+    }
+
+    body.light-theme .theme-toggle .moon-icon {
+        display: block;
+    }
+
+    .lang-trigger {
+        height: 36px;
+        width: 44px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 6px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        color: var(--text-primary);
+        font-family: var(--font-mono), monospace;
+        font-size: 0.78rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: border-color 0.2s;
+    }
+
+    .lang-trigger:hover,
+    .lang-trigger:focus-visible {
+        border-color: var(--accent);
+    }
+
+    .header-divider {
+        width: 1px;
+        height: 18px;
+        background-color: var(--border-color);
+        margin: 0 2px;
     }
 
     .font-switcher {
@@ -490,11 +479,11 @@
         background: transparent;
         border: 1px solid transparent;
         color: var(--text-muted);
-        width: 24px;
-        height: 24px;
+        width: 26px;
+        height: 36px;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 0.82rem;
+        font-size: 0.85rem;
         font-weight: 600;
         display: inline-flex;
         align-items: center;
@@ -528,88 +517,163 @@
         background-color: rgba(0, 0, 0, 0.05);
     }
 
-    .dock-copyright {
-        font-size: 0.75rem !important;
-        color: var(--text-muted);
-        white-space: nowrap;
+    @keyframes marquee-roll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    /* ==========================================================================
+     DESKTOP METACARD (Mini Rolling Marquee & Centered Hotkeys)
+     ========================================================================== */
+    .desktop-metacard {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 36px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: transparent !important;
+        font-family: var(--font-mono), monospace;
     }
 
-    /* --- CENTER: Balanced Color Palette --- */
-    .dock-center {
-        gap: 8px;
+    body.light-theme .desktop-metacard {
+        border-top-color: rgba(0, 0, 0, 0.08);
     }
 
-    /* Lighthouse: Clean Blue Border + Official Green 100 Digits */
-    .dock-lh-group {
+    /* Top Line: Edge status & Copyright */
+    .meta-row-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4px;
+    }
+
+    .meta-status {
         display: inline-flex;
         align-items: center;
+        gap: 7px;
+    }
+
+    .dock-pulse-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #10b981;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
+    }
+
+    .meta-status-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--text-primary);
+    }
+
+    .meta-copyright {
+        color: var(--text-muted);
+        font-size: 0.72rem;
+    }
+
+    /* Mini Marquee Viewport with soft gradient edges */
+    .meta-marquee-viewport {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        padding: 4px 0;
+    }
+
+    .meta-marquee-track {
+        display: flex;
+        width: max-content;
+        animation: marquee-roll 28s linear infinite;
+        will-change: transform;
+    }
+
+    .meta-marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    .meta-marquee-group {
+        display: flex;
+        align-items: center;
         gap: 8px;
-        padding: 2px 10px;
-        height: 26px;
+        padding-right: 8px;
+        flex-shrink: 0;
+    }
+
+    /* --- Badge Styling Inside the Marquee --- */
+    .dock-lh-group {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 8px;
+        height: 25px;
         background: rgba(59, 130, 246, 0.04);
         border: 1px solid rgba(59, 130, 246, 0.22);
         border-radius: 4px;
         color: var(--accent);
+        white-space: nowrap !important;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .dock-svg-icon {
+        flex-shrink: 0;
+        stroke: currentColor;
     }
 
     .lh-title {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         font-weight: 700;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.05em;
         color: var(--text-primary);
     }
 
     .lh-scores {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
     }
 
     .lh-item {
         display: inline-flex;
         align-items: center;
-        gap: 3px;
+        gap: 2px;
     }
 
     .lh-val {
-        color: #10b981; /* Precision green kept strictly for 100 scores */
-        font-size: 0.75rem;
+        color: #10b981;
+        font-size: 0.7rem;
         font-weight: 700;
     }
 
     .lh-item small {
         color: var(--text-muted);
-        font-size: 0.75rem;
-        letter-spacing: 0.04em;
+        font-size: 0.68rem;
     }
 
-    a.telemetry-pill.privacy-pill {
-        text-decoration: none;
-        color: var(--text-secondary);
-        cursor: pointer;
-    }
-
-    a.telemetry-pill.privacy-pill:hover {
-        color: var(--text-primary);
-        border-color: var(--accent);
-    }
-
-    /* Telemetry Pills: Monochrome with Dot-Matrix Blue Accents */
     .telemetry-pill {
-        display: inline-flex;
+        display: inline-flex !important;
         align-items: center;
         gap: 6px;
         padding: 0 8px;
-        height: 26px;
+        height: 25px;
         border-radius: 4px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border-color);
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         color: var(--text-secondary);
-        white-space: nowrap;
+        white-space: nowrap !important;
+        text-decoration: none;
+        flex-shrink: 0;
         transition:
-            border-color 0.2s ease,
-            transform 0.2s ease;
+            border-color 0.15s,
+            color 0.15s;
     }
 
     body.light-theme .telemetry-pill {
@@ -618,20 +682,11 @@
 
     .telemetry-pill:hover {
         border-color: var(--accent);
-        transform: translateY(-1px);
         color: var(--text-primary);
     }
 
-    .telemetry-pill .dock-svg-icon {
-        color: var(--text-muted);
-    }
-
-    .telemetry-pill:hover .dock-svg-icon {
-        color: var(--accent);
-    }
-
     .live-vitals-pill {
-        background: rgba(59, 130, 246, 0.05);
+        background: rgba(59, 130, 246, 0.04);
         border-color: rgba(59, 130, 246, 0.22);
         color: var(--text-primary);
     }
@@ -650,15 +705,22 @@
         color: var(--border-color);
     }
 
-    /* --- RIGHT: Hotkeys, Clock & Desktop Controls --- */
-    .dock-hotkeys {
-        display: inline-flex;
+    /* Centered Hotkeys Strip */
+    .meta-hotkeys-centered {
+        display: flex;
         align-items: center;
-        gap: 6px;
+        justify-content: center;
+        gap: 12px;
+        padding-top: 8px;
+        border-top: 1px dashed rgba(255, 255, 255, 0.06);
+    }
+
+    body.light-theme .meta-hotkeys-centered {
+        border-top-color: rgba(0, 0, 0, 0.06);
     }
 
     .hotkey-pill {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: var(--text-muted);
         display: inline-flex;
         align-items: center;
@@ -666,97 +728,28 @@
     }
 
     .hotkey-pill kbd {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 3px;
-        padding: 1px 4px;
-        font-size: 0.75rem;
+        padding: 0 4px;
+        font-size: 0.7rem;
         font-weight: 700;
         color: var(--text-primary);
     }
 
     body.light-theme .hotkey-pill kbd {
-        background: rgba(0, 0, 0, 0.06);
-    }
-
-    .dock-clock {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.78rem;
-    }
-
-    .clock-time {
-        font-weight: 600;
-        color: var(--text-primary);
-        font-variant-numeric: tabular-nums;
-        letter-spacing: 0.03em;
-    }
-
-    .clock-details {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    .clock-divider {
-        opacity: 0.5;
-    }
-
-    /* Theme Toggle base styling */
-    .theme-toggle {
-        background: transparent;
-        border: 1px solid transparent;
-        color: var(--text-muted);
-        width: 28px;
-        height: 28px;
-        border-radius: 4px;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-    }
-
-    .theme-toggle:hover {
-        color: var(--text-primary);
-        border-color: var(--border-color);
-        background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    body.light-theme .theme-toggle:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    .theme-toggle .sun-icon {
-        display: block;
-    }
-
-    .theme-toggle .moon-icon {
-        display: none;
-    }
-
-    body.light-theme .theme-toggle .sun-icon {
-        display: none;
-    }
-
-    body.light-theme .theme-toggle .moon-icon {
-        display: block;
+        background: rgba(0, 0, 0, 0.04);
+        border-color: rgba(0, 0, 0, 0.08);
     }
 
     /* ==========================================================================
-          MOBILE TELEMETRY MARQUEE FOOTER (Längst ner på sidan på mobil/tablet)
-          ========================================================================== */
-    .mobile-telemetry-dock {
-        display: none; /* Dold som standard på PC */
-    }
-
-    /* ==========================================================================
-       KEYBOARD NAVIGATION & ACCESSIBILITY STYLING
+       6. MOBILE TELEMETRY DOCK (Rolling Marquee at Bottom)
        ========================================================================== */
-    /* 1. Skip-to-content Link (WCAG 2.4.1) */
+    .mobile-telemetry-dock {
+        display: none;
+    }
+
+    /* Skip link */
     .skip-link {
         position: fixed;
         top: -100px;
@@ -780,463 +773,109 @@
         outline: none;
     }
 
-    /* 3. Global High-Contrast Focus Ring */
     :focus-visible {
         outline: 2px solid var(--accent) !important;
         outline-offset: 3px !important;
         border-radius: 4px;
-    }
-
-    /* Global Focus Ring */
-    :focus-visible {
-        outline: 2px solid var(--accent) !important;
-        outline-offset: 3px !important;
-        border-radius: 4px;
-    }
-
-    /* 4. Display tooltips when pills or buttons receive keyboard focus */
-    [data-tooltip]:focus-visible::before,
-    [data-tooltip]:focus-visible::after,
-    [data-tooltip-en]:focus-visible::before,
-    [data-tooltip-en]:focus-visible::after {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateX(-50%) translateY(0) !important;
-    }
-
-    @media (max-width: 1150px), (max-height: 500px) and (orientation: landscape) {
-        /* 1. TOP-HEADER: Icke-följsam (stannar i toppen, följer inte med vid skroll) */
-        .status-dock {
-            position: absolute !important;
-            top: 0 !important;
-            bottom: auto !important;
-            width: 100% !important;
-            left: 0 !important;
-        }
-
-        /* 1. Cramped, clean mobile bottom dock in normal document flow */
-        .mobile-telemetry-dock {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            width: 100%;
-            margin: 0;
-            padding: 6px 10px 8px 10px;
-            background: var(--card-bg);
-            border: none;
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
-            z-index: 100;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        /* 2. In-flow Inspector Card: Sits neatly above marquee with solid opaque background */
-        .m-inspector-card {
-            position: relative;
-            margin-bottom: 6px;
-            padding: 8px 10px;
-            background: var(--card-bg);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            border-radius: 6px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-            animation: fadeInCard 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-            box-sizing: border-box;
-        }
-
-        body.light-theme .m-inspector-card {
-            background: #ffffff;
-            border-color: rgba(29, 78, 216, 0.3);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-        }
-
-        .m-inspector-card.hidden {
-            display: none !important;
-        }
-
-        .m-inspector-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3px;
-        }
-
-        .m-inspector-title {
-            font-family: var(--font-mono), monospace;
-            font-size: 0.75rem !important;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .m-inspector-close {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 0 4px;
-            line-height: 1;
-        }
-
-        .m-inspector-desc {
-            font-size: 0.76rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-            margin: 0;
-            user-select: text;
-            -webkit-user-select: text;
-        }
-
-        /* Utsnitt med mjuk toning i kanterna */
-        .m-marquee-viewport {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-            padding: 2px 0;
-            touch-action: pan-y;
-            user-select: none;
-            -webkit-user-select: none;
-            cursor: grab;
-        }
-
-        .m-marquee-viewport.is-dragging {
-            cursor: grabbing;
-        }
-
-        .m-marquee-track {
-            display: flex;
-            width: max-content;
-            animation: marquee-roll 22s linear infinite;
-            animation-play-state: paused; /* Paused during critical initial paint */
-            will-change: transform;
-        }
-
-        .m-marquee-track.is-running {
-            animation-play-state: running;
-        }
-
-        /* Pausa när klassen är satt (Touch har ingen sticky :hover längre!) */
-        .m-marquee-track.is-paused {
-            animation-play-state: paused !important;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            .m-marquee-track:hover {
-                animation-play-state: paused;
-            }
-        }
-
-        .m-marquee-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding-right: 6px;
-        }
-
-        /* Cramped, sleek pills */
-        .m-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            height: 25px;
-            padding: 0 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            font-family: var(--font-mono), monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            cursor: pointer;
-            transition:
-                border-color 0.15s ease,
-                background-color 0.15s ease,
-                color 0.15s ease;
-        }
-
-        body.light-theme .m-pill {
-            background: rgba(0, 0, 0, 0.03);
-        }
-
-        .m-pill.is-active {
-            border-color: var(--accent);
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--text-primary);
-            box-shadow: 0 0 8px rgba(59, 130, 246, 0.25);
-        }
-
-        .m-pill-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--accent);
-        }
-
-        .m-pill-dot.green {
-            background: #10b981;
-            box-shadow: 0 0 5px rgba(16, 185, 129, 0.8);
-        }
-
-        .m-pill-icon {
-            color: var(--accent);
-            width: 11px;
-            height: 11px;
-        }
-
-        @keyframes marquee-roll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        @keyframes fadeInCard {
-            from {
-                opacity: 0;
-                transform: translateY(-4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
     }
 
     /* ==========================================================================
-       4. STRICT RESPONSIVE HIERARCHY
+       7. RESPONSIVE BREAKPOINTS (Desktop vs Mobile)
        ========================================================================== */
-    /* Tier 1 (<= 1600px): Drop secondary architectural tags */
-    /* Tier 3 (<= 1100px Tablet): Hide hotkeys & telemetry */
+    @media (min-width: 1151px) {
+        .portfolio-wrapper {
+            /* Keeps the original 5vh top space, extends cleanly to 24px off the bottom */
+            height: calc(95vh - 24px) !important;
+            margin: 5vh auto 24px auto !important;
+            padding-bottom: 0 !important;
+        }
+
+        /* Smooth 24px bottom edge fade so text never cuts off abruptly */
+        .left-panel,
+        .right-panel {
+            padding-bottom: 28px !important;
+            mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 24px), transparent 100%);
+            transition:
+                mask-image 0.2s ease,
+                -webkit-mask-image 0.2s ease;
+        }
+
+        /* WHEN SCROLLED: Smooth 24px fade on BOTH top and bottom */
+        .left-panel.is-scrolled-top,
+        .right-panel.is-scrolled-top {
+            mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 24px,
+                black calc(100% - 24px),
+                transparent 100%
+            ) !important;
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 24px,
+                black calc(100% - 24px),
+                transparent 100%
+            ) !important;
+        }
+    }
+
     @media (max-width: 1150px) {
-        .dock-hotkeys {
-            display: none;
-        }
-
-        .dock-center {
-            display: none !important;
-        }
-    }
-
-    /* Desktop (> 750px): Stack Language button vertically UNDER Dark Mode */
-    @media (min-width: 1150px) and (max-width: 1800px) {
-        .status-dock .theme-toggle {
-            position: fixed;
-            top: 24px;
-            left: 24px;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            z-index: 100;
-        }
-
-        /* Placed directly below the theme button */
-        .dock-mobile-lang {
-            position: fixed;
-            top: 66px; /* 👈 Stacks cleanly beneath the 36px theme toggle */
-            left: 24px;
-            z-index: 100;
-        }
-
-        .pill-runtime,
-        .pill-ts,
-        .pill-layer {
-            display: none;
-        }
-
-        .dock-lh-group {
-            display: none;
-        }
-
-        .dock-mobile-lang .lang-trigger {
-            width: 36px;
-            height: 30px;
-            padding: 0;
-            justify-content: center;
-            border-radius: 6px;
-            font-size: 0.75rem !important;
-        }
-
-        /* Hide chevron & full text on desktop so it's a sleek, compact [EN] box */
-        .dock-mobile-lang .lang-trigger .chevron,
-        .dock-mobile-lang .lang-trigger-text {
-            display: none !important;
-        }
-
-        .dock-mobile-lang .lang-current-label {
-            display: inline-block !important;
-            font-family: var(--font-mono), monospace;
-            font-weight: 700;
-            font-size: 0.75rem;
-        }
-    }
-
-    /* 1. Desktop: Endast när skärmen är bredare än 750px OCH högre än 500px */
-    @media (min-width: 751px) and (min-height: 501px) {
-        .dock-mobile-lang {
-            position: fixed;
-            top: 66px;
-            left: 24px;
-            z-index: 100;
-        }
-
-        .status-dock .theme-toggle {
-            position: fixed;
-            top: 24px;
-            left: 24px;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            z-index: 100;
-        }
-
-        .dock-mobile-lang .lang-trigger {
-            width: 36px;
-            height: 30px;
-            padding: 0;
-            justify-content: center;
-            border-radius: 6px;
-            font-size: 0.75rem !important;
-        }
-
-        .dock-mobile-lang .lang-trigger .chevron,
-        .dock-mobile-lang .lang-trigger-text {
-            display: none !important;
-        }
-
-        .dock-mobile-lang .lang-current-label {
-            display: inline-block !important;
-            font-family: var(--font-mono), monospace;
-            font-weight: 700;
-            font-size: 0.75rem;
-        }
-    }
-
-    /* 2. Mobil Top Header: Gäller antingen vid mobil bredd (<= 750px) ELLER roterad mobil (<= 500px höjd) */
-    @media (max-width: 1150px), (max-height: 500px) and (orientation: landscape) {
-        /* Disable off-screen tooltips for A A A and top header on mobile */
-        .status-dock [data-tooltip]::before,
-        .status-dock [data-tooltip]::after,
-        .status-dock [data-tooltip-en]::before,
-        .status-dock [data-tooltip-en]::after,
-        .font-switcher [data-tooltip]::before,
-        .font-switcher [data-tooltip]::after,
-        .font-switcher [data-tooltip-en]::before,
-        .font-switcher [data-tooltip-en]::after {
-            display: none !important;
-            content: none !important;
-        }
-
-        /* =====================================================================
-           1. TOP HEADER (STATUS DOCK)
-           ===================================================================== */
-        .status-dock {
-            position: absolute !important;
+        /* Mobile Top Bar (Clean 48px sticky header) */
+        .site-header {
+            position: fixed !important;
             top: 0 !important;
-            bottom: auto !important;
-            width: 100% !important;
             left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
             height: 48px !important;
-            border-top: none !important;
+            padding: 0 16px !important;
+            background: var(--card-bg) !important;
             border-bottom: 1px solid var(--border-color) !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
-            padding: 0 12px !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+            justify-content: space-between !important;
+        }
+
+        .header-cluster-left {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .theme-toggle {
+            order: 3; /* Dark mode on far right */
+        }
+
+        .lang-dropdown {
+            order: 1;
+        }
+
+        .lang-dropdown .lang-trigger {
+            width: auto !important;
+            min-width: 88px !important;
+            padding: 0 10px !important;
+            gap: 6px !important;
+        }
+
+        .font-switcher {
+            order: 2; /* A A A in the middle */
+            gap: 6px;
+        }
+
+        .header-divider {
+            display: none;
         }
 
         .portfolio-wrapper {
             padding-top: 60px !important;
         }
 
-        .profile-card-container {
-            margin-top: 20px !important;
-        }
-
-        .dock-desktop-only {
+        /* Hide the Desktop Metacard on Mobile */
+        .desktop-metacard {
             display: none !important;
         }
 
-        .dock-center {
-            display: none !important;
-        }
-
-        .dock-hotkeys {
-            display: none !important;
-        }
-
-        /* Lighthouse 100% Tap Target Fix for A A A buttons */
-        .font-switcher {
-            gap: 8px !important; /* Min 8px gap required by Lighthouse */
-        }
-
-        .font-btn {
-            width: 34px !important;
-            height: 36px !important;
-            font-size: 0.88rem !important;
-            border-radius: 6px !important;
-        }
-
-        /* Divider between A A A and Language on mobile */
-        .dock-mobile-only {
-            display: block !important;
-            margin: 0 2px !important;
-        }
-
-        /* Mobile Language Selector */
-        .dock-mobile-lang {
-            display: inline-block !important;
-            position: static !important;
-            margin-left: 2px !important;
-        }
-
-        .dock-mobile-lang .lang-trigger {
-            height: 36px !important; /* Matched to 36px for tap compliance */
-            width: auto !important;
-            padding: 0 10px !important;
-            font-size: 0.78rem !important;
-            border-radius: 6px !important;
-            gap: 6px !important;
-        }
-
-        .dock-mobile-lang .lang-current-label {
-            display: none !important;
-        }
-
-        .dock-mobile-lang .lang-trigger-text {
-            display: inline !important;
-            font-weight: 500 !important;
-        }
-
-        /* Right segment (Theme + Clock) */
-        .dock-right {
-            gap: 8px !important;
-        }
-
-        .status-dock .theme-toggle {
-            position: static !important;
-            width: 36px !important;
-            height: 36px !important;
-            border: 1px solid var(--border-color) !important;
-            background: var(--card-bg) !important;
-            border-radius: 6px !important;
-        }
-
-        .clock-details .clock-year {
-            display: none !important;
-        }
-
-        /* =====================================================================
-           2. BOTTOM ROLLING TELEMETRY MARQUEE & INSPECTOR
-           ===================================================================== */
-        /* Allow the inspector popup to float above without being clipped */
+        /* Show the Mobile Rolling Telemetry Dock at bottom */
         .mobile-telemetry-dock {
             display: flex;
             flex-direction: column;
@@ -1245,7 +884,6 @@
             margin: 0;
             padding: 6px 10px 8px 10px;
             background: var(--card-bg);
-            border: none;
             border-top: 1px solid var(--border-color);
             box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
             z-index: 100;
@@ -1253,7 +891,6 @@
             overflow: visible !important;
         }
 
-        /* Floating flyout: Sits right above the marquee with zero page displacement */
         .m-inspector-card {
             position: absolute;
             bottom: calc(100% + 8px);
@@ -1270,14 +907,12 @@
             visibility: hidden;
             transform: translateY(6px);
             pointer-events: none;
-            cursor: pointer; /* Tap text to collapse */
+            cursor: pointer;
             transition:
                 opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
                 visibility 0.2s;
             z-index: 150;
-            user-select: none;
-            -webkit-user-select: none;
         }
 
         body.light-theme .m-inspector-card {
@@ -1291,16 +926,6 @@
             visibility: visible;
             transform: translateY(0);
             pointer-events: auto;
-        }
-
-        .m-inspector-card:hover {
-            border-color: var(--accent);
-        }
-
-        body.light-theme .m-inspector-card.is-open {
-            background: #ffffff;
-            border-color: rgba(29, 78, 216, 0.3);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
         }
 
         .m-inspector-header {
@@ -1338,7 +963,6 @@
             -webkit-user-select: text;
         }
 
-        /* Marquee viewport */
         .m-marquee-viewport {
             position: relative;
             width: 100%;
@@ -1352,10 +976,6 @@
             cursor: grab;
         }
 
-        .m-marquee-viewport.is-dragging {
-            cursor: grabbing;
-        }
-
         .m-marquee-track {
             display: flex;
             width: max-content;
@@ -1367,12 +987,6 @@
             animation-play-state: paused !important;
         }
 
-        @media (hover: hover) and (pointer: fine) {
-            .m-marquee-track:hover {
-                animation-play-state: paused;
-            }
-        }
-
         .m-marquee-group {
             display: flex;
             align-items: center;
@@ -1380,7 +994,6 @@
             padding-right: 6px;
         }
 
-        /* Compact pills */
         .m-pill {
             display: inline-flex;
             align-items: center;
@@ -1395,10 +1008,6 @@
             color: var(--text-secondary);
             white-space: nowrap;
             cursor: pointer;
-            transition:
-                border-color 0.15s ease,
-                background-color 0.15s ease,
-                color 0.15s ease;
         }
 
         .m-pill-mobile-only {
@@ -1411,7 +1020,6 @@
             display: none;
         }
 
-        /* Tablet (600px - 1150px): Expand Lighthouse into the full desktop breakdown */
         @media (min-width: 600px) and (max-width: 1150px) {
             .m-pill-mobile-only {
                 display: none !important;
@@ -1426,7 +1034,6 @@
             .m-pill-lh .lh-title {
                 font-size: 0.75rem !important;
                 font-weight: 700;
-                letter-spacing: 0.05em;
                 color: var(--text-primary);
             }
 
@@ -1451,12 +1058,7 @@
             .m-pill-lh .lh-item small {
                 color: var(--text-muted);
                 font-size: 0.75rem !important;
-                letter-spacing: 0.03em;
             }
-        }
-
-        body.light-theme .m-pill {
-            background: rgba(0, 0, 0, 0.03);
         }
 
         .m-pill.is-active {
@@ -1492,35 +1094,71 @@
                 transform: translateX(-50%);
             }
         }
+    }
 
-        @keyframes fadeInCard {
-            from {
-                opacity: 0;
-                transform: translateY(-4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+    /* ==========================================================================
+       VERTICAL TOP CLUSTER (1151px - 1550px)
+       Stacks controls vertically so they never collide with the profile photo
+       ========================================================================== */
+    @media (min-width: 1151px) and (max-width: 1550px) {
+        .site-header {
+            top: 20px;
+            left: 20px;
         }
 
-        @media (max-width: 450px) {
-            .status-dock .dock-divider.dock-mobile-only,
-            .status-dock .clock-details,
-            .status-dock .clock-time {
-                display: none !important;
-            }
+        .header-cluster-left {
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
 
-            .status-dock .dock-left {
-                width: 100%;
-                justify-content: center;
-            }
+        .header-divider {
+            width: 24px;
+            height: 1px;
+            margin: 2px 0;
+        }
 
-            .status-dock .font-switcher {
-                display: flex !important;
-                justify-content: center;
-                margin: 0 auto;
-            }
+        .font-switcher {
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .font-btn {
+            width: 36px;
+            height: 28px;
+        }
+
+        /* Language menu pops out to the right instead of overlapping below */
+        .lang-menu {
+            top: 0 !important;
+            left: calc(100% + 8px) !important;
+            right: auto !important;
+        }
+
+        .lang-menu::before {
+            top: 0 !important;
+            left: -14px !important;
+            width: 16px !important;
+            height: 100% !important;
+        }
+    }
+
+    /* Desktop displays the 2-letter badge; Mobile displays the full name */
+    .lang-desktop-label {
+        display: inline-block;
+    }
+
+    .lang-mobile-label {
+        display: none;
+    }
+
+    @media (max-width: 1150px) {
+        .lang-desktop-label {
+            display: none !important;
+        }
+
+        .lang-mobile-label {
+            display: inline-block !important;
         }
     }
 }

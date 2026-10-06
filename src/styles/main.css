@@ -44,9 +44,10 @@
     .portfolio-wrapper {
         width: calc(100vw - 160px) !important;
         max-width: 1180px !important;
-        margin: 4vh auto !important;
+
         padding: 0 16px !important;
-        height: calc(88vh - 44px) !important;
+        height: calc(95vh - 24px) !important;
+        margin: 5vh auto 24px auto !important;
     }
 
     .main-container {

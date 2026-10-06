@@ -4,6 +4,7 @@
 
 [![CI/CD Pipeline](https://github.com/adamnordling/adamnordling.github.io/actions/workflows/pipeline.yml/badge.svg)](https://github.com/adamnordling/adamnordling.github.io/actions/workflows/pipeline.yml)
 [![Lighthouse 100/100](https://img.shields.io/badge/Lighthouse-100%2F100-success?style=flat&logo=lighthouse)](https://adamnordling.se/)
+[![BeaverCheck](https://beavercheck.com/badge?url=https%3A%2F%2Fadamnordling.se)](https://beavercheck.com/sites/adamnordling.se)
 [![TypeScript Strict](https://img.shields.io/badge/TypeScript-StrictTypeChecked-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -114,7 +115,3 @@ language - more languages?
 Projects > hover the project to see a 10 sec video?
 
 copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
-
-BUG: Projects when scrolling hides projects title
-
-Change footer to sometihng better?

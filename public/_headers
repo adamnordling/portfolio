@@ -13,14 +13,12 @@
 /assets/*
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
-  Access-Control-Allow-Origin: *
   Server-Timing: cfEdge;desc="Cloudflare Edge"
 
 /manifest.webmanifest
   ! Cache-Control
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
   Content-Type: application/manifest+json; charset=utf-8
-  Access-Control-Allow-Origin: *
   Server-Timing: cfEdge;desc="Cloudflare Edge"
 
 /favicon.ico

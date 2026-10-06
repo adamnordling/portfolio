@@ -420,15 +420,28 @@ export function initCanvasBackground(): void {
     );
 
     function initCanvasDimensions(): void {
-        if (!canvas || !contentContainer) return;
+        if (!canvas) return;
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
 
-        const rect = contentContainer.getBoundingClientRect();
-        wrapperLeft = rect.left;
-        wrapperRight = rect.right;
-        wrapperTop = rect.top;
-        wrapperBottom = rect.bottom;
+        // On mobile (<= 1150px), bypass getBoundingClientRect() to avoid forced layout during bootup
+        if (window.innerWidth <= 1150) {
+            wrapperLeft = 0;
+            wrapperRight = width;
+            wrapperTop = 0;
+            wrapperBottom = height;
+            rebuildDotGridCache();
+            draw();
+            return;
+        }
+
+        if (contentContainer) {
+            const rect = contentContainer.getBoundingClientRect();
+            wrapperLeft = rect.left;
+            wrapperRight = rect.right;
+            wrapperTop = rect.top;
+            wrapperBottom = rect.bottom;
+        }
 
         rebuildDotGridCache();
         draw();

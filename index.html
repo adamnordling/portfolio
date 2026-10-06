@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <!-- 1. PRIMARY SEARCH ENGINE METADATA -->
-        <title>Adam Nordling - Portfolio</title>
+        <title>Portfolio | Adam Nordling</title>
         <meta
             name="description"
-            content="Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning pipelines, and network security."
+            content="Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning, and network security."
         />
         <meta name="author" content="Adam Nordling" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -16,12 +16,11 @@
         <meta name="referrer" content="strict-origin-when-cross-origin" />
 
         <!-- Language Alternatives -->
-        <!-- Language Alternatives via Query Parameters -->
         <link rel="alternate" hreflang="en" href="https://adamnordling.se/?lang=en" />
         <link rel="alternate" hreflang="sv" href="https://adamnordling.se/?lang=sv" />
         <link rel="alternate" hreflang="x-default" href="https://adamnordling.se/" />
 
-        <!-- 2. CRITICAL RENDERING PATH (Discovered immediately by browser preload scanner) -->
+        <!-- 2. CRITICAL RENDERING PATH -->
         <link
             rel="preload"
             as="image"
@@ -37,17 +36,18 @@
         <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
         <meta name="color-scheme" content="light dark" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="./assets/favicons/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="./manifest.webmanifest" />
 
-        <!-- 4. OPEN GRAPH (LinkedIn, Facebook, Discord) -->
+        <!-- 4. OPEN GRAPH -->
         <meta property="og:site_name" content="Adam Nordling" />
-        <meta property="og:title" content="Adam Nordling - Portfolio" />
+        <meta property="og:title" content="Portfolio | Adam Nordling" />
         <meta
             property="og:description"
-            content="Explore projects in fullstack web development, machine learning pipelines, and network security."
+            content="Explore projects in fullstack web development, machine learning, and network security."
         />
         <meta property="og:type" content="profile" />
         <meta property="og:url" content="https://adamnordling.se/" />
@@ -61,14 +61,16 @@
 
         <!-- 5. TWITTER / X CARD -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Adam Nordling - Portfolio" />
+        <meta name="twitter:site" content="@adamnordling" />
+        <meta name="twitter:creator" content="@adamnordling" />
+        <meta name="twitter:title" content="Portfolio | Adam Nordling" />
         <meta
             name="twitter:description"
-            content="Explore projects in fullstack web development, machine learning pipelines, and network security."
+            content="Explore projects in fullstack web development, machine learning, and network security."
         />
         <meta name="twitter:image" content="https://adamnordling.se/assets/og-image.png" />
 
-        <!-- 6. LANGUAGE FOUC & URL PARAMETER RESOLVER -->
+        <!-- 6. LANGUAGE RESOLVER (Unchanged) -->
         <script>
             (function () {
                 const p = new URLSearchParams(window.location.search).get('lang');
@@ -83,8 +85,7 @@
             })();
         </script>
 
-        <!-- 7. ENRICHED SCHEMA.ORG GRAPH -->
-        <!-- 1. Standalone WebSite Entity (Resolves BeaverCheck name, url, and description requirements) -->
+        <!-- 7. SCHEMA.ORG (Block 1: WebSite) -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -92,26 +93,40 @@
                 "@id": "https://adamnordling.se/#website",
                 "name": "Adam Nordling",
                 "url": "https://adamnordling.se/",
-                "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning pipelines, and network security.",
+                "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning, and network security.",
                 "inLanguage": ["en", "sv"],
                 "publisher": {
-                    "@type": "Person",
-                    "name": "Adam Nordling",
-                    "url": "https://adamnordling.se/"
+                    "@id": "https://adamnordling.se/#organization"
                 }
             }
         </script>
 
-        <!-- 2. ProfilePage & Person Graph (Cleanly connected to #website above) -->
+        <!-- 7. SCHEMA.ORG (Block 2: Organization, ProfilePage, Person) -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@graph": [
                     {
+                        "@type": "Organization",
+                        "@id": "https://adamnordling.se/#organization",
+                        "name": "Adam Nordling",
+                        "url": "https://adamnordling.se/",
+                        "logo": "https://adamnordling.se/assets/profile-600.webp",
+                        "founder": {
+                            "@id": "https://adamnordling.se/#person"
+                        },
+                        "contactPoint": {
+                            "@type": "ContactPoint",
+                            "contactType": "Professional Inquiries",
+                            "url": "https://www.linkedin.com/in/adamnordling",
+                            "availableLanguage": ["English", "Swedish"]
+                        }
+                    },
+                    {
                         "@type": "ProfilePage",
                         "@id": "https://adamnordling.se/#webpage",
                         "url": "https://adamnordling.se/",
-                        "name": "Adam Nordling - Portfolio",
+                        "name": "Portfolio | Adam Nordling",
                         "isPartOf": {
                             "@id": "https://adamnordling.se/#website"
                         },
@@ -158,7 +173,13 @@
                             "https://arxiv.org/abs/2606.10938",
                             "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
                             "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
-                        ]
+                        ],
+                        "contactPoint": {
+                            "@type": "ContactPoint",
+                            "contactType": "Professional Inquiries",
+                            "url": "https://www.linkedin.com/in/adamnordling",
+                            "availableLanguage": ["English", "Swedish"]
+                        }
                     }
                 ]
             }

@@ -8,11 +8,6 @@
             content="The requested page could not be found. Return to Adam Nordling's portfolio homepage."
         />
         <meta name="theme-color" content="#131418" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self';"
-        />
-
         <title>404 — Page Not Found | Adam Nordling</title>
         <link rel="icon" type="image/x-icon" href="./assets/favicons/favicon.ico" />
 
@@ -39,7 +34,7 @@
                 justify-content: center;
                 background-color: var(--bg);
                 color: var(--text);
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                 text-align: center;
                 padding: 24px;
                 line-height: 1.6;
@@ -49,33 +44,68 @@
                 background-color: var(--card);
                 border: 1px solid var(--border);
                 border-radius: 12px;
-                padding: 48px 32px;
-                max-width: 480px;
+                padding: 40px 28px;
+                max-width: 440px;
                 width: 100%;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             }
 
             .error-code {
-                font-size: 5.5rem;
+                font-size: 5rem;
                 font-weight: 800;
                 color: var(--accent);
                 font-family: ui-monospace, SFMono-Regular, monospace;
                 line-height: 1;
                 margin-bottom: 8px;
-                letter-spacing: -0.04em;
             }
 
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
                 font-weight: 700;
-                margin-bottom: 12px;
-                color: var(--text);
+                margin-bottom: 8px;
             }
 
             p {
                 color: var(--muted);
-                font-size: 0.95rem;
-                margin-bottom: 32px;
+                font-size: 0.9rem;
+                margin-bottom: 24px;
+            }
+
+            /* Minimalistisk återhämtningssökning */
+            .search-form {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 24px;
+            }
+
+            .search-input {
+                flex: 1;
+                background: #131418;
+                border: 1px solid var(--border);
+                color: var(--text);
+                padding: 10px 14px;
+                border-radius: 6px;
+                font-size: 0.88rem;
+                outline: none;
+            }
+
+            .search-input:focus {
+                border-color: var(--accent);
+            }
+
+            .search-btn {
+                background: var(--border);
+                border: none;
+                color: var(--text);
+                padding: 10px 16px;
+                border-radius: 6px;
+                font-weight: 600;
+                font-size: 0.85rem;
+                cursor: pointer;
+            }
+
+            .search-btn:hover {
+                background: #3f4252;
             }
 
             .home-btn {
@@ -85,22 +115,15 @@
                 background-color: var(--text);
                 color: var(--bg);
                 font-weight: 600;
-                font-size: 0.9rem;
+                font-size: 0.88rem;
                 text-decoration: none;
-                padding: 12px 28px;
+                padding: 10px 24px;
                 border-radius: 6px;
-                transition:
-                    opacity 0.2s ease,
-                    transform 0.2s ease;
-                min-height: 44px;
+                transition: opacity 0.2s;
             }
 
-            .home-btn:hover,
-            .home-btn:focus-visible {
+            .home-btn:hover {
                 opacity: 0.9;
-                transform: translateY(-1px);
-                outline: 2px solid var(--accent);
-                outline-offset: 2px;
             }
         </style>
     </head>
@@ -108,9 +131,28 @@
         <main class="error-card" aria-labelledby="error-heading">
             <div class="error-code" aria-hidden="true">404</div>
             <h1 id="error-heading">Page Not Found</h1>
-            <p>The page or resource you are looking for has moved or does not exist.</p>
+            <p>The page you are looking for has moved or does not exist.</p>
+
+            <!-- Sökformulär för Beavercheck och besökare -->
+            <form
+                action="https://github.com/adamnordling"
+                method="get"
+                target="_blank"
+                class="search-form"
+                role="search"
+            >
+                <input
+                    type="search"
+                    name="q"
+                    class="search-input"
+                    placeholder="Search projects or repositories..."
+                    aria-label="Search repositories"
+                />
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+
             <nav aria-label="Error recovery navigation">
-                <a href="./" class="home-btn" aria-label="Return to portfolio homepage">Back to Portfolio</a>
+                <a href="/" rel="home" class="home-btn" aria-label="Return to portfolio homepage">Back to Home</a>
             </nav>
         </main>
     </body>

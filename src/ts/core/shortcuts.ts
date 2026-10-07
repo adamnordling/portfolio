@@ -374,4 +374,28 @@ export function initShortcuts(): void {
             }
         }
     });
+
+    // Hantera Skip-länk och "Top"-länk för både mobil och interna paneler
+    const mainContent = qs('#main-content');
+    const scrollLinks = qsa('a[href="#main-content"]');
+
+    scrollLinks.forEach(link => {
+        on(link, 'click', (e: MouseEvent) => {
+            e.preventDefault();
+
+            // 1. Om vi är på dator: skrolla upp panelerna
+            if (window.innerWidth > 1150) {
+                leftPanel?.scrollTo({ top: 0, behavior: 'smooth' });
+                rightPanel?.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // 2. På mobil: skrolla hela fönstret till toppen
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Flytta tangentbordsfokus till huvudinnehållet
+            if (mainContent) {
+                mainContent.focus({ preventScroll: true });
+            }
+        });
+    });
 }

@@ -30,6 +30,7 @@
             fetchpriority="high"
         />
         <link rel="stylesheet" href="./src/styles/main.css" />
+        <link rel="stylesheet" href="./print.css" media="print" />
 
         <!-- 3. THEME & APP CONFIGURATION -->
         <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
@@ -148,6 +149,24 @@
                         "mainEntity": {
                             "@id": "https://adamnordling.se/#person"
                         }
+                    },
+                    {
+                        "@type": "BreadcrumbList",
+                        "@id": "https://adamnordling.se/#breadcrumb",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Portfolio",
+                                "item": "https://adamnordling.se/"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Projects",
+                                "item": "https://adamnordling.se/#projects-panel"
+                            }
+                        ]
                     },
                     {
                         "@type": "Person",
@@ -317,7 +336,7 @@
         </header>
 
         <div class="portfolio-wrapper">
-            <main class="main-container" id="main-content">
+            <main class="main-container" id="main-content" tabindex="-1">
                 <!-- LEFT PANEL: Minimal Column -->
                 <section class="left-panel" aria-label="Introduction & Profile">
                     <!-- 1. Profile Header -->
@@ -1714,6 +1733,7 @@
                                 <span class="meta-status-label">CLOUDFLARE EDGE</span>
                             </div>
                             <span class="meta-copyright">© <span id="footer-year">2026</span> Adam Nordling</span>
+                            <a href="#main-content" class="telemetry-pill" aria-label="Back to top of page">↑ Top</a>
                         </div>
 
                         <!-- Mini Desktop Marquee Viewport -->
@@ -1835,7 +1855,7 @@
 
                                 <!-- SET 2 (Seamless loop clone) -->
                                 <div class="meta-marquee-group" aria-hidden="true">
-                                    <div class="dock-lh-group" tabindex="-1">
+                                    <div class="dock-lh-group">
                                         <svg
                                             class="dock-svg-icon lh-icon"
                                             width="12"
@@ -1868,7 +1888,7 @@
                                             >
                                         </div>
                                     </div>
-                                    <div class="telemetry-pill live-vitals-pill" tabindex="-1">
+                                    <div class="telemetry-pill live-vitals-pill">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -1890,7 +1910,7 @@
                                             >CLS: <span class="telemetry-live-val telemetry-live-cls">0.000</span></span
                                         >
                                     </div>
-                                    <a href="/privacy.html" class="telemetry-pill privacy-pill" tabindex="-1">
+                                    <span class="telemetry-pill privacy-pill">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -1899,43 +1919,20 @@
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="2.2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
                                         >
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>
                                         <span class="pill-text">Privacy</span>
-                                    </a>
-                                    <span class="telemetry-pill" tabindex="-1">Vite 8 · ESNext</span>
-                                    <span class="telemetry-pill" tabindex="-1">TS Strict</span>
-                                    <span class="telemetry-pill" tabindex="-1">CSS @layer</span>
-                                    <span class="telemetry-pill" tabindex="-1">0 Trackers</span>
-                                    <span class="telemetry-pill" tabindex="-1">
-                                        <svg
-                                            class="dock-svg-icon"
-                                            width="11"
-                                            height="11"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="#10b981"
-                                            stroke-width="2.5"
-                                        >
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                        <span>GDPR Compliant</span>
                                     </span>
-                                    <a href="/privacy.html#acceptable-use" class="telemetry-pill" tabindex="-1"
-                                        >Acceptable Use</a
-                                    >
-                                    <a href="/privacy.html#copyright" class="telemetry-pill" tabindex="-1"
-                                        >Copyright Notice</a
-                                    >
-                                    <a href="/privacy.html#refunds" class="telemetry-pill" tabindex="-1"
-                                        >Refund Policy</a
-                                    >
-                                    <a href="/privacy.html#cookies" class="telemetry-pill" tabindex="-1"
-                                        >Cookie Policy</a
-                                    >
+                                    <span class="telemetry-pill">Vite 8 · ESNext</span>
+                                    <span class="telemetry-pill">TS Strict</span>
+                                    <span class="telemetry-pill">CSS @layer</span>
+                                    <span class="telemetry-pill">0 Trackers</span>
+                                    <span class="telemetry-pill">GDPR Compliant</span>
+                                    <span class="telemetry-pill">Acceptable Use</span>
+                                    <span class="telemetry-pill">Copyright Notice</span>
+                                    <span class="telemetry-pill">Refund Policy</span>
+                                    <span class="telemetry-pill">Cookie Policy</span>
                                 </div>
                             </div>
                         </div>

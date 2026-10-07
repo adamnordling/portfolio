@@ -91,7 +91,7 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
                 <svg class="stat-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
-                <span class="stat-num">${stats.totalCommits.toString()}</span>
+                <span class="stat-num">${stats.totalCommits > 0 ? stats.totalCommits.toString() : '–'}</span>
                 <small>
                     <span lang="en">TOTAL</span>
                     <span lang="sv">TOTALT</span>
@@ -165,7 +165,7 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
 export async function loadGitHubActivity(): Promise<void> {
     const activityFeed = qs('#activity-feed');
     let fallbackCommits: CommitItem[] = [];
-    let fallbackStats = { today: 0, totalCommits: 200, totalRepos: 4 };
+    let fallbackStats = { today: 0, totalCommits: 0, totalRepos: 0 };
 
     const cachedCommits = localStorage.getItem(CACHE_COMMITS_KEY);
     const cachedStats = localStorage.getItem(CACHE_STATS_KEY);

@@ -1,6 +1,5 @@
 import { initTheme } from './core/theme';
 import { initI18n } from './core/i18n';
-import { initClock } from './core/clock';
 import { initShortcuts } from './core/shortcuts';
 import { initPerformanceMonitoring } from './utils/dom';
 import { initCanvasBackground } from './features/canvas-bg';
@@ -30,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     scheduleSecondary(() => {
-        initClock();
+        const footerYear = document.getElementById('footer-year');
+        if (footerYear) footerYear.textContent = String(new Date().getFullYear());
         initCanvasBackground();
         initCardTilt();
         initClipboard();

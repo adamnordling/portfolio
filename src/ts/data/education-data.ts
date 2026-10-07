@@ -6,7 +6,7 @@ export interface CourseData {
     links?: { label: string; url: string }[];
 }
 
-export const EDUCATION_COURSES: Record<string, CourseData> = {
+export const EDUCATION_COURSES = {
     // =========================================================================
     // MASTER'S PROGRAMME (16 COURSES)
     // =========================================================================
@@ -589,4 +589,4 @@ export const EDUCATION_COURSES: Record<string, CourseData> = {
         },
         links: [{ label: 'DiVA Portal ↗', url: 'https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518' }]
     }
-};
+} satisfies Record<string, CourseData>;

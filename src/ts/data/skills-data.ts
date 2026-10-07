@@ -3,7 +3,7 @@ export interface SkillData {
     desc: { en: string; sv: string };
 }
 
-export const SKILLS_DATA: Record<string, SkillData> = {
+export const SKILLS_DATA = {
     // =========================================================================
     // 1. LANGUAGES
     // =========================================================================
@@ -294,4 +294,4 @@ export const SKILLS_DATA: Record<string, SkillData> = {
             sv: 'Implementerat nätverksprotokoll från grunden utifrån RFC-specifikationer: byggt flertrådade HTTP/1.1-webbservrar över TCP-sockets och TFTP-filöverföringsservrar över UDP-sockets.'
         }
     }
-};
+} satisfies Record<string, SkillData>;

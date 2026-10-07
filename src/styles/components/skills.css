@@ -42,16 +42,19 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
-    .skill-group:hover {
-        transform: translateX(4px);
-        border-bottom-color: var(--accent);
+    /* Hover gäller BARA på dator med mus */
+    @media (hover: hover) and (pointer: fine) {
+        .skill-group:hover {
+            transform: translateX(4px);
+            border-bottom-color: var(--accent);
+        }
+
+        .skill-group:hover .skill-group-name {
+            color: var(--accent);
+        }
     }
 
-    .skill-group:hover .skill-group-name {
-        color: var(--accent);
-    }
-
-    /* Stanna på 4px när raden är öppen */
+    /* Bara aktiv när den faktiskt är utfälld */
     .skill-group.is-expanded {
         transform: translateX(4px) !important;
         border-bottom-color: var(--accent);

@@ -22,8 +22,8 @@ function initBioCard(): void {
         const hintEn = qs('.bio-hint-text [lang="en"]', bioCard);
         const hintSv = qs('.bio-hint-text [lang="sv"]', bioCard);
 
-        if (hintEn) hintEn.textContent = isExpanded ? 'less' : 'more';
-        if (hintSv) hintSv.textContent = isExpanded ? 'mindre' : 'mer';
+        if (hintEn) hintEn.textContent = isExpanded ? 'READ LESS' : 'READ MORE';
+        if (hintSv) hintSv.textContent = isExpanded ? 'LÄS MINDRE' : 'LÄS MER';
     });
 
     on(bioCard, 'keydown', (e: KeyboardEvent) => {
@@ -97,17 +97,8 @@ export function closeAllEducation(): void {
 
 function initEducationAccordion(): void {
     const eduList = qs('.education-list');
-    const eduSection = qs('.section-edu');
-    if (!eduList) return;
 
-    // 1. Allow clicking the Education <h2> heading to collapse all education
-    const eduHeading = eduSection?.querySelector('h2');
-    if (eduHeading) {
-        eduHeading.style.cursor = 'pointer';
-        on(eduHeading, 'click', () => {
-            closeAllEducation();
-        });
-    }
+    if (!eduList) return;
 
     on(eduList, 'click', (e: MouseEvent) => {
         const target = e.target as HTMLElement | null;
@@ -409,5 +400,7 @@ function initSkillsSystem(): void {
 
         if (skillsSection) autoCollapseObserver.observe(skillsSection);
         if (eduSection) autoCollapseObserver.observe(eduSection);
+        const bioCard = qs('#bio-card');
+        if (bioCard) autoCollapseObserver.observe(bioCard);
     }
 }

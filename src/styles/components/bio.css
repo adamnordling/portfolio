@@ -12,13 +12,16 @@
         border-radius: 0 6px 6px 0;
     }
 
+    /* Den blå linjen visas vid hover, tangentbordsfokus OCH när kortet är expanderat */
     .intro-quote.bio-card:hover,
-    .intro-quote.bio-card:focus-visible {
+    .intro-quote.bio-card:focus-visible,
+    .intro-quote.bio-card.is-expanded {
         border-left-color: var(--accent);
         background: rgba(255, 255, 255, 0.015);
     }
 
-    body.light-theme .intro-quote.bio-card:hover {
+    body.light-theme .intro-quote.bio-card:hover,
+    body.light-theme .intro-quote.bio-card.is-expanded {
         background: rgba(0, 0, 0, 0.015);
     }
 
@@ -30,36 +33,43 @@
         -webkit-user-select: text;
     }
 
+    /* Knappen är alltid blå och tydlig */
     .bio-hint {
         display: inline-flex;
         align-items: center;
-        gap: 3px;
+        gap: 4px;
         font-family: var(--font-mono), monospace;
         font-size: 0.75rem;
-        color: var(--text-muted);
+        color: var(--accent);
         margin-left: 6px;
-        padding: 1px 6px;
+        padding: 1px 7px;
         border-radius: 4px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
+        background: rgba(59, 130, 246, 0.08);
+        border: 1px solid var(--accent);
         transition: all 0.2s ease;
         vertical-align: middle;
         user-select: none;
     }
 
     body.light-theme .bio-hint {
-        background: rgba(0, 0, 0, 0.04);
+        background: rgba(29, 78, 216, 0.06);
+        color: var(--accent);
+        border-color: var(--accent);
     }
 
     .intro-quote.bio-card:hover .bio-hint {
-        color: var(--accent);
-        border-color: var(--accent);
+        background: rgba(59, 130, 246, 0.18);
+    }
+
+    body.light-theme .intro-quote.bio-card:hover .bio-hint {
+        background: rgba(29, 78, 216, 0.12);
     }
 
     .bio-chevron {
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    /* Pilen roterar uppåt när bion är öppen */
     .intro-quote.bio-card.is-expanded .bio-chevron {
         transform: rotate(180deg);
     }

@@ -29,15 +29,19 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
-    .edu-group:hover {
-        transform: translateX(4px);
-        border-bottom-color: var(--accent);
+    /* Hover gäller BARA på dator med mus – aldrig på mobil/touch! */
+    @media (hover: hover) and (pointer: fine) {
+        .edu-group:hover {
+            transform: translateX(4px);
+            border-bottom-color: var(--accent);
+        }
+
+        .edu-group:hover .edu-degree-title {
+            color: var(--accent);
+        }
     }
 
-    .edu-group:hover .edu-degree-title {
-        color: var(--accent);
-    }
-
+    /* På mobil och dator: Bara blå OCH förskjuten när den faktiskt är öppen (.is-expanded) */
     .edu-group.is-expanded {
         transform: translateX(4px) !important;
         border-bottom-color: var(--accent);

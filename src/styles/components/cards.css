@@ -263,19 +263,21 @@
         }
     }
 
-    /* Breadcrumb Title Header */
+    /* Matchar vänsterpanelens H2-rubriker exakt */
     .breadcrumb-list {
         display: flex;
         align-items: baseline;
-        gap: 8px;
+        gap: 6px;
         list-style: none;
         padding: 0;
         margin: 0;
     }
 
     .breadcrumb-link {
-        font-size: 1.15rem;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
         color: var(--text-muted);
         text-decoration: none;
         transition: color 0.15s ease;
@@ -286,17 +288,20 @@
     }
 
     .breadcrumb-sep {
-        font-size: 1.15rem;
+        font-size: 0.9rem;
         color: var(--border-color);
         user-select: none;
     }
 
-    .breadcrumb-current-title {
-        font-size: 1.45rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin: 0;
-        display: inline;
-        line-height: 1.2;
+    .breadcrumb-current-title,
+    #view-title {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: var(--text-secondary) !important;
+        margin: 0 !important;
+        display: inline !important;
+        line-height: inherit !important;
     }
 }

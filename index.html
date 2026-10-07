@@ -90,39 +90,33 @@
             })();
         </script>
 
-        <!-- 7. SCHEMA.ORG (Unified Linked Data Knowledge Graph) -->
+        <!-- 7. SCHEMA.ORG (Organization – Fristående för Beavercheck och Brand Checkers) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "@id": "https://adamnordling.se/#organization",
+                "name": "Adam Nordling",
+                "url": "https://adamnordling.se/",
+                "logo": "https://adamnordling.se/assets/favicons/android-chrome-512x512.png",
+                "image": "https://adamnordling.se/assets/favicons/android-chrome-512x512.png",
+                "contactPoint": [
+                    {
+                        "@type": "ContactPoint",
+                        "contactType": "Professional Inquiries",
+                        "url": "https://www.linkedin.com/in/adamnordling",
+                        "availableLanguage": ["English", "Swedish"]
+                    }
+                ],
+                "sameAs": ["https://github.com/adamnordling", "https://www.linkedin.com/in/adamnordling"]
+            }
+        </script>
+
+        <!-- 8. SCHEMA.ORG (WebSite, ProfilePage & Person) -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@graph": [
-                    {
-                        "@type": "Organization",
-                        "@id": "https://adamnordling.se/#organization",
-                        "name": "Adam Nordling",
-                        "url": "https://adamnordling.se/",
-                        "logo": {
-                            "@type": "ImageObject",
-                            "@id": "https://adamnordling.se/#logo",
-                            "url": "https://adamnordling.se/assets/favicons/android-chrome-512x512.png",
-                            "contentUrl": "https://adamnordling.se/assets/favicons/android-chrome-512x512.png",
-                            "caption": "Adam Nordling",
-                            "width": 512,
-                            "height": 512
-                        },
-                        "image": "https://adamnordling.se/assets/favicons/android-chrome-512x512.png",
-                        "founder": {
-                            "@id": "https://adamnordling.se/#person"
-                        },
-                        "contactPoint": [
-                            {
-                                "@type": "ContactPoint",
-                                "contactType": "Professional Inquiries",
-                                "url": "https://www.linkedin.com/in/adamnordling",
-                                "availableLanguage": ["English", "Swedish"]
-                            }
-                        ],
-                        "sameAs": ["https://github.com/adamnordling", "https://www.linkedin.com/in/adamnordling"]
-                    },
                     {
                         "@type": "WebSite",
                         "@id": "https://adamnordling.se/#website",
@@ -142,31 +136,12 @@
                         "isPartOf": {
                             "@id": "https://adamnordling.se/#website"
                         },
-                        "inLanguage": ["en", "sv"],
                         "about": {
                             "@id": "https://adamnordling.se/#person"
                         },
                         "mainEntity": {
                             "@id": "https://adamnordling.se/#person"
                         }
-                    },
-                    {
-                        "@type": "BreadcrumbList",
-                        "@id": "https://adamnordling.se/#breadcrumb",
-                        "itemListElement": [
-                            {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Portfolio",
-                                "item": "https://adamnordling.se/"
-                            },
-                            {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "Projects",
-                                "item": "https://adamnordling.se/#projects-panel"
-                            }
-                        ]
                     },
                     {
                         "@type": "Person",
@@ -204,13 +179,7 @@
                             "https://arxiv.org/abs/2606.10938",
                             "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
                             "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
-                        ],
-                        "contactPoint": {
-                            "@type": "ContactPoint",
-                            "contactType": "Professional Inquiries",
-                            "url": "https://www.linkedin.com/in/adamnordling",
-                            "availableLanguage": ["English", "Swedish"]
-                        }
+                        ]
                     }
                 ]
             }
@@ -1732,10 +1701,15 @@
                                 <span class="dock-pulse-dot"></span>
                                 <span class="meta-status-label">CLOUDFLARE EDGE</span>
                             </div>
+                            <a
+                                href="#main-content"
+                                class="back-to-top"
+                                aria-label="Back to top of page"
+                                style="color: var(--text-muted); font-size: 0.72rem; text-decoration: none"
+                                >↑ Back to top</a
+                            >
                             <span class="meta-copyright">© <span id="footer-year">2026</span> Adam Nordling</span>
-                            <a href="#main-content" class="telemetry-pill" aria-label="Back to top of page">↑ Top</a>
                         </div>
-
                         <!-- Mini Desktop Marquee Viewport -->
                         <div class="meta-marquee-viewport">
                             <div class="meta-marquee-track">
@@ -1954,10 +1928,23 @@
                 <section class="right-panel" id="projects-panel">
                     <div class="right-header">
                         <div class="header-title-group">
-                            <h2 id="view-title">
-                                <span lang="en">Projects</span>
-                                <span lang="sv">Projekt</span>
-                            </h2>
+                            <nav aria-label="Breadcrumb" class="breadcrumb-header">
+                                <ol class="breadcrumb-list">
+                                    <li class="breadcrumb-item">
+                                        <a href="/" class="breadcrumb-link" aria-label="Home">
+                                            <span lang="en">Home</span>
+                                            <span lang="sv">Hem</span>
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-sep" aria-hidden="true">/</li>
+                                    <li class="breadcrumb-item current" aria-current="page">
+                                        <h2 id="view-title" class="breadcrumb-current-title">
+                                            <span lang="en">Projects</span>
+                                            <span lang="sv">Projekt</span>
+                                        </h2>
+                                    </li>
+                                </ol>
+                            </nav>
                         </div>
 
                         <nav class="header-actions" aria-label="Projects category filter">

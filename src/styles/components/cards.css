@@ -262,4 +262,41 @@
             border-color: var(--accent);
         }
     }
+
+    /* Breadcrumb Title Header */
+    .breadcrumb-list {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .breadcrumb-link {
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.15s ease;
+    }
+
+    .breadcrumb-link:hover {
+        color: var(--accent);
+    }
+
+    .breadcrumb-sep {
+        font-size: 1.15rem;
+        color: var(--border-color);
+        user-select: none;
+    }
+
+    .breadcrumb-current-title {
+        font-size: 1.45rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+        display: inline;
+        line-height: 1.2;
+    }
 }

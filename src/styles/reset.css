@@ -85,7 +85,6 @@
     button,
     .btn-primary,
     .btn-secondary,
-    .thesis-btn,
     .cv-action-wrapper,
     .theme-toggle,
     .filter-trigger,
@@ -94,9 +93,7 @@
     .profile-links,
     .activity-icon,
     .activity-time,
-    .spotlight,
-    .thesis-tag,
-    .tech-drawer-label {
+    .spotlight {
         user-select: none;
         -webkit-user-select: none;
     }
@@ -252,5 +249,47 @@
         clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border-width: 0;
+    }
+
+    /* Matchar vänsterpanelens H2-rubriker exakt */
+    .breadcrumb-list {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .breadcrumb-link {
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.15s ease;
+    }
+
+    .breadcrumb-link:hover {
+        color: var(--accent);
+    }
+
+    .breadcrumb-sep {
+        font-size: 0.9rem;
+        color: var(--border-color);
+        user-select: none;
+    }
+
+    .breadcrumb-current-title,
+    #view-title {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        color: var(--text-secondary) !important;
+        margin: 0 !important;
+        display: inline !important;
+        line-height: inherit !important;
     }
 }

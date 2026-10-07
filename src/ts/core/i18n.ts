@@ -18,7 +18,7 @@ export function initI18n(): void {
         });
     });
 
-    const targetLang = getInitialLanguage();
+    const targetLang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
     setLanguage(targetLang);
 
     initDropdownInteractions();
@@ -34,21 +34,6 @@ export function setLanguage(lang: Language): void {
     });
 
     window.dispatchEvent(new CustomEvent('site:languagechange', { detail: { lang } }));
-}
-
-function getInitialLanguage(): Language {
-    const urlParam = new URLSearchParams(window.location.search).get('lang')?.toLowerCase();
-    if (urlParam === 'en' || urlParam === 'sv') {
-        localStorage.setItem('site_lang', urlParam);
-        return urlParam;
-    }
-
-    const saved = localStorage.getItem('site_lang') as Language | null;
-    if (saved === 'en' || saved === 'sv') return saved;
-
-    const browserLangs = navigator.languages.length > 0 ? navigator.languages : [navigator.language];
-    const isSwedish = browserLangs.some(l => l.toLowerCase().startsWith('sv'));
-    return isSwedish ? 'sv' : 'en';
 }
 
 function initDropdownInteractions(): void {

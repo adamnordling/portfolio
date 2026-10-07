@@ -7,14 +7,6 @@ const fontTypes = ['default', 'serif', 'monospace'] as const;
 let currentFontIndex = 0;
 let lastFocusedElement: HTMLElement | null = null;
 
-// Track last focused interactive element
-document.addEventListener('focusin', e => {
-    const target = e.target as HTMLElement | null;
-    if (target && target !== document.body && !target.classList.contains('skip-link')) {
-        lastFocusedElement = target;
-    }
-});
-
 // Helper: Find first visible project card
 function getFirstVisibleProjectCard(): HTMLElement | null {
     const cards = qsa('.app-card');
@@ -75,28 +67,6 @@ export function initShortcuts(): void {
             activeScrollTarget = rightPanel;
         });
     }
-
-    // Cached divider X position (zero reflow during mousemove)
-    let cachedDividerX = window.innerWidth / 2;
-    const updateDividerPos = (): void => {
-        const divider = qs('.panel-divider');
-        cachedDividerX = divider
-            ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
-            : window.innerWidth / 2;
-    };
-    updateDividerPos();
-    on(window, 'resize', updateDividerPos, { passive: true });
-
-    on(
-        window,
-        'mousemove',
-        (e: MouseEvent) => {
-            if (window.innerWidth > 1150) {
-                activeScrollTarget = e.clientX < cachedDividerX ? leftPanel : rightPanel;
-            }
-        },
-        { passive: true }
-    );
 
     document.addEventListener('focusin', e => {
         const target = e.target as HTMLElement | null;

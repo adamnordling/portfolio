@@ -34,31 +34,6 @@ function initBioCard(): void {
             toggleBio();
         }
     });
-
-    // 2. Skottsäker auto-collapse på mobil när användaren rullat förbi bion
-    if (typeof IntersectionObserver !== 'undefined') {
-        const bioObserver = new IntersectionObserver(
-            entries => {
-                entries.forEach(entry => {
-                    // Om bion har rullat helt ovanför skärmen och är öppen på mobil (<= 1150px):
-                    if (!entry.isIntersecting && entry.boundingClientRect.top < 0 && window.innerWidth <= 1150) {
-                        if (bioCard.classList.contains('is-expanded')) {
-                            bioCard.classList.remove('is-expanded');
-                            bioCard.setAttribute('aria-expanded', 'false');
-
-                            const hintEn = qs('.bio-hint-text [lang="en"]', bioCard);
-                            const hintSv = qs('.bio-hint-text [lang="sv"]', bioCard);
-                            if (hintEn) hintEn.textContent = 'READ MORE';
-                            if (hintSv) hintSv.textContent = 'LÄS MER';
-                        }
-                    }
-                });
-            },
-            { threshold: 0 } // Triggas exakt den millisekund den är 0% synlig
-        );
-
-        bioObserver.observe(bioCard);
-    }
 }
 
 // =============================================================================
@@ -413,7 +388,23 @@ function initSkillsSystem(): void {
         const autoCollapseObserver = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
-                    if (!entry.isIntersecting && window.innerWidth <= 1150) {
+                    if (window.innerWidth > 1150) return;
+
+                    // 1. Bio: kollapsa när den skrollats förbi uppåt
+                    if (entry.target.id === 'bio-card' && !entry.isIntersecting && entry.boundingClientRect.top < 0) {
+                        const bioCard = entry.target as HTMLElement;
+                        if (bioCard.classList.contains('is-expanded')) {
+                            bioCard.classList.remove('is-expanded');
+                            bioCard.setAttribute('aria-expanded', 'false');
+                            const hintEn = qs('.bio-hint-text [lang="en"]', bioCard);
+                            const hintSv = qs('.bio-hint-text [lang="sv"]', bioCard);
+                            if (hintEn) hintEn.textContent = 'READ MORE';
+                            if (hintSv) hintSv.textContent = 'LÄS MER';
+                        }
+                    }
+
+                    // 2. Utbildning & Kompetenser: kollapsa när de lämnar skärmen
+                    if (!entry.isIntersecting) {
                         if (entry.target.classList.contains('section-skills')) {
                             collapseAllSkills();
                         } else if (entry.target.classList.contains('section-edu')) {
@@ -422,9 +413,11 @@ function initSkillsSystem(): void {
                     }
                 });
             },
-            { threshold: 0.01 }
+            { threshold: 0 }
         );
 
+        const bioCard = qs('#bio-card');
+        if (bioCard) autoCollapseObserver.observe(bioCard);
         if (skillsSection) autoCollapseObserver.observe(skillsSection);
         if (eduSection) autoCollapseObserver.observe(eduSection);
     }

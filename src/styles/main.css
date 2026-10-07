@@ -262,12 +262,6 @@
         padding: 66px 14px 50px 14px;
     }
 
-    .top-controls {
-        top: 14px;
-        left: 14px;
-        gap: 6px;
-    }
-
     .theme-toggle,
     .lang-trigger {
         height: 34px;
@@ -307,11 +301,6 @@
         padding: 10px 14px;
     }
 
-    .edu-header {
-        flex-direction: column;
-        gap: 2px;
-    }
-
     .filter-menu {
         left: 0;
         right: auto;
@@ -342,37 +331,5 @@
 @media (max-height: 340px) and (orientation: landscape) {
     .profile-card-container {
         display: none !important;
-    }
-}
-
-/* 10. PRINT MEDIA STYLES */
-@media print {
-    #bg-canvas,
-    .top-controls,
-    .status-dock,
-    #projects-filter,
-    .email-toast {
-        display: none !important;
-    }
-
-    body {
-        background: #ffffff !important;
-        color: #000000 !important;
-    }
-
-    .portfolio-wrapper {
-        height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        max-width: 100% !important;
-    }
-
-    .main-container {
-        display: block !important;
-    }
-
-    .app-card {
-        page-break-inside: avoid;
-        border: 1px solid #ccc !important;
     }
 }

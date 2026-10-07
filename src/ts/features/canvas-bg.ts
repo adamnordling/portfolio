@@ -105,7 +105,6 @@ export function initCanvasBackground(): void {
         '.profile-links button svg',
         '.cv-action-wrapper',
         '.bio-hint',
-        '.thesis-btn',
         '.filter-trigger',
         '.app-img-container img',
         '.app-img-container svg',

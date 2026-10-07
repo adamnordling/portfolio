@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     scheduleSecondary(() => {
-        const footerYear = document.getElementById('footer-year');
-        if (footerYear) footerYear.textContent = String(new Date().getFullYear());
+        document.querySelectorAll('.footer-year').forEach(el => {
+            el.textContent = String(new Date().getFullYear());
+        });
         initCanvasBackground();
         initCardTilt();
         initClipboard();

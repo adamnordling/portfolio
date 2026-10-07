@@ -262,8 +262,6 @@
                     </div>
                 </div>
 
-                <div class="header-divider" aria-hidden="true"></div>
-
                 <div class="font-switcher" role="group" aria-label="Font configuration">
                     <button
                         class="font-btn active"
@@ -1703,7 +1701,7 @@
                                 style="color: var(--text-muted); font-size: 0.72rem; text-decoration: none"
                                 >↑ Back to top</a
                             >
-                            <span class="meta-copyright">© <span id="footer-year">2026</span> Adam Nordling</span>
+                            <span class="meta-copyright">© <span class="footer-year">2026</span> Adam Nordling</span>
                         </div>
                         <!-- Mini Desktop Marquee Viewport -->
                         <div class="meta-marquee-viewport">
@@ -2239,6 +2237,14 @@
 MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
 ========================================================================== -->
         <footer class="mobile-telemetry-dock" aria-label="Site architecture and live performance specifications">
+            <div class="m-dock-meta-row">
+                <div class="meta-status">
+                    <span class="dock-pulse-dot"></span>
+                    <span class="meta-status-label">CLOUDFLARE EDGE</span>
+                </div>
+                <a href="#main-content" class="back-to-top" aria-label="Back to top of page">↑ Back to top</a>
+                <span class="meta-copyright">© <span class="footer-year">2026</span> Adam Nordling</span>
+            </div>
             <!-- 1. INSPECTOR CARD MOVED TO TOP (Expands upwards) -->
             <div class="m-inspector-card" id="m-inspector-card" role="button" tabindex="0" aria-label="Close inspector">
                 <div class="m-inspector-header">
@@ -2510,7 +2516,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                         </p>
                         <div class="cv-fallback-buttons">
                             <a
-                                href="./assets/resume.pdf"
+                                href="/assets/resume.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="btn-primary cv-fallback-btn"

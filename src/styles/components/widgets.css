@@ -910,14 +910,40 @@
             flex-direction: column;
             position: relative;
             width: 100%;
-            margin: 0;
-            padding: 6px 10px 8px 10px;
+            margin-top: 40px !important; /* Ger ren och tydlig distans från Recent Activity */
+            padding: 14px 12px 10px 12px !important;
             background: var(--card-bg);
             border-top: 1px solid var(--border-color);
             box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
             z-index: 100;
             box-sizing: border-box;
             overflow: visible !important;
+        }
+
+        .m-dock-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: var(--font-mono), monospace;
+            font-size: 0.72rem;
+        }
+
+        body.light-theme .m-dock-meta-row {
+            border-bottom-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .m-dock-meta-row .back-to-top {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .m-dock-meta-row .back-to-top:hover {
+            color: var(--accent);
         }
 
         .m-inspector-card {

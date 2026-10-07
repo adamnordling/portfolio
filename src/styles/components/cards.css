@@ -304,4 +304,28 @@
         display: inline !important;
         line-height: inherit !important;
     }
+
+    /* Garanterar att dropdownen alltid svävar över allt annat */
+    .filter-dropdown {
+        position: relative;
+        z-index: 1200 !important;
+    }
+
+    .right-header {
+        position: relative;
+        z-index: 1200;
+    }
+
+    /* Förhindrar att projektområdet krymper till 0px när en tom kategori väljs */
+    .apps-grid {
+        min-height: 180px;
+    }
+
+    @media (max-width: 900px) {
+        /* Gör bilderna oskadliga för tummen på mobil – länkarna sköts av knapparna under */
+        .app-img-link {
+            pointer-events: none;
+            cursor: default;
+        }
+    }
 }

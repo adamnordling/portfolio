@@ -12,7 +12,8 @@ function initBioCard(): void {
     const bioCard = qs('#bio-card');
     if (!bioCard) return;
 
-    on(bioCard, 'click', () => {
+    // 1. Klick- och tangentbordsväxling
+    const toggleBio = (): void => {
         const selection = window.getSelection()?.toString() ?? '';
         if (selection.length > 0) return;
 
@@ -24,14 +25,40 @@ function initBioCard(): void {
 
         if (hintEn) hintEn.textContent = isExpanded ? 'READ LESS' : 'READ MORE';
         if (hintSv) hintSv.textContent = isExpanded ? 'LÄS MINDRE' : 'LÄS MER';
-    });
+    };
 
+    on(bioCard, 'click', toggleBio);
     on(bioCard, 'keydown', (e: KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            bioCard.click();
+            toggleBio();
         }
     });
+
+    // 2. Skottsäker auto-collapse på mobil när användaren rullat förbi bion
+    if (typeof IntersectionObserver !== 'undefined') {
+        const bioObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    // Om bion har rullat helt ovanför skärmen och är öppen på mobil (<= 1150px):
+                    if (!entry.isIntersecting && entry.boundingClientRect.top < 0 && window.innerWidth <= 1150) {
+                        if (bioCard.classList.contains('is-expanded')) {
+                            bioCard.classList.remove('is-expanded');
+                            bioCard.setAttribute('aria-expanded', 'false');
+
+                            const hintEn = qs('.bio-hint-text [lang="en"]', bioCard);
+                            const hintSv = qs('.bio-hint-text [lang="sv"]', bioCard);
+                            if (hintEn) hintEn.textContent = 'READ MORE';
+                            if (hintSv) hintSv.textContent = 'LÄS MER';
+                        }
+                    }
+                });
+            },
+            { threshold: 0 } // Triggas exakt den millisekund den är 0% synlig
+        );
+
+        bioObserver.observe(bioCard);
+    }
 }
 
 // =============================================================================
@@ -400,7 +427,5 @@ function initSkillsSystem(): void {
 
         if (skillsSection) autoCollapseObserver.observe(skillsSection);
         if (eduSection) autoCollapseObserver.observe(eduSection);
-        const bioCard = qs('#bio-card');
-        if (bioCard) autoCollapseObserver.observe(bioCard);
     }
 }

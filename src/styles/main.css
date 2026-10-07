@@ -216,16 +216,16 @@
     }
 
     .right-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        display: flex !important;
+        flex-direction: row !important; /* Håller dem på samma rad */
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
     }
 
     .header-actions {
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        gap: 8px;
+        width: auto !important;
     }
 
     .skills-grid {

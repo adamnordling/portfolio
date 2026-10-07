@@ -147,7 +147,7 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
                 <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" class="activity-item" title="${commitMessage}">
                     <div class="activity-icon" aria-hidden="true">${commitIconSvg}</div>
                     <div class="activity-body">
-                        <div class="activity-title">${commitMessage}</div>
+                        <div class="activity-title">${commitMessage} <span style="font-size: 0.75rem; color: var(--accent);">↗</span></div>
                         <div class="activity-desc">
                             <span>${repoName}</span>
                             ${shortSha.length > 0 ? `<span>· <code>${shortSha}</code></span>` : ''}

@@ -55,7 +55,7 @@ export function initProjectFilter(): void {
                     updateCardVisibility();
                 }
 
-                filterDropdown?.classList.add('menu-closed');
+                filterDropdown?.classList.remove('menu-open');
             });
         });
 

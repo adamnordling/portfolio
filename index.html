@@ -112,76 +112,79 @@
             }
         </script>
 
-        <!-- 8. SCHEMA.ORG (WebSite, ProfilePage & Person) -->
+        <!-- 8. SCHEMA.ORG (WebSite – Fristående för Beavercheck & Sökmotorer) -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
-                "@graph": [
-                    {
-                        "@type": "WebSite",
-                        "@id": "https://adamnordling.se/#website",
-                        "name": "Adam Nordling",
-                        "url": "https://adamnordling.se/",
-                        "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning, and network security.",
-                        "inLanguage": ["en", "sv"],
-                        "publisher": {
-                            "@id": "https://adamnordling.se/#organization"
+                "@type": "WebSite",
+                "@id": "https://adamnordling.se/#website",
+                "name": "Adam Nordling",
+                "url": "https://adamnordling.se/",
+                "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning, and network security.",
+                "inLanguage": ["en", "sv"],
+                "publisher": {
+                    "@id": "https://adamnordling.se/#organization"
+                },
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://adamnordling.se/?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            }
+        </script>
+
+        <!-- 9. SCHEMA.ORG (ProfilePage & Person) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "ProfilePage",
+                "@id": "https://adamnordling.se/#webpage",
+                "url": "https://adamnordling.se/",
+                "name": "Portfolio | Adam Nordling",
+                "isPartOf": {
+                    "@id": "https://adamnordling.se/#website"
+                },
+                "about": {
+                    "@id": "https://adamnordling.se/#person"
+                },
+                "mainEntity": {
+                    "@type": "Person",
+                    "@id": "https://adamnordling.se/#person",
+                    "name": "Adam Nordling",
+                    "givenName": "Adam",
+                    "familyName": "Nordling",
+                    "url": "https://adamnordling.se/",
+                    "image": "https://adamnordling.se/assets/profile-600.webp",
+                    "jobTitle": ["Software Engineer", "Mjukvaruingenjör"],
+                    "description": "Software engineer and Master of Science graduate in Software Technology from Linnaeus University, specializing in web architecture, machine learning, data augmentation, and network security.",
+                    "alumniOf": [
+                        {
+                            "@type": "CollegeOrUniversity",
+                            "name": "Linnaeus University",
+                            "alternateName": "Linnéuniversitetet",
+                            "url": "https://lnu.se"
                         }
-                    },
-                    {
-                        "@type": "ProfilePage",
-                        "@id": "https://adamnordling.se/#webpage",
-                        "url": "https://adamnordling.se/",
-                        "name": "Portfolio | Adam Nordling",
-                        "isPartOf": {
-                            "@id": "https://adamnordling.se/#website"
-                        },
-                        "about": {
-                            "@id": "https://adamnordling.se/#person"
-                        },
-                        "mainEntity": {
-                            "@id": "https://adamnordling.se/#person"
-                        }
-                    },
-                    {
-                        "@type": "Person",
-                        "@id": "https://adamnordling.se/#person",
-                        "name": "Adam Nordling",
-                        "givenName": "Adam",
-                        "familyName": "Nordling",
-                        "url": "https://adamnordling.se/",
-                        "image": "https://adamnordling.se/assets/profile-600.webp",
-                        "jobTitle": ["Software Engineer", "Mjukvaruingenjör"],
-                        "description": "Software engineer and Master of Science graduate in Software Technology from Linnaeus University, specializing in web architecture, machine learning, data augmentation, and network security.",
-                        "alumniOf": [
-                            {
-                                "@type": "CollegeOrUniversity",
-                                "name": "Linnaeus University",
-                                "alternateName": "Linnéuniversitetet",
-                                "url": "https://lnu.se"
-                            }
-                        ],
-                        "knowsAbout": [
-                            "Software Engineering",
-                            "Machine Learning",
-                            "Fullstack Development",
-                            "Network Security",
-                            "Python",
-                            "Data Augmentation",
-                            "Trajectory Analysis",
-                            "TypeScript",
-                            "Deep Learning"
-                        ],
-                        "sameAs": [
-                            "https://github.com/adamnordling",
-                            "https://www.linkedin.com/in/adamnordling",
-                            "https://orcid.org/0009-0004-3989-6796",
-                            "https://arxiv.org/abs/2606.10938",
-                            "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
-                            "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
-                        ]
-                    }
-                ]
+                    ],
+                    "knowsAbout": [
+                        "Software Engineering",
+                        "Machine Learning",
+                        "Fullstack Development",
+                        "Network Security",
+                        "Python",
+                        "Data Augmentation",
+                        "Trajectory Analysis",
+                        "TypeScript",
+                        "Deep Learning"
+                    ],
+                    "sameAs": [
+                        "https://github.com/adamnordling",
+                        "https://www.linkedin.com/in/adamnordling",
+                        "https://orcid.org/0009-0004-3989-6796",
+                        "https://arxiv.org/abs/2606.10938",
+                        "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
+                        "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
+                    ]
+                }
             }
         </script>
     </head>

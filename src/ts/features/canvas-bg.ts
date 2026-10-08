@@ -160,7 +160,7 @@ export function initCanvasBackground(): void {
 
     function cacheDocumentExclusions(): void {
         cachedExclusionRects = [];
-        const isDesktop = window.innerWidth > 1150;
+        const isDesktop = window.innerWidth > 1250;
         const rightPanelEl = document.querySelector<HTMLElement>('.right-panel');
         const leftPanelEl = document.querySelector<HTMLElement>('.left-panel');
 
@@ -255,7 +255,7 @@ export function initCanvasBackground(): void {
     }
 
     function updateViewportExclusionsMath(): void {
-        const isDesktop = window.innerWidth > 1150;
+        const isDesktop = window.innerWidth > 1250;
         const rightPanelEl = document.querySelector<HTMLElement>('.right-panel');
         const leftPanelEl = document.querySelector<HTMLElement>('.left-panel');
 
@@ -298,7 +298,7 @@ export function initCanvasBackground(): void {
 
     function rebuildDotGridCache(): void {
         cachedGridDots = [];
-        const isMobile = width <= 1150;
+        const isMobile = width <= 1250;
         const maxZone = TEXT_CLEARANCE + FADE_ZONE;
         const maxZoneSq = maxZone * maxZone;
         const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
@@ -388,7 +388,7 @@ export function initCanvasBackground(): void {
         const leftPanel = document.querySelector<HTMLElement>('.left-panel');
         const rightPanel = document.querySelector<HTMLElement>('.right-panel');
 
-        if (leftPanel && rightPanel && window.innerWidth > 1150) {
+        if (leftPanel && rightPanel && window.innerWidth > 1250) {
             const lpRect = leftPanel.getBoundingClientRect();
             const rpRect = rightPanel.getBoundingClientRect();
             leftPanelRight = lpRect.right;
@@ -423,8 +423,8 @@ export function initCanvasBackground(): void {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
 
-        // On mobile (<= 1150px), bypass getBoundingClientRect() to avoid forced layout during bootup
-        if (window.innerWidth <= 1150) {
+        // On mobile (<= 1250px), bypass getBoundingClientRect() to avoid forced layout during bootup
+        if (window.innerWidth <= 1250) {
             wrapperLeft = 0;
             wrapperRight = width;
             wrapperTop = 0;
@@ -451,7 +451,7 @@ export function initCanvasBackground(): void {
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         // On small mobile screens, skip the expensive DOM text-range tree traversal
-        if (window.innerWidth <= 1150) {
+        if (window.innerWidth <= 1250) {
             hasMeasuredExclusions = true;
             rebuildDotGridCache();
             draw();
@@ -582,7 +582,7 @@ export function initCanvasBackground(): void {
         ctx.clearRect(0, 0, width, height);
 
         const isLight = document.body.classList.contains('light-theme');
-        const isMobile = width <= 1150;
+        const isMobile = width <= 1250;
         const baseColor = isLight ? 'rgba(0, 0, 0, ' : 'rgba(255, 255, 255, ';
         const touchRadius = isMobile ? 100 : 140;
         const touchRadiusSq = touchRadius * touchRadius;

@@ -172,18 +172,7 @@ function initMobileMarqueeTelemetry(): void {
     const rawTitle = document.getElementById('m-inspector-title');
     const rawDesc = document.getElementById('m-inspector-desc');
     const rawCloseBtn = document.getElementById('m-inspector-close');
-    const pills = document.querySelectorAll<HTMLElement>('.m-pill');
-
-    if (!rawViewport || !rawTrack || !rawCard || !rawTitle || !rawDesc || !rawCloseBtn) return;
-
-    const viewport: HTMLElement = rawViewport;
-    const track: HTMLElement = rawTrack;
-    const inspectorCard: HTMLElement = rawCard;
-    const inspectorTitle: HTMLElement = rawTitle;
-    const inspectorDesc: HTMLElement = rawDesc;
-    const closeBtn: HTMLElement = rawCloseBtn;
-
-    track.classList.add('is-running');
+    const mobilePills = document.querySelectorAll<HTMLElement>('.mobile-telemetry-dock .m-pill');
 
     const MARQUEE_DURATION = 22;
     let currentTrackX = 0;
@@ -232,16 +221,85 @@ function initMobileMarqueeTelemetry(): void {
                 en: 'Architectural cascade layer organization (reset, base, components, utilities) eliminating specificity clashes.',
                 sv: 'Kaskad-lager (reset, base, components, utilities) som eliminerar CSS-konflikter och minimerar filstorlek.'
             }
-        },
-        /* Added Privacy Architecture telemetry metric */
-        privacy: {
-            title: { en: 'Privacy & Terms', sv: 'Integritet & Villkor' },
-            desc: {
-                en: 'Zero cookies, zero analytics, zero data collection. Meets GDPR Article 13 & WCAG 2.1 AA standards.',
-                sv: 'Noll kakor, noll analysverktyg, noll datainsamling. Följer GDPR artikel 13 och WCAG 2.1 AA.'
-            }
         }
     };
+
+    // DESKTOP TELEMETRI INSPECT
+    const dTrack = document.getElementById('d-telemetry-track');
+    const dCard = document.getElementById('d-inspector-card');
+    const dTitle = document.getElementById('d-inspector-title');
+    const dDesc = document.getElementById('d-inspector-desc');
+    const dClose = document.getElementById('d-inspector-close');
+    const leftPanel = document.querySelector<HTMLElement>('.left-panel');
+
+    const closeDesktopInspector = (): void => {
+        if (!dCard || !dTrack) return;
+        dCard.classList.remove('is-open');
+        dTrack.classList.remove('is-paused');
+        dTrack.querySelectorAll('.m-pill').forEach(p => {
+            p.classList.remove('is-active');
+        });
+    };
+
+    if (dTrack && dCard && dTitle && dDesc) {
+        const desktopPills = dTrack.querySelectorAll<HTMLElement>('.m-pill, .telemetry-pill, .dock-lh-group');
+
+        desktopPills.forEach(pill => {
+            pill.addEventListener('click', e => {
+                e.stopPropagation();
+                const metricKey = pill.getAttribute('data-metric');
+                if (!metricKey || !(metricKey in metricData)) return;
+
+                const isAlreadyActive = pill.classList.contains('is-active');
+                if (isAlreadyActive) {
+                    closeDesktopInspector();
+                    return;
+                }
+
+                dTrack.classList.add('is-paused');
+                desktopPills.forEach(p => {
+                    p.classList.remove('is-active');
+                });
+                dTrack.querySelectorAll(`[data-metric="${metricKey}"]`).forEach(p => {
+                    p.classList.add('is-active');
+                });
+
+                const currentLang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
+                dTitle.textContent = metricData[metricKey].title[currentLang];
+                dDesc.textContent = metricData[metricKey].desc[currentLang];
+                dCard.classList.add('is-open');
+
+                // Förhindra att vänsterpanelen hoppar uppåt när kortet expanderar
+                if (leftPanel) {
+                    requestAnimationFrame(() => {
+                        leftPanel.scrollTo({ top: leftPanel.scrollHeight, behavior: 'smooth' });
+                    });
+                }
+            });
+        });
+
+        dClose?.addEventListener('click', e => {
+            e.stopPropagation();
+            closeDesktopInspector();
+        });
+
+        dCard.addEventListener('click', e => {
+            e.stopPropagation();
+            closeDesktopInspector();
+        });
+    }
+
+    // MOBIL TELEMETRI LOGIK
+    if (!rawViewport || !rawTrack || !rawCard || !rawTitle || !rawDesc || !rawCloseBtn) return;
+
+    const viewport: HTMLElement = rawViewport;
+    const track: HTMLElement = rawTrack;
+    const inspectorCard: HTMLElement = rawCard;
+    const inspectorTitle: HTMLElement = rawTitle;
+    const inspectorDesc: HTMLElement = rawDesc;
+    const closeBtn: HTMLElement = rawCloseBtn;
+
+    track.classList.add('is-running');
 
     function getTrackTranslateX(): number {
         const style = window.getComputedStyle(track);
@@ -284,7 +342,7 @@ function initMobileMarqueeTelemetry(): void {
     function closeInspector(): void {
         activeMetricKey = null;
         inspectorCard.classList.remove('is-open');
-        pills.forEach(p => {
+        mobilePills.forEach(p => {
             p.classList.remove('is-active');
         });
 
@@ -334,7 +392,7 @@ function initMobileMarqueeTelemetry(): void {
                 try {
                     track.setPointerCapture(e.pointerId);
                 } catch {
-                    // Ignored if capture unsupported
+                    // Ignorerat
                 }
             } else if (Math.abs(deltaY) > 5) {
                 isPointerDown = false;
@@ -372,7 +430,7 @@ function initMobileMarqueeTelemetry(): void {
                     track.releasePointerCapture(e.pointerId);
                 }
             } catch {
-                // Ignored
+                // Ignorerat
             }
         }
 
@@ -382,7 +440,7 @@ function initMobileMarqueeTelemetry(): void {
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
 
-    pills.forEach(pill => {
+    mobilePills.forEach(pill => {
         pill.addEventListener('click', e => {
             e.stopPropagation();
             pill.blur();
@@ -402,11 +460,10 @@ function initMobileMarqueeTelemetry(): void {
             freezeRolling();
 
             activeMetricKey = metricKey;
-            pills.forEach(p => {
+            mobilePills.forEach(p => {
                 p.classList.remove('is-active');
             });
-
-            document.querySelectorAll<HTMLElement>(`.m-pill[data-metric="${metricKey}"]`).forEach(p => {
+            document.querySelectorAll<HTMLElement>(`.mobile-telemetry-dock [data-metric="${metricKey}"]`).forEach(p => {
                 p.classList.add('is-active');
             });
 
@@ -414,13 +471,10 @@ function initMobileMarqueeTelemetry(): void {
             const data = metricData[metricKey];
             inspectorTitle.textContent = data.title[currentLang];
             inspectorDesc.textContent = data.desc[currentLang];
-
-            // Open smoothly right above the dock — NO screen scrolling needed!
             inspectorCard.classList.add('is-open');
         });
     });
 
-    // Clicking anywhere on the text card collapses it
     inspectorCard.addEventListener('click', e => {
         e.stopPropagation();
         closeInspector();
@@ -431,11 +485,24 @@ function initMobileMarqueeTelemetry(): void {
         closeInspector();
     });
 
+    // KLICK UTANFÖR STÄNGER BÅDE MOBIL- OCH DESKTOP-INSPEKTÖREN
     document.addEventListener('click', e => {
         const target = e.target as HTMLElement | null;
-        if (!target || !target.closest('.m-pill, .m-inspector-card')) {
+        if (!target) return;
+
+        // Mobil
+        if (!target.closest('.mobile-telemetry-dock .m-pill, .m-inspector-card')) {
             if (inspectorCard.classList.contains('is-open')) {
                 closeInspector();
+            }
+        }
+
+        // Desktop
+        if (
+            !target.closest('#desktop-telemetry-viewport .m-pill, #d-telemetry-track .m-pill, .desktop-inspector-card')
+        ) {
+            if (dCard && dCard.classList.contains('is-open')) {
+                closeDesktopInspector();
             }
         }
     });
@@ -447,6 +514,11 @@ function initMobileMarqueeTelemetry(): void {
             const data = metricData[activeMetricKey];
             inspectorTitle.textContent = data.title[lang];
             inspectorDesc.textContent = data.desc[lang];
+
+            if (dTitle && dDesc) {
+                dTitle.textContent = data.title[lang];
+                dDesc.textContent = data.desc[lang];
+            }
         }
     });
 }
@@ -469,7 +541,7 @@ function initZoneScrolling(): void {
     window.addEventListener(
         'wheel',
         (e: WheelEvent) => {
-            if (window.innerWidth <= 1150) return;
+            if (window.innerWidth <= 1250) return;
 
             // 1. Never scroll background if CV Modal is open
             if (document.getElementById('cv-modal')?.classList.contains('is-open')) return;

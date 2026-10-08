@@ -233,7 +233,7 @@
         box-shadow: none;
     }
 
-    @media (max-width: 1150px) {
+    @media (max-width: 1250px) {
         .panel-divider {
             display: none !important;
         }

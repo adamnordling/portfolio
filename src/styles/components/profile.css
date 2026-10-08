@@ -299,14 +299,14 @@
        4. RESPONSIVE BREAKPOINTS (Fixes the 950px–1150px Gap & Stable Mobile)
        ========================================================================= */
     /* Around 950px to 1150px: locks image and text together and centers the pair */
-    @media (min-width: 957px) and (max-width: 1150px) {
+    @media (min-width: 957px) and (max-width: 1250px) {
         .profile-header {
             display: flex !important;
             flex-direction: row !important;
             justify-content: center !important;
             align-items: center !important;
             gap: 22px !important;
-            width: fit-content !important; /* Prevents 800px stretch */
+            width: fit-content !important;
             margin: 0 auto 24px auto !important;
             padding: 6px !important;
         }
@@ -319,7 +319,7 @@
         }
 
         .profile-info {
-            flex: 0 0 auto !important; /* Eliminates the empty gap */
+            flex: 0 0 auto !important;
         }
     }
 

@@ -286,4 +286,46 @@
             cursor: default;
         }
     }
+
+    .header-title-group {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .header-cli-repo-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: var(--font-mono), monospace;
+        font-size: 0.68rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        text-decoration: none !important;
+        letter-spacing: 0.04em;
+        width: fit-content;
+        transition: color 0.15s ease;
+        user-select: none;
+    }
+
+    .header-cli-repo-link:hover {
+        color: var(--accent);
+    }
+
+    .header-cli-repo-link .cli-sep {
+        color: var(--border-color);
+    }
+
+    .header-cli-repo-link .cli-file {
+        color: var(--text-secondary);
+    }
+
+    .header-cli-repo-link:hover .cli-file {
+        color: var(--accent);
+    }
+
+    .header-cli-repo-link .cli-arrow {
+        font-size: 0.72rem;
+        color: var(--accent);
+    }
 }

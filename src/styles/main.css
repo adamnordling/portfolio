@@ -40,7 +40,7 @@
 
 /* 2. BÄRBAR DATOR (1151px till 1450px)
    Garanterar 80px+ dot-matrix på sidorna & naturliga proportioner */
-@media (min-width: 1151px) and (max-width: 1450px) {
+@media (min-width: 1251px) and (max-width: 1450px) {
     .portfolio-wrapper {
         width: calc(100vw - 160px) !important;
         max-width: 1180px !important;
@@ -91,9 +91,18 @@
     }
 }
 
+/* Begränsa bredden vid enkelkolumn mellan 957px och 1250px */
+@media (min-width: 957px) and (max-width: 1250px) {
+    .portfolio-wrapper {
+        max-width: 860px !important;
+        margin: 0 auto !important;
+        padding: 80px 28px 80px 28px !important;
+    }
+}
+
 /* 3. SURFPLATTA & MOBIL LAYOUT (<= 1150px)
    Enkel kolumn, stäng av cockpit & sätt vertikal ordning */
-@media (max-width: 1150px) {
+@media (max-width: 1250px) {
     .portfolio-wrapper {
         height: auto;
         min-height: 100vh;

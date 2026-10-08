@@ -220,7 +220,7 @@ export function initShortcuts(): void {
         }
 
         // 8. Global Desktop Tab & Arrow Sequence
-        if (window.innerWidth > 1150 && (e.key === 'Tab' || e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+        if (window.innerWidth > 1250 && (e.key === 'Tab' || e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
             const isForward = e.key === 'Tab' ? !e.shiftKey : e.key === 'ArrowDown';
             const skipLink = qs('.skip-link');
             const topHeaderElements = getTopHeaderElements();
@@ -347,22 +347,19 @@ export function initShortcuts(): void {
 
     // Hantera Skip-länk och "Top"-länk för både mobil och interna paneler
     const mainContent = qs('#main-content');
-    const scrollLinks = qsa('a[href="#main-content"]');
+    const scrollLinks = qsa('a[href="#main-content"], a[href="#top"], .back-to-top');
 
     scrollLinks.forEach(link => {
         on(link, 'click', (e: MouseEvent) => {
             e.preventDefault();
 
-            // 1. Om vi är på dator: skrolla upp panelerna
-            if (window.innerWidth > 1150) {
+            if (window.innerWidth > 1250) {
                 leftPanel?.scrollTo({ top: 0, behavior: 'smooth' });
                 rightPanel?.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
-                // 2. På mobil: skrolla hela fönstret till toppen
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // Flytta tangentbordsfokus till huvudinnehållet
             if (mainContent) {
                 mainContent.focus({ preventScroll: true });
             }

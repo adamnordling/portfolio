@@ -367,7 +367,7 @@ function initSkillsSystem(): void {
     window.addEventListener(
         'scroll',
         () => {
-            if (window.innerWidth <= 1150) {
+            if (window.innerWidth <= 1250) {
                 closeAllSkillBubbles();
                 closeAllCourseBubbles();
             }
@@ -388,7 +388,7 @@ function initSkillsSystem(): void {
         const autoCollapseObserver = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
-                    if (window.innerWidth > 1150) return;
+                    if (window.innerWidth > 1250) return;
 
                     // 1. Bio: kollapsa när den skrollats förbi uppåt
                     if (entry.target.id === 'bio-card' && !entry.isIntersecting && entry.boundingClientRect.top < 0) {

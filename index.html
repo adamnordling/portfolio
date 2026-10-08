@@ -188,12 +188,12 @@
             }
         </script>
     </head>
-    <body class="light-theme">
+    <body class="light-theme" id="top">
         <a href="#main-content" class="skip-link">Skip to main content</a>
         <!-- Interactive Dot Matrix Background -->
         <canvas id="bg-canvas" aria-hidden="true"></canvas>
         <!-- UNIFIED SITE HEADER (Top-Left on Desktop, Top Bar on Mobile) -->
-        <header class="site-header" aria-label="Site preferences">
+        <header class="site-header" role="banner" aria-label="Site header">
             <div class="header-cluster-left">
                 <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
                     <svg
@@ -1686,7 +1686,7 @@
                         </div>
                     </section>
 
-                    <!-- DESKTOP STUDIO METACARD (Mini Marquee Track) -->
+                    <!-- DESKTOP STUDIO METACARD -->
                     <aside class="desktop-metacard" aria-label="System telemetry">
                         <!-- Top Header Line -->
                         <div class="meta-row-top">
@@ -1694,23 +1694,63 @@
                                 <span class="dock-pulse-dot"></span>
                                 <span class="meta-status-label">CLOUDFLARE EDGE</span>
                             </div>
-                            <a href="#main-content" class="back-to-top" aria-label="Back to top of page"
-                                >↑ Back to top</a
-                            >
+
+                            <!-- Byt klass & aria-label för att kringgå uBlock/Brave Annoyance-filter -->
+                            <a href="#top" class="return-to-top" aria-label="Scroll to top of page">
+                                <svg
+                                    class="back-to-top-icon"
+                                    width="11"
+                                    height="11"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                                >
+                                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                                    <polyline points="5 12 12 5 19 12"></polyline>
+                                </svg>
+                                <span lang="en">Back to top</span>
+                                <span lang="sv">Till toppen</span>
+                            </a>
+
                             <span class="meta-copyright">© <span class="footer-year">2026</span> Adam Nordling</span>
                         </div>
-                        <!-- Mini Desktop Marquee Viewport -->
-                        <div class="meta-marquee-viewport">
-                            <div class="meta-marquee-track">
+
+                        <!-- Telemetri-inspektör för Desktop -->
+                        <div
+                            class="desktop-inspector-card"
+                            id="d-inspector-card"
+                            role="button"
+                            tabindex="0"
+                            aria-label="Close inspector"
+                        >
+                            <div class="m-inspector-header">
+                                <span class="m-inspector-title" id="d-inspector-title">TELEMETRY</span>
+                                <button
+                                    type="button"
+                                    class="m-inspector-close"
+                                    id="d-inspector-close"
+                                    aria-label="Close inspector"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                            <p class="m-inspector-desc" id="d-inspector-desc">Select a metric to inspect.</p>
+                        </div>
+
+                        <!-- RAD 1: Prestanda & Tech Stack (Med matchande SVG & färger) -->
+                        <div class="meta-marquee-viewport" id="desktop-telemetry-viewport">
+                            <div class="meta-marquee-track telemetry-track" id="d-telemetry-track">
                                 <!-- SET 1 -->
                                 <div class="meta-marquee-group">
-                                    <div
-                                        class="dock-lh-group"
-                                        tabindex="0"
-                                        role="button"
+                                    <button
+                                        type="button"
+                                        class="dock-lh-group m-pill"
+                                        data-metric="lh"
                                         aria-label="Lighthouse score"
-                                        data-tooltip-en="Lighthouse CI: Perfect 100"
-                                        data-tooltip-sv="Lighthouse CI: 100 poäng"
                                     >
                                         <svg
                                             class="dock-svg-icon lh-icon"
@@ -1743,12 +1783,12 @@
                                                 ><span class="lh-val">100</span><small>SEO</small></span
                                             >
                                         </div>
-                                    </div>
-                                    <div
-                                        class="telemetry-pill live-vitals-pill"
-                                        tabindex="0"
-                                        role="button"
-                                        aria-label="Core Web Vitals status"
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="telemetry-pill live-vitals-pill m-pill"
+                                        data-metric="lcp"
+                                        aria-label="Core Web Vitals LCP"
                                     >
                                         <svg
                                             class="dock-svg-icon"
@@ -1757,25 +1797,217 @@
                                             viewBox="0 0 24 24"
                                             fill="none"
                                             stroke="currentColor"
-                                            stroke-width="2"
+                                            stroke-width="2.2"
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                         >
                                             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                                         </svg>
                                         <span class="vitals-metric"
-                                            >LCP: <span id="telemetry-lcp" class="telemetry-live-val">--</span></span
+                                            >LCP: <span class="telemetry-live-val telemetry-live-lcp">--</span></span
                                         >
-                                        <span class="vitals-separator">·</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="telemetry-pill live-vitals-pill m-pill"
+                                        data-metric="cls"
+                                        aria-label="Core Web Vitals CLS"
+                                    >
                                         <span class="vitals-metric"
-                                            >CLS: <span id="telemetry-cls" class="telemetry-live-val">0.000</span></span
+                                            >CLS: <span class="telemetry-live-val telemetry-live-cls">0.000</span></span
                                         >
-                                    </div>
+                                    </button>
+                                    <button type="button" class="telemetry-pill m-pill" data-metric="runtime">
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#eab308"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg>
+                                        <span>Vite 8 · ESNext</span>
+                                    </button>
+                                    <button type="button" class="telemetry-pill m-pill" data-metric="ts">
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#38bdf8"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polyline points="16 18 22 12 16 6"></polyline>
+                                            <polyline points="8 6 2 12 8 18"></polyline>
+                                        </svg>
+                                        <span>TS Strict</span>
+                                    </button>
+                                    <button type="button" class="telemetry-pill m-pill" data-metric="layer">
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#a855f7"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                            <polyline points="2 17 12 22 22 17"></polyline>
+                                            <polyline points="2 12 12 17 22 12"></polyline>
+                                        </svg>
+                                        <span>CSS @layer</span>
+                                    </button>
+                                </div>
 
-                                    <span class="telemetry-pill">Vite 8 · ESNext</span>
-                                    <span class="telemetry-pill">TS Strict</span>
-                                    <span class="telemetry-pill">CSS @layer</span>
-                                    <span class="telemetry-pill">0 Trackers</span>
+                                <!-- SET 2 (Identisk Klon) -->
+                                <div class="meta-marquee-group" aria-hidden="true">
+                                    <button type="button" class="dock-lh-group m-pill" data-metric="lh" tabindex="-1">
+                                        <svg
+                                            class="dock-svg-icon lh-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <path
+                                                d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+                                            />
+                                            <path d="M12 12l3-2" />
+                                        </svg>
+                                        <span class="lh-title">LIGHTHOUSE</span>
+                                        <div class="lh-scores">
+                                            <span class="lh-item"
+                                                ><span class="lh-val">100</span><small>PERF</small></span
+                                            >
+                                            <span class="lh-item"
+                                                ><span class="lh-val">100</span><small>A11Y</small></span
+                                            >
+                                            <span class="lh-item"
+                                                ><span class="lh-val">100</span><small>BP</small></span
+                                            >
+                                            <span class="lh-item"
+                                                ><span class="lh-val">100</span><small>SEO</small></span
+                                            >
+                                        </div>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="telemetry-pill live-vitals-pill m-pill"
+                                        data-metric="lcp"
+                                        tabindex="-1"
+                                    >
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                        </svg>
+                                        <span class="vitals-metric"
+                                            >LCP: <span class="telemetry-live-val telemetry-live-lcp">--</span></span
+                                        >
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="telemetry-pill live-vitals-pill m-pill"
+                                        data-metric="cls"
+                                        tabindex="-1"
+                                    >
+                                        <span class="vitals-metric"
+                                            >CLS: <span class="telemetry-live-val telemetry-live-cls">0.000</span></span
+                                        >
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="telemetry-pill m-pill"
+                                        data-metric="runtime"
+                                        tabindex="-1"
+                                    >
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#eab308"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg>
+                                        <span>Vite 8 · ESNext</span>
+                                    </button>
+                                    <button type="button" class="telemetry-pill m-pill" data-metric="ts" tabindex="-1">
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#38bdf8"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polyline points="16 18 22 12 16 6"></polyline>
+                                            <polyline points="8 6 2 12 8 18"></polyline>
+                                        </svg>
+                                        <span>TS Strict</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="telemetry-pill m-pill"
+                                        data-metric="layer"
+                                        tabindex="-1"
+                                    >
+                                        <svg
+                                            class="dock-svg-icon"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#a855f7"
+                                            stroke-width="2.2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        >
+                                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                            <polyline points="2 17 12 22 22 17"></polyline>
+                                            <polyline points="2 12 12 17 22 12"></polyline>
+                                        </svg>
+                                        <span>CSS @layer</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RAD 2: Compliance & Legal Links -->
+                        <div class="meta-marquee-viewport compliance-viewport">
+                            <div class="meta-marquee-track compliance-track">
+                                <!-- SET 1 -->
+                                <div class="meta-marquee-group">
                                     <span class="telemetry-pill" title="Zero cookies, Article 13 disclosures verified">
                                         <svg
                                             class="dock-svg-icon"
@@ -1790,11 +2022,7 @@
                                         </svg>
                                         <span>GDPR Compliant</span>
                                     </span>
-                                    <a href="/privacy.html#acceptable-use" class="telemetry-pill">Acceptable Use</a>
-                                    <a href="/privacy.html#copyright" class="telemetry-pill">Copyright Notice</a>
-                                    <a href="/privacy.html#refunds" class="telemetry-pill">Refund Policy</a>
-                                    <a href="/privacy.html#cookies" class="telemetry-pill">Cookie Policy</a>
-                                    <a href="/privacy.html" class="telemetry-pill privacy-pill" title="Privacy Policy">
+                                    <a href="/privacy.html" class="telemetry-pill privacy-pill">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -1806,74 +2034,33 @@
                                         >
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>
-                                        <span class="pill-text">Privacy</span>
+                                        <span>Privacy Policy</span>
                                     </a>
                                     <a href="/privacy.html#terms" class="telemetry-pill">Terms of Service</a>
                                     <a href="/privacy.html#cookies" class="telemetry-pill">Cookie Policy</a>
                                     <a href="/privacy.html#accessibility" class="telemetry-pill">Accessibility</a>
-                                    <a href="/privacy.html#copyright" class="telemetry-pill">Copyright Notice</a>
                                     <a href="/privacy.html#acceptable-use" class="telemetry-pill">Acceptable Use</a>
+                                    <a href="/privacy.html#copyright" class="telemetry-pill">Copyright Notice</a>
                                     <a href="/privacy.html#refunds" class="telemetry-pill">Refund Policy</a>
                                 </div>
 
-                                <!-- SET 2 (Seamless loop clone) -->
+                                <!-- SET 2 (Identisk Klon) -->
                                 <div class="meta-marquee-group" aria-hidden="true">
-                                    <div class="dock-lh-group">
-                                        <svg
-                                            class="dock-svg-icon lh-icon"
-                                            width="12"
-                                            height="12"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2.2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        >
-                                            <path
-                                                d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
-                                            />
-                                            <path d="M12 12l3-2" />
-                                        </svg>
-                                        <span class="lh-title">LIGHTHOUSE</span>
-                                        <div class="lh-scores">
-                                            <span class="lh-item"
-                                                ><span class="lh-val">100</span><small>PERF</small></span
-                                            >
-                                            <span class="lh-item"
-                                                ><span class="lh-val">100</span><small>A11Y</small></span
-                                            >
-                                            <span class="lh-item"
-                                                ><span class="lh-val">100</span><small>BP</small></span
-                                            >
-                                            <span class="lh-item"
-                                                ><span class="lh-val">100</span><small>SEO</small></span
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="telemetry-pill live-vitals-pill">
+                                    <span class="telemetry-pill" tabindex="-1">
                                         <svg
                                             class="dock-svg-icon"
-                                            width="12"
-                                            height="12"
+                                            width="11"
+                                            height="11"
                                             viewBox="0 0 24 24"
                                             fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
+                                            stroke="#10b981"
+                                            stroke-width="2.5"
                                         >
-                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                            <polyline points="20 6 9 17 4 12"></polyline>
                                         </svg>
-                                        <span class="vitals-metric"
-                                            >LCP: <span class="telemetry-live-val telemetry-live-lcp">--</span></span
-                                        >
-                                        <span class="vitals-separator">·</span>
-                                        <span class="vitals-metric"
-                                            >CLS: <span class="telemetry-live-val telemetry-live-cls">0.000</span></span
-                                        >
-                                    </div>
-                                    <span class="telemetry-pill privacy-pill">
+                                        <span>GDPR Compliant</span>
+                                    </span>
+                                    <a href="/privacy.html" class="telemetry-pill privacy-pill" tabindex="-1">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -1885,17 +2072,26 @@
                                         >
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>
-                                        <span class="pill-text">Privacy</span>
-                                    </span>
-                                    <span class="telemetry-pill">Vite 8 · ESNext</span>
-                                    <span class="telemetry-pill">TS Strict</span>
-                                    <span class="telemetry-pill">CSS @layer</span>
-                                    <span class="telemetry-pill">0 Trackers</span>
-                                    <span class="telemetry-pill">GDPR Compliant</span>
-                                    <span class="telemetry-pill">Acceptable Use</span>
-                                    <span class="telemetry-pill">Copyright Notice</span>
-                                    <span class="telemetry-pill">Refund Policy</span>
-                                    <span class="telemetry-pill">Cookie Policy</span>
+                                        <span>Privacy Policy</span>
+                                    </a>
+                                    <a href="/privacy.html#terms" class="telemetry-pill" tabindex="-1"
+                                        >Terms of Service</a
+                                    >
+                                    <a href="/privacy.html#cookies" class="telemetry-pill" tabindex="-1"
+                                        >Cookie Policy</a
+                                    >
+                                    <a href="/privacy.html#accessibility" class="telemetry-pill" tabindex="-1"
+                                        >Accessibility</a
+                                    >
+                                    <a href="/privacy.html#acceptable-use" class="telemetry-pill" tabindex="-1"
+                                        >Acceptable Use</a
+                                    >
+                                    <a href="/privacy.html#copyright" class="telemetry-pill" tabindex="-1"
+                                        >Copyright Notice</a
+                                    >
+                                    <a href="/privacy.html#refunds" class="telemetry-pill" tabindex="-1"
+                                        >Refund Policy</a
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -1934,9 +2130,25 @@
                                     </li>
                                 </ol>
                             </nav>
+
+                            <!-- CLI README-LÄNK -->
+                            <a
+                                href="https://github.com/adamnordling/portfolio#readme"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="header-cli-repo-link"
+                                aria-label="View Portfolio source code and README on GitHub (opens in new tab)"
+                            >
+                                <span>adamnordling</span>
+                                <span class="cli-sep">/</span>
+                                <span>portfolio</span>
+                                <span class="cli-sep">/</span>
+                                <span class="cli-file">README.md</span>
+                                <span class="cli-arrow">↗</span>
+                            </a>
                         </div>
 
-                        <nav class="header-actions" aria-label="Projects category filter">
+                        <nav class="header-actions" role="search" aria-label="Filter and search projects">
                             <div class="filter-dropdown" id="projects-filter">
                                 <!-- Change <button ... tabindex="-1"> to <div>: -->
                                 <div class="filter-trigger" id="active-filter-label">
@@ -2004,7 +2216,8 @@
                                     <div class="app-status-badge is-live" data-live-enabled="true">
                                         <span class="status-dot"></span>
                                         <span class="status-label-live">
-                                            <span>M.Sc. Pipeline · Python 3.11</span>
+                                            <span lang="en">M.Sc. Research · Open Science</span>
+                                            <span lang="sv">M.Sc. Forskning · Open Science</span>
                                         </span>
                                     </div>
                                     <a
@@ -2033,12 +2246,18 @@
                                     </h3>
                                     <p>
                                         <span lang="en"
-                                            >A modular Python framework evaluating selection strategies (Outlierness,
-                                            Uncertainty, Diversity) with Optuna across 200GB+ datasets.</span
+                                            >Master's thesis research exploring when and how to augment spatio-temporal
+                                            trajectories. Replaces naive random sampling with active selection
+                                            strategies (Outlierness, Uncertainty, Diversity), backed by Optuna
+                                            optimization, 72-D kinematic feature extraction, and UMAP topological
+                                            manifold analysis.</span
                                         >
                                         <span lang="sv"
-                                            >Ett modulärt Python-ramverk som utvärderar urvalsstrategier (Outlierness,
-                                            Uncertainty, Diversity) med Optuna över 200GB+ dataset.</span
+                                            >Masterexamensforskning som undersöker när och hur geospatiala trajektorier
+                                            bör augmenteras. Ersätter slumpmässig sampling med aktiva urvalsstrategier
+                                            (Outlierness, Uncertainty, Diversity), understött av Optuna-optimering,
+                                            72-dimensionell kinematisk feature extraction och topologisk
+                                            UMAP-analys.</span
                                         >
                                     </p>
                                     <div class="app-links">
@@ -2238,7 +2457,25 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                     <span class="dock-pulse-dot"></span>
                     <span class="meta-status-label">CLOUDFLARE EDGE</span>
                 </div>
-                <a href="#main-content" class="back-to-top" aria-label="Back to top of page">↑ Back to top</a>
+                <a href="#top" class="return-to-top" aria-label="Scroll to top of page">
+                    <svg
+                        class="back-to-top-icon"
+                        width="11"
+                        height="11"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                    <span lang="en">Back to top</span>
+                    <span lang="sv">Till toppen</span>
+                </a>
                 <span class="meta-copyright">© <span class="footer-year">2026</span> Adam Nordling</span>
             </div>
             <!-- 1. INSPECTOR CARD MOVED TO TOP (Expands upwards) -->
@@ -2308,39 +2545,54 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                         </button>
                         <button type="button" class="m-pill" data-metric="runtime">
                             <svg
-                                class="m-pill-icon"
+                                class="dock-svg-icon"
                                 width="12"
                                 height="12"
                                 viewBox="0 0 24 24"
                                 fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            </svg>
-                            <span class="m-pill-label">Vite 8 · ESNext</span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="ts">
-                            <span class="m-pill-label">TS Strict</span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="layer">
-                            <span class="m-pill-label">CSS @layer</span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="privacy">
-                            <svg
-                                class="m-pill-icon"
-                                width="11"
-                                height="11"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
+                                stroke="#eab308"
                                 stroke-width="2.2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                             >
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                             </svg>
-                            <span class="m-pill-label">0 Trackers</span>
+                            <span class="m-pill-label">Vite 8 · ESNext</span>
+                        </button>
+                        <button type="button" class="m-pill" data-metric="ts">
+                            <svg
+                                class="dock-svg-icon"
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#38bdf8"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <span class="m-pill-label">TS Strict</span>
+                        </button>
+                        <button type="button" class="m-pill" data-metric="layer">
+                            <svg
+                                class="dock-svg-icon"
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#a855f7"
+                                stroke-width="2.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                            <span class="m-pill-label">CSS @layer</span>
                         </button>
                     </div>
 

@@ -19,7 +19,6 @@
         content: attr(data-tooltip-sv);
     }
 
-    /* Disable off-screen tooltips on the top font buttons */
     .font-switcher [data-tooltip]::before,
     .font-switcher [data-tooltip]::after,
     .font-switcher [data-tooltip-en]::before,
@@ -85,38 +84,6 @@
         transition-delay: 80ms;
     }
 
-    [data-tooltip-align='start']::before {
-        left: 0 !important;
-        transform: translateX(0) translateY(4px) !important;
-    }
-
-    [data-tooltip-align='start']::after {
-        left: 18px !important;
-        transform: translateX(0) translateY(4px) !important;
-    }
-
-    [data-tooltip-align='start']:hover::before,
-    [data-tooltip-align='start']:hover::after {
-        transform: translateX(0) translateY(0) !important;
-    }
-
-    [data-tooltip-align='end']::before {
-        left: auto !important;
-        right: 0 !important;
-        transform: translateX(0) translateY(4px) !important;
-    }
-
-    [data-tooltip-align='end']::after {
-        left: auto !important;
-        right: 14px !important;
-        transform: translateX(0) translateY(4px) !important;
-    }
-
-    [data-tooltip-align='end']:hover::before,
-    [data-tooltip-align='end']:hover::after {
-        transform: translateX(0) translateY(0) !important;
-    }
-
     body.light-theme [data-tooltip]::before {
         box-shadow:
             0 6px 18px rgba(0, 0, 0, 0.1),
@@ -154,7 +121,6 @@
         justify-content: center;
         cursor: default;
         user-select: none;
-        -webkit-user-select: none;
     }
 
     .stat-num {
@@ -248,7 +214,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         user-select: text;
-        -webkit-user-select: text;
     }
 
     .activity-desc {
@@ -259,7 +224,6 @@
         text-overflow: ellipsis;
         font-family: var(--font-mono), monospace;
         user-select: text;
-        -webkit-user-select: text;
     }
 
     .activity-time {
@@ -377,13 +341,13 @@
     }
 
     /* ==========================================================================
-       4. UNIFIED SITE HEADER (Top-Left on Desktop, Top Bar on Mobile)
+       4. UNIFIED SITE HEADER
        ========================================================================== */
     .site-header {
         position: fixed;
         top: 24px;
         left: 24px;
-        z-index: 1000; /* Stays above the profile portrait (125) */
+        z-index: 1000;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -525,13 +489,78 @@
             transform: translateX(-50%);
         }
     }
+
     /* ==========================================================================
-     DESKTOP METACARD (Mini Rolling Marquee & Centered Hotkeys)
-     ========================================================================== */
+       5. TELEMETRI-INSPEKTÖR (Gemensam stil för både Desktop & Mobil)
+       ========================================================================== */
+    .m-inspector-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3px;
+    }
+
+    .m-inspector-title {
+        font-family: var(--font-mono), monospace;
+        font-size: 0.75rem !important;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .m-inspector-close {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 0 4px;
+        line-height: 1;
+    }
+
+    .m-inspector-close:hover {
+        color: var(--text-primary);
+    }
+
+    .m-inspector-desc {
+        font-size: 0.76rem;
+        color: var(--text-secondary);
+        line-height: 1.4;
+        margin: 0;
+        user-select: text;
+    }
+
+    /* Desktop-specifikt kort */
+    .desktop-inspector-card {
+        display: none;
+        padding: 8px 12px;
+        background: var(--card-bg);
+        border: 1px solid rgba(59, 130, 246, 0.35);
+        border-radius: 6px;
+        margin-bottom: 4px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .desktop-inspector-card.is-open {
+        display: block !important;
+    }
+
+    body.light-theme .desktop-inspector-card {
+        background: #ffffff;
+        border-color: rgba(29, 78, 216, 0.3);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ==========================================================================
+       6. DESKTOP METACARD (Top Row, Back to Top & Marquee)
+       ========================================================================== */
     .desktop-metacard {
+        position: relative;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         margin-top: 36px;
         padding-top: 16px;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -543,18 +572,20 @@
         border-top-color: rgba(0, 0, 0, 0.08);
     }
 
-    /* Top Line: Edge status & Copyright */
     .meta-row-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 4px;
+        gap: 8px;
+        width: 100%;
     }
 
     .meta-status {
         display: inline-flex;
         align-items: center;
         gap: 7px;
+        flex-shrink: 0;
     }
 
     .dock-pulse-dot {
@@ -575,23 +606,75 @@
     .meta-copyright {
         color: var(--text-muted);
         font-size: 0.72rem;
+        flex-shrink: 0;
     }
 
-    /* Mini Marquee Viewport with soft gradient edges */
+    /* ==========================================================================
+       GARANTERAD BACK TO TOP KNAPP (ALLTID SYNLIG)
+       ========================================================================== */
+    .meta-row-top .return-to-top,
+    .m-dock-meta-row .return-to-top {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+        padding: 2px 10px !important;
+        height: 22px !important;
+        min-width: 80px !important;
+        border-radius: 4px !important;
+        background: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid var(--border-color) !important;
+        color: var(--accent) !important;
+        font-size: 0.72rem !important;
+        font-family: var(--font-mono), monospace !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transition:
+            color 0.15s ease,
+            border-color 0.15s ease,
+            background-color 0.15s ease !important;
+    }
+
+    body.light-theme .meta-row-top .return-to-top,
+    body.light-theme .m-dock-meta-row .return-to-top {
+        background: rgba(0, 0, 0, 0.04) !important;
+        color: var(--accent) !important;
+    }
+
+    .meta-row-top .return-to-top:hover,
+    .m-dock-meta-row .return-to-top:hover,
+    .meta-row-top .return-to-top:focus-visible,
+    .m-dock-meta-row .return-to-top:focus-visible {
+        color: #ffffff !important;
+        border-color: var(--accent) !important;
+        background: var(--accent) !important;
+    }
+
+    /* ==========================================================================
+       MARQUEE VIEWPORTS & TRACKS
+       ========================================================================== */
     .meta-marquee-viewport {
         position: relative;
         width: 100%;
         overflow: hidden;
         mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
         -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-        padding: 4px 0;
+        padding: 2px 0;
     }
 
     .meta-marquee-track {
         display: flex;
         width: max-content;
-        animation: marquee-roll 28s linear infinite;
+        animation: marquee-roll 34s linear infinite;
         will-change: transform;
+    }
+
+    .meta-marquee-track.is-paused {
+        animation-play-state: paused !important;
     }
 
     .meta-marquee-track:hover {
@@ -601,12 +684,12 @@
     .meta-marquee-group {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding-right: 8px;
+        gap: 6px;
+        padding-right: 6px;
         flex-shrink: 0;
     }
 
-    /* --- Badge Styling Inside the Marquee --- */
+    /* Badges & Pills */
     .dock-lh-group {
         display: inline-flex !important;
         align-items: center;
@@ -667,10 +750,12 @@
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border-color);
         font-size: 0.72rem;
+        font-family: var(--font-mono), monospace;
         color: var(--text-secondary);
         white-space: nowrap !important;
         text-decoration: none;
         flex-shrink: 0;
+        cursor: pointer;
         transition:
             border-color 0.15s,
             color 0.15s;
@@ -683,6 +768,13 @@
     .telemetry-pill:hover {
         border-color: var(--accent);
         color: var(--text-primary);
+    }
+
+    .telemetry-pill.is-active,
+    .dock-lh-group.is-active {
+        border-color: var(--accent) !important;
+        background: rgba(59, 130, 246, 0.12) !important;
+        color: var(--text-primary) !important;
     }
 
     .live-vitals-pill {
@@ -705,7 +797,7 @@
         color: var(--border-color);
     }
 
-    /* Centered Hotkeys Strip */
+    /* Hotkey Strip */
     .meta-hotkeys-centered {
         display: flex;
         align-items: center;
@@ -742,25 +834,13 @@
         border-color: rgba(0, 0, 0, 0.08);
     }
 
-    .back-to-top {
-        color: var(--text-muted);
-        font-size: 0.72rem;
-        text-decoration: none;
-        transition: color 0.15s ease;
-    }
-
-    .back-to-top:hover {
-        color: var(--accent);
-    }
-
     /* ==========================================================================
-       6. MOBILE TELEMETRY DOCK (Rolling Marquee at Bottom)
+       7. MOBILE TELEMETRY DOCK (Hidden by default on Desktop)
        ========================================================================== */
     .mobile-telemetry-dock {
         display: none;
     }
 
-    /* Skip link */
     .skip-link {
         position: fixed;
         top: -100px;
@@ -791,17 +871,15 @@
     }
 
     /* ==========================================================================
-       7. RESPONSIVE BREAKPOINTS (Desktop vs Mobile)
+       8. RESPONSIVE BREAKPOINTS (Desktop vs Mobile)
        ========================================================================== */
-    @media (min-width: 1151px) {
+    @media (min-width: 1251px) {
         .portfolio-wrapper {
-            /* Keeps the original 5vh top space, extends cleanly to 24px off the bottom */
             height: calc(95vh - 24px) !important;
             margin: 5vh auto 24px auto !important;
             padding-bottom: 0 !important;
         }
 
-        /* Smooth 24px bottom edge fade so text never cuts off abruptly */
         .left-panel,
         .right-panel {
             padding-bottom: 28px !important;
@@ -812,7 +890,6 @@
                 -webkit-mask-image 0.2s ease;
         }
 
-        /* WHEN SCROLLED: Smooth 24px fade on BOTH top and bottom */
         .left-panel.is-scrolled-top,
         .right-panel.is-scrolled-top {
             mask-image: linear-gradient(
@@ -832,15 +909,12 @@
         }
     }
 
-    @media (max-width: 1150px) {
-        /* Maybe fixes to initial mobile loading with edu skills etc with auto */
-        /* Defers off-screen layout calculations until user scrolls near them */
+    @media (max-width: 1250px) {
         .section-edu {
             content-visibility: auto;
             contain-intrinsic-size: 0 450px;
         }
 
-        /* 2. THE FIX: When a bubble opens, immediately disable containment and elevate z-index */
         .section-edu:has(.has-bubble-open),
         .section-edu.has-active-bubble {
             content-visibility: visible !important;
@@ -865,7 +939,6 @@
             contain-intrinsic-size: 0 800px;
         }
 
-        /* Mobile Top Bar (Clean 48px sticky header) */
         .site-header {
             position: absolute !important;
             top: 0 !important;
@@ -894,7 +967,7 @@
 
         .font-switcher {
             order: 2;
-            justify-self: center; /* "A A A" är nu 100% centrerad på skärmen! */
+            justify-self: center;
             gap: 6px;
         }
 
@@ -911,18 +984,16 @@
             padding-top: 88px !important;
         }
 
-        /* Hide the Desktop Metacard on Mobile */
         .desktop-metacard {
             display: none !important;
         }
 
-        /* Show the Mobile Rolling Telemetry Dock at bottom */
         .mobile-telemetry-dock {
             display: flex;
             flex-direction: column;
             position: relative;
             width: 100%;
-            margin-top: 40px !important; /* Ger ren och tydlig distans från Recent Activity */
+            margin-top: 40px !important;
             padding: 14px 12px 10px 12px !important;
             background: var(--card-bg);
             border-top: 1px solid var(--border-color);
@@ -941,21 +1012,12 @@
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             font-family: var(--font-mono), monospace;
-            font-size: 0.72rem;
+            font-size: 0.76rem;
+            gap: 8px;
         }
 
         body.light-theme .m-dock-meta-row {
             border-bottom-color: rgba(0, 0, 0, 0.08);
-        }
-
-        .m-dock-meta-row .back-to-top {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s ease;
-        }
-
-        .m-dock-meta-row .back-to-top:hover {
-            color: var(--accent);
         }
 
         .m-inspector-card {
@@ -995,41 +1057,6 @@
             pointer-events: auto;
         }
 
-        .m-inspector-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3px;
-        }
-
-        .m-inspector-title {
-            font-family: var(--font-mono), monospace;
-            font-size: 0.75rem !important;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .m-inspector-close {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 0 4px;
-            line-height: 1;
-        }
-
-        .m-inspector-desc {
-            font-size: 0.76rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-            margin: 0;
-            user-select: text;
-            -webkit-user-select: text;
-        }
-
         .m-marquee-viewport {
             position: relative;
             width: 100%;
@@ -1039,7 +1066,6 @@
             padding: 2px 0;
             touch-action: pan-y;
             user-select: none;
-            -webkit-user-select: none;
             cursor: grab;
         }
 
@@ -1152,22 +1178,12 @@
             width: 11px;
             height: 11px;
         }
-
-        @keyframes marquee-roll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
     }
 
     /* ==========================================================================
-       VERTICAL TOP CLUSTER (1151px - 1550px)
-       Stacks controls vertically so they never collide with the profile photo
+       9. VERTICAL TOP CLUSTER (1251px - 1700px)
        ========================================================================== */
-    @media (min-width: 1151px) and (max-width: 1550px) {
+    @media (min-width: 1251px) and (max-width: 1700px) {
         .site-header {
             top: 20px;
             left: 20px;
@@ -1176,7 +1192,18 @@
         .header-cluster-left {
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+        }
+
+        .lang-trigger {
+            width: 36px !important;
+            height: 36px !important;
+            padding: 0 !important;
+            justify-content: center !important;
+        }
+
+        .lang-trigger .chevron {
+            display: none !important;
         }
 
         .header-divider {
@@ -1187,7 +1214,7 @@
 
         .font-switcher {
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
         }
 
         .font-btn {
@@ -1195,7 +1222,6 @@
             height: 28px;
         }
 
-        /* Language menu pops out to the right instead of overlapping below */
         .lang-menu {
             top: 0 !important;
             left: calc(100% + 8px) !important;

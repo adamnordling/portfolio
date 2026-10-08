@@ -290,7 +290,7 @@
     .header-title-group {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 12px;
     }
 
     .header-cli-repo-link {
@@ -325,7 +325,7 @@
     }
 
     .header-cli-repo-link .cli-arrow {
-        font-size: 0.72rem;
+        font-size: 0.76rem;
         color: var(--accent);
     }
 }

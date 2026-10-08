@@ -597,7 +597,7 @@
     }
 
     .meta-status-label {
-        font-size: 0.72rem;
+        font-size: 0.76rem;
         font-weight: 700;
         letter-spacing: 0.06em;
         color: var(--text-primary);
@@ -605,7 +605,7 @@
 
     .meta-copyright {
         color: var(--text-muted);
-        font-size: 0.72rem;
+        font-size: 0.76rem;
         flex-shrink: 0;
     }
 
@@ -625,7 +625,7 @@
         background: rgba(255, 255, 255, 0.06) !important;
         border: 1px solid var(--border-color) !important;
         color: var(--accent) !important;
-        font-size: 0.72rem !important;
+        font-size: 0.76rem !important;
         font-family: var(--font-mono), monospace !important;
         text-decoration: none !important;
         white-space: nowrap !important;
@@ -749,7 +749,7 @@
         border-radius: 4px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border-color);
-        font-size: 0.72rem;
+        font-size: 0.76rem;
         font-family: var(--font-mono), monospace;
         color: var(--text-secondary);
         white-space: nowrap !important;

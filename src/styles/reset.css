@@ -269,6 +269,8 @@
         color: var(--text-muted);
         text-decoration: none;
         transition: color 0.15s ease;
+        display: inline-flex;
+        align-items: center;
     }
 
     .breadcrumb-link:hover {

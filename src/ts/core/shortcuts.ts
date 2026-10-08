@@ -347,17 +347,19 @@ export function initShortcuts(): void {
 
     // Hantera Skip-länk och "Top"-länk för både mobil och interna paneler
     const mainContent = qs('#main-content');
-    const scrollLinks = qsa('a[href="#main-content"], a[href="#top"], .back-to-top');
+    const scrollLinks = qsa('a[href="#main-content"], a[href="#top"], .return-to-top');
 
     scrollLinks.forEach(link => {
         on(link, 'click', (e: MouseEvent) => {
             e.preventDefault();
 
+            // Skrolla alltid fönstret (så att Beavercheck ser att window.scrollY blir 0)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // På dator: skrolla även panelerna
             if (window.innerWidth > 1250) {
                 leftPanel?.scrollTo({ top: 0, behavior: 'smooth' });
                 rightPanel?.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
             if (mainContent) {

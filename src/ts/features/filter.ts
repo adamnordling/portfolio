@@ -3,7 +3,25 @@ import { qs, qsa, on } from '../utils/dom';
 export function initProjectFilter(): void {
     const filterDropdown = qs('.filter-dropdown');
     const filterButtons = qsa('.filter-btn');
+    const searchInput = qs('#project-search-input') as HTMLInputElement | null;
     const cards = qsa('.app-card');
+
+    if (searchInput) {
+        on(searchInput, 'input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            const activeFilter = qs('.filter-btn.active')?.getAttribute('data-filter') ?? 'all';
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category') ?? '';
+                const title = card.querySelector('h3')?.textContent?.toLowerCase() ?? '';
+                const desc = card.querySelector('p')?.textContent?.toLowerCase() ?? '';
+                const matchesCategory = activeFilter === 'all' || category === activeFilter;
+                const matchesQuery = query === '' || title.includes(query) || desc.includes(query);
+
+                card.style.display = matchesCategory && matchesQuery ? 'flex' : 'none';
+            });
+        });
+    }
 
     if (filterButtons.length > 0) {
         filterButtons.forEach(button => {

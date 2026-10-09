@@ -138,3 +138,11 @@ language - more languages?
 Projects > hover the project to see a 10 sec video?
 
 copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
+
+todo:
+
+Clean up dead code, improvement filestructure etc
+
+tabbing fixes, särskilt upp och ner
+
+

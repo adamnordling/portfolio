@@ -145,4 +145,6 @@ Clean up dead code, improvement filestructure etc
 
 tabbing fixes, särskilt upp och ner
 
+Adda projekt I slutet av bio , se nedan Drop down kategori funkar inte mobilen Chrome öppna ny flik ggwp Till toppen får
+inte plats på mobilen chrome
 

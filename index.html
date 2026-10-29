@@ -1983,12 +1983,16 @@
                             </div>
                         </div>
 
-                        <!-- RAD 2: Compliance & Legal Links -->
+                        <!-- DESKTOP METACARD RAD 2: Compliance & Legal Links -->
                         <div class="meta-marquee-viewport compliance-viewport">
                             <div class="meta-marquee-track compliance-track">
                                 <!-- SET 1 -->
                                 <div class="meta-marquee-group">
-                                    <span class="telemetry-pill" title="Zero cookies, Article 13 disclosures verified">
+                                    <a
+                                        href="./privacy.html#gdpr"
+                                        class="telemetry-pill"
+                                        title="Zero cookies, Article 13 disclosures verified"
+                                    >
                                         <svg
                                             class="dock-svg-icon"
                                             width="11"
@@ -1997,12 +2001,13 @@
                                             fill="none"
                                             stroke="#10b981"
                                             stroke-width="2.5"
+                                            aria-hidden="true"
                                         >
                                             <polyline points="20 6 9 17 4 12"></polyline>
                                         </svg>
                                         <span>GDPR Compliant</span>
-                                    </span>
-                                    <a href="/privacy.html" class="telemetry-pill privacy-pill">
+                                    </a>
+                                    <a href="./privacy.html" class="telemetry-pill privacy-pill">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -2011,22 +2016,23 @@
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="2.2"
+                                            aria-hidden="true"
                                         >
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>
                                         <span>Privacy Policy</span>
                                     </a>
-                                    <a href="/privacy.html#terms" class="telemetry-pill">Terms of Service</a>
-                                    <a href="/privacy.html#cookies" class="telemetry-pill">Cookie Policy</a>
-                                    <a href="/privacy.html#accessibility" class="telemetry-pill">Accessibility</a>
-                                    <a href="/privacy.html#acceptable-use" class="telemetry-pill">Acceptable Use</a>
-                                    <a href="/privacy.html#copyright" class="telemetry-pill">Copyright Notice</a>
-                                    <a href="/privacy.html#refunds" class="telemetry-pill">Refund Policy</a>
+                                    <a href="./privacy.html#terms" class="telemetry-pill">Terms of Service</a>
+                                    <a href="./privacy.html#cookies" class="telemetry-pill">Cookie Policy</a>
+                                    <a href="./privacy.html#accessibility" class="telemetry-pill">Accessibility</a>
+                                    <a href="./privacy.html#acceptable-use" class="telemetry-pill">Acceptable Use</a>
+                                    <a href="./privacy.html#copyright" class="telemetry-pill">Copyright Notice</a>
+                                    <a href="./privacy.html#refunds" class="telemetry-pill">Refund Policy</a>
                                 </div>
 
-                                <!-- SET 2 (Identisk Klon) -->
+                                <!-- SET 2 (Identical Interactive Clone for Continuous Marquee) -->
                                 <div class="meta-marquee-group" aria-hidden="true">
-                                    <span class="telemetry-pill">
+                                    <a href="./privacy.html#gdpr" class="telemetry-pill" tabindex="-1">
                                         <svg
                                             class="dock-svg-icon"
                                             width="11"
@@ -2035,12 +2041,13 @@
                                             fill="none"
                                             stroke="#10b981"
                                             stroke-width="2.5"
+                                            aria-hidden="true"
                                         >
                                             <polyline points="20 6 9 17 4 12"></polyline>
                                         </svg>
                                         <span>GDPR Compliant</span>
-                                    </span>
-                                    <span class="telemetry-pill privacy-pill">
+                                    </a>
+                                    <a href="./privacy.html" class="telemetry-pill privacy-pill" tabindex="-1">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -2049,17 +2056,30 @@
                                             fill="none"
                                             stroke="currentColor"
                                             stroke-width="2.2"
+                                            aria-hidden="true"
                                         >
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>
                                         <span>Privacy Policy</span>
-                                    </span>
-                                    <span class="telemetry-pill">Terms of Service</span>
-                                    <span class="telemetry-pill">Cookie Policy</span>
-                                    <span class="telemetry-pill">Accessibility</span>
-                                    <span class="telemetry-pill">Acceptable Use</span>
-                                    <span class="telemetry-pill">Copyright Notice</span>
-                                    <span class="telemetry-pill">Refund Policy</span>
+                                    </a>
+                                    <a href="./privacy.html#terms" class="telemetry-pill" tabindex="-1"
+                                        >Terms of Service</a
+                                    >
+                                    <a href="./privacy.html#cookies" class="telemetry-pill" tabindex="-1"
+                                        >Cookie Policy</a
+                                    >
+                                    <a href="./privacy.html#accessibility" class="telemetry-pill" tabindex="-1"
+                                        >Accessibility</a
+                                    >
+                                    <a href="./privacy.html#acceptable-use" class="telemetry-pill" tabindex="-1"
+                                        >Acceptable Use</a
+                                    >
+                                    <a href="./privacy.html#copyright" class="telemetry-pill" tabindex="-1"
+                                        >Copyright Notice</a
+                                    >
+                                    <a href="./privacy.html#refunds" class="telemetry-pill" tabindex="-1"
+                                        >Refund Policy</a
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -2116,6 +2136,7 @@
                             </a>
                         </div>
 
+                        <!-- SEARCH INPUT & FILTER DROPDOWN IN .right-header -->
                         <div class="header-actions" role="search">
                             <div class="search-input-wrapper">
                                 <svg
@@ -2137,20 +2158,34 @@
                                     type="search"
                                     id="project-search-input"
                                     class="project-search-field"
-                                    placeholder="Search projects..."
+                                    placeholder="Search projects"
                                     aria-label="Search projects by keyword"
                                     autocomplete="off"
                                 />
                             </div>
 
                             <div class="filter-dropdown" id="projects-filter">
-                                <!-- Behåll befintlig filter-dropdown här -->
-                                <div class="filter-trigger" id="active-filter-label">
-                                    <span lang="en">Category:</span>
-                                    <span lang="sv">Kategori:</span>
+                                <button
+                                    type="button"
+                                    class="filter-trigger"
+                                    id="active-filter-label"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    aria-label="Filter projects by category"
+                                >
+                                    <span class="filter-prefix">
+                                        <span lang="en">Category:</span>
+                                        <span lang="sv">Kategori:</span>
+                                    </span>
                                     <span class="filter-selected">
-                                        <span lang="en">All</span>
-                                        <span lang="sv">Alla</span>
+                                        <span lang="en">
+                                            <span class="filter-label-desktop">All Projects</span>
+                                            <span class="filter-label-mobile">All</span>
+                                        </span>
+                                        <span lang="sv">
+                                            <span class="filter-label-desktop">Alla projekt</span>
+                                            <span class="filter-label-mobile">Alla</span>
+                                        </span>
                                     </span>
                                     <svg
                                         class="chevron"
@@ -2160,11 +2195,52 @@
                                         fill="none"
                                         stroke="currentColor"
                                         stroke-width="2"
+                                        aria-hidden="true"
                                     >
                                         <path d="m6 9 6 6 6-6" />
                                     </svg>
+                                </button>
+                                <div class="filter-menu" id="projects-filter-menu" role="menu">
+                                    <button class="filter-btn active" data-filter="all" type="button" role="menuitem">
+                                        <span>
+                                            <span lang="en">
+                                                <span class="filter-label-desktop">All Projects</span>
+                                                <span class="filter-label-mobile">All</span>
+                                            </span>
+                                            <span lang="sv">
+                                                <span class="filter-label-desktop">Alla projekt</span>
+                                                <span class="filter-label-mobile">Alla</span>
+                                            </span>
+                                        </span>
+                                        <span class="filter-count"></span>
+                                    </button>
+                                    <button class="filter-btn" data-filter="ai" type="button" role="menuitem">
+                                        <span>
+                                            <span lang="en">
+                                                <span class="filter-label-desktop">AI &amp; Machine Learning</span>
+                                                <span class="filter-label-mobile">AI &amp; ML</span>
+                                            </span>
+                                            <span lang="sv">
+                                                <span class="filter-label-desktop">AI &amp; Maskininlärning</span>
+                                                <span class="filter-label-mobile">AI &amp; ML</span>
+                                            </span>
+                                        </span>
+                                        <span class="filter-count"></span>
+                                    </button>
+                                    <button class="filter-btn" data-filter="web" type="button" role="menuitem">
+                                        <span>
+                                            <span lang="en">
+                                                <span class="filter-label-desktop">Web Development</span>
+                                                <span class="filter-label-mobile">Web</span>
+                                            </span>
+                                            <span lang="sv">
+                                                <span class="filter-label-desktop">Webbutveckling</span>
+                                                <span class="filter-label-mobile">Webb</span>
+                                            </span>
+                                        </span>
+                                        <span class="filter-count"></span>
+                                    </button>
                                 </div>
-                                <!-- ... -->
                             </div>
                         </div>
                     </div>
@@ -2419,11 +2495,15 @@
         <!-- ==========================================================================
 MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
 ========================================================================== -->
+        <!-- MOBILE TELEMETRY DOCK (Shortened Labels for Mobile) -->
         <footer class="mobile-telemetry-dock" aria-label="Site architecture and live performance specifications">
             <div class="m-dock-meta-row">
                 <div class="meta-status">
                     <span class="dock-pulse-dot"></span>
-                    <span class="meta-status-label">CLOUDFLARE EDGE</span>
+                    <span class="meta-status-label">
+                        <span class="meta-label-desktop">CLOUDFLARE EDGE</span>
+                        <span class="meta-label-mobile">CF EDGE</span>
+                    </span>
                 </div>
                 <a href="#top" class="return-to-top" aria-label="Scroll to top of page">
                     <svg
@@ -2444,8 +2524,12 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                     <span lang="en">Back to top</span>
                     <span lang="sv">Till toppen</span>
                 </a>
-                <span class="meta-copyright">© <span class="footer-year">2026</span> Adam Nordling</span>
+                <span class="meta-copyright">
+                    <span class="copy-desktop">© <span class="footer-year">2026</span> Adam Nordling</span>
+                    <span class="copy-mobile">© <span class="footer-year">2026</span> Nordling</span>
+                </span>
             </div>
+
             <!-- 1. INSPECTOR CARD MOVED TO TOP (Expands upwards) -->
             <div class="m-inspector-card" id="m-inspector-card" role="button" tabindex="0" aria-label="Close inspector">
                 <div class="m-inspector-header">

@@ -311,9 +311,11 @@
     }
 
     .filter-menu {
-        left: 0;
-        right: auto;
-        min-width: 220px;
+        right: 0 !important;
+        left: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        width: max-content !important;
     }
 }
 

@@ -361,27 +361,36 @@
 
     .project-search-field {
         height: 38px;
-        padding: 0 12px 0 30px;
+        padding: 0 12px 0 32px;
         background: var(--card-bg);
         border: 1px solid var(--border-color);
         border-radius: 6px;
         color: var(--text-primary);
         font-family: var(--font-mono), monospace;
         font-size: 0.78rem;
-        outline: none;
+        outline: none !important;
         transition:
             border-color 0.2s ease,
-            width 0.2s ease;
-        width: 150px;
+            box-shadow 0.2s ease;
+        width: 190px; /* Fixed width on desktop */
     }
 
-    .project-search-field:focus {
-        border-color: var(--accent);
-        width: 190px;
+    /* Keep steady width on click / focus (no jumping or expanding) */
+    .project-search-field:focus,
+    .project-search-field:focus-visible {
+        width: 190px !important;
+        outline: none !important;
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 0 1px var(--accent);
     }
 
     .project-search-field::placeholder {
         color: var(--text-muted);
+    }
+
+    /* Filter mobile label visibility rules */
+    .filter-label-mobile {
+        display: none;
     }
 
     @media (max-width: 768px) {
@@ -392,37 +401,90 @@
         }
     }
 
+    @media (max-width: 600px) {
+        .filter-label-desktop {
+            display: none !important;
+        }
+
+        .filter-label-mobile {
+            display: inline !important;
+        }
+
+        .filter-trigger {
+            padding: 0 10px !important;
+            gap: 5px !important;
+        }
+    }
     @media (max-width: 480px) {
-        /* 1. Stapla hela headern så att Home/Readme hamnar överst */
+        /* Stack breadcrumbs/title on top, actions below */
         .right-header {
             flex-direction: column !important;
             align-items: stretch !important;
             gap: 12px !important;
         }
 
-        /* 2. Lägg Search till vänster och Category till höger om Search */
+        /* Balanced side-by-side row with safe container margins */
         .header-actions {
-            flex-direction: row !important; /* Sida vid sida */
+            display: flex !important;
+            flex-direction: row !important;
             justify-content: space-between !important;
             align-items: center !important;
             width: 100% !important;
-            gap: 8px !important;
+            gap: 10px !important;
+            padding: 2px 0 !important;
+            box-sizing: border-box !important;
         }
 
-        /* 3. Låt sökfältet ta upp all ledig plats till vänster */
+        /* Search takes all remaining space smoothly without squeezing the button */
         .search-input-wrapper {
-            flex: 1 !important;
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
             width: auto !important;
+            margin-left: 0 !important;
         }
 
         .project-search-field {
-            width: 80% !important;
+            width: 100% !important;
             max-width: none !important;
+            height: 38px !important;
+            box-sizing: border-box !important;
         }
 
-        /* 4. Håll kategoriknappen stabil till höger */
+        .project-search-field:focus,
+        .project-search-field:focus-visible {
+            width: 100% !important;
+        }
+
+        /* Category button stays stable on the right with comfortable internal padding */
         .filter-dropdown {
+            flex: 0 0 auto !important;
             flex-shrink: 0 !important;
+            position: relative !important;
+        }
+
+        .filter-trigger {
+            height: 38px !important;
+            padding: 0 12px !important;
+            gap: 6px !important;
+            white-space: nowrap !important;
+        }
+
+        /* Clean focus glow that stays inside the container without spilling */
+        .filter-trigger:focus-visible,
+        .filter-dropdown.menu-open .filter-trigger {
+            outline: none !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 1px var(--accent) !important;
+        }
+
+        /* Dropdown menu opens safely to the left */
+        .filter-menu {
+            right: 0 !important;
+            left: auto !important;
+            min-width: 140px !important;
+            max-width: 200px !important;
+            width: max-content !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45) !important;
         }
     }
 }

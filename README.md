@@ -132,19 +132,3 @@ npm run fix
 # Compile production bundle to /dist
 npm run build
 ```
-
-language - more languages?
-
-Projects > hover the project to see a 10 sec video?
-
-copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
-
-todo:
-
-Clean up dead code, improvement filestructure etc
-
-tabbing fixes, särskilt upp och ner
-
-Adda projekt I slutet av bio , se nedan Drop down kategori funkar inte mobilen Chrome öppna ny flik ggwp Till toppen får
-inte plats på mobilen chrome
-

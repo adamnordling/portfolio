@@ -48,3 +48,11 @@
   Content-Type: application/pdf
   Content-Disposition: inline
   Cache-Control: public, max-age=31536000, immutable
+
+/health
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: no-cache
+
+/status
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: no-cache

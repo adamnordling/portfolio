@@ -324,8 +324,8 @@
                                         sizes="(max-width: 480px) 150px, (max-width: 956px) 175px, 250px"
                                         alt="Adam Nordling Profile Portrait"
                                         class="profile-img"
-                                        width="293"
-                                        height="255"
+                                        width="300"
+                                        height="300"
                                         fetchpriority="high"
                                         decoding="async"
                                         draggable="false"
@@ -437,7 +437,8 @@
                                 <a
                                     href="https://linkedin.com/in/adamnordling"
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="noopener noreferrer me"
+                                    itemprop="sameAs"
                                     class="contact-btn-2"
                                     aria-label="LinkedIn Profile (opens in new tab)"
                                 >
@@ -2031,8 +2032,9 @@
                                 </div>
 
                                 <!-- SET 2 (Identical Interactive Clone for Continuous Marquee) -->
+                                <!-- SET 2 (Identical Clone for Continuous Animation) -->
                                 <div class="meta-marquee-group" aria-hidden="true">
-                                    <a href="./privacy.html#gdpr" class="telemetry-pill" tabindex="-1">
+                                    <span class="telemetry-pill" data-href="./privacy.html#gdpr">
                                         <svg
                                             class="dock-svg-icon"
                                             width="11"
@@ -2046,8 +2048,8 @@
                                             <polyline points="20 6 9 17 4 12"></polyline>
                                         </svg>
                                         <span>GDPR Compliant</span>
-                                    </a>
-                                    <a href="./privacy.html" class="telemetry-pill privacy-pill" tabindex="-1">
+                                    </span>
+                                    <span class="telemetry-pill privacy-pill" data-href="./privacy.html">
                                         <svg
                                             class="dock-svg-icon"
                                             width="12"
@@ -2061,36 +2063,56 @@
                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                                         </svg>
                                         <span>Privacy Policy</span>
-                                    </a>
-                                    <a href="./privacy.html#terms" class="telemetry-pill" tabindex="-1"
-                                        >Terms of Service</a
+                                    </span>
+                                    <span class="telemetry-pill" data-href="./privacy.html#terms"
+                                        >Terms of Service</span
                                     >
-                                    <a href="./privacy.html#cookies" class="telemetry-pill" tabindex="-1"
-                                        >Cookie Policy</a
+                                    <span class="telemetry-pill" data-href="./privacy.html#cookies">Cookie Policy</span>
+                                    <span class="telemetry-pill" data-href="./privacy.html#accessibility"
+                                        >Accessibility</span
                                     >
-                                    <a href="./privacy.html#accessibility" class="telemetry-pill" tabindex="-1"
-                                        >Accessibility</a
+                                    <span class="telemetry-pill" data-href="./privacy.html#acceptable-use"
+                                        >Acceptable Use</span
                                     >
-                                    <a href="./privacy.html#acceptable-use" class="telemetry-pill" tabindex="-1"
-                                        >Acceptable Use</a
+                                    <span class="telemetry-pill" data-href="./privacy.html#copyright"
+                                        >Copyright Notice</span
                                     >
-                                    <a href="./privacy.html#copyright" class="telemetry-pill" tabindex="-1"
-                                        >Copyright Notice</a
-                                    >
-                                    <a href="./privacy.html#refunds" class="telemetry-pill" tabindex="-1"
-                                        >Refund Policy</a
-                                    >
+                                    <span class="telemetry-pill" data-href="./privacy.html#refunds">Refund Policy</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Centered Hotkey Strip -->
                         <div class="meta-hotkeys-centered" aria-label="Keyboard shortcuts">
-                            <span class="hotkey-pill"><kbd>T</kbd> <span>Theme</span></span>
-                            <span class="hotkey-pill"><kbd>L</kbd> <span>Lang</span></span>
-                            <span class="hotkey-pill"><kbd>C</kbd> <span>CV</span></span>
-                            <span class="hotkey-pill"><kbd>F</kbd> <span>Font</span></span>
-                            <span class="hotkey-pill"><kbd>1–3</kbd> <span>App</span></span>
+                            <span class="hotkey-pill">
+                                <kbd>T</kbd>
+                                <span>
+                                    <span lang="en">Theme</span>
+                                    <span lang="sv">Tema</span>
+                                </span>
+                            </span>
+                            <span class="hotkey-pill">
+                                <kbd>L</kbd>
+                                <span>
+                                    <span lang="en">Lang</span>
+                                    <span lang="sv">Språk</span>
+                                </span>
+                            </span>
+                            <span class="hotkey-pill">
+                                <kbd>C</kbd>
+                                <span>CV</span>
+                            </span>
+                            <span class="hotkey-pill">
+                                <kbd>F</kbd>
+                                <span>
+                                    <span lang="en">Font</span>
+                                    <span lang="sv">Typsnitt</span>
+                                </span>
+                            </span>
+                            <span class="hotkey-pill">
+                                <kbd>1–3</kbd>
+                                <span>App</span>
+                            </span>
                         </div>
                     </aside>
                 </section>
@@ -2816,7 +2838,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                         </p>
                         <div class="cv-fallback-buttons">
                             <a
-                                href="/assets/resume.pdf"
+                                href="./assets/resume.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="btn-primary cv-fallback-btn"

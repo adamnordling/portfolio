@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initModal();
     initProfileCardMenu();
 
+    document.addEventListener('click', (e: MouseEvent) => {
+        const target = (e.target as HTMLElement | null)?.closest<HTMLElement>('.telemetry-pill[data-href]');
+        if (target?.dataset.href) {
+            window.location.href = target.dataset.href;
+        }
+    });
+
     // 2. Schedule secondary background widgets in an idle slice to prevent long-task TBT
     const scheduleSecondary = (cb: () => void): void => {
         if ('requestIdleCallback' in window) {

@@ -347,7 +347,7 @@ export function initShortcuts(): void {
 
     // Hantera Skip-länk och "Top"-länk för både mobil och interna paneler
     const mainContent = qs('#main-content');
-    const scrollLinks = qsa('a[href="#main-content"], a[href="#top"], .back-to-top');
+    const scrollLinks = qsa('a[href="#main-content"], a[href="#top"], .return-to-top');
 
     scrollLinks.forEach(link => {
         on(link, 'click', (e: MouseEvent) => {

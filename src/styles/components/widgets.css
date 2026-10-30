@@ -612,8 +612,8 @@
     /* ==========================================================================
        GARANTERAD BACK TO TOP KNAPP (ALLTID SYNLIG)
        ========================================================================== */
-    .meta-row-top .return-to-top,
-    .m-dock-meta-row .return-to-top {
+    .meta-row-top .back-to-top,
+    .m-dock-meta-row .back-to-top {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -639,16 +639,16 @@
             background-color 0.15s ease !important;
     }
 
-    body.light-theme .meta-row-top .return-to-top,
-    body.light-theme .m-dock-meta-row .return-to-top {
+    body.light-theme .meta-row-top .back-to-top,
+    body.light-theme .m-dock-meta-row .back-to-top {
         background: rgba(0, 0, 0, 0.04) !important;
         color: var(--accent) !important;
     }
 
-    .meta-row-top .return-to-top:hover,
-    .m-dock-meta-row .return-to-top:hover,
-    .meta-row-top .return-to-top:focus-visible,
-    .m-dock-meta-row .return-to-top:focus-visible {
+    .meta-row-top .back-to-top:hover,
+    .m-dock-meta-row .back-to-top:hover,
+    .meta-row-top .back-to-top:focus-visible,
+    .m-dock-meta-row .back-to-top:focus-visible {
         color: #ffffff !important;
         border-color: var(--accent) !important;
         background: var(--accent) !important;
@@ -891,7 +891,7 @@
             font-size: 0.72rem !important;
         }
 
-        .m-dock-meta-row .return-to-top {
+        .m-dock-meta-row .back-to-top {
             min-width: unset !important;
             padding: 2px 8px !important;
             font-size: 0.72rem !important;
@@ -1058,7 +1058,7 @@
             justify-self: start !important;
         }
 
-        .m-dock-meta-row .return-to-top {
+        .m-dock-meta-row .back-to-top {
             justify-self: center !important;
             margin: 0 auto !important;
         }

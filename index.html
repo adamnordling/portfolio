@@ -25,14 +25,15 @@
             rel="preload"
             as="image"
             type="image/webp"
-            imagesrcset="./assets/profile-200.webp 200w, ./assets/profile-300.webp 300w, ./assets/profile-400.webp 400w"
-            imagesizes="(max-width: 480px) 150px, (max-width: 956px) 175px, 250px"
+            imagesrcset="./assets/profile-200.webp 200w, ./assets/profile-300.webp 300w, ./assets/profile-400.webp 400w, ./assets/profile-600.webp 600w"
+            imagesizes="(max-width: 480px) 150px, (max-width: 956px) 175px, 220px"
             fetchpriority="high"
         />
         <link rel="stylesheet" href="./src/styles/main.css" />
         <link rel="stylesheet" href="./print.css" media="print" />
 
         <!-- 3. THEME & APP CONFIGURATION -->
+        <meta name="msapplication-TileColor" content="#131418" />
         <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
         <meta name="color-scheme" content="light dark" />
@@ -179,12 +180,79 @@
                     "sameAs": [
                         "https://github.com/adamnordling",
                         "https://www.linkedin.com/in/adamnordling",
-                        "https://orcid.org/0009-0004-3989-6796",
-                        "https://arxiv.org/abs/2606.10938",
-                        "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
-                        "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
+                        "https://orcid.org/0009-0004-3989-6796"
                     ]
                 }
+            }
+        </script>
+
+        <!-- 10. SCHEMA.ORG (Academic Theses / Scholarly Works) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "Thesis",
+                        "@id": "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
+                        "name": "A Systematic Approach for Selecting Trajectories for Data Augmentation",
+                        "headline": "A Systematic Approach for Selecting Trajectories for Data Augmentation",
+                        "inLanguage": "en",
+                        "author": {
+                            "@id": "https://adamnordling.se/#person"
+                        },
+                        "datePublished": "2026",
+                        "url": "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
+                        "sameAs": "https://arxiv.org/abs/2606.10938",
+                        "inSupportOf": "Master of Science in Software Technology",
+                        "sourceOrganization": {
+                            "@type": "CollegeOrUniversity",
+                            "name": "Linnaeus University",
+                            "alternateName": "Linnéuniversitetet",
+                            "url": "https://lnu.se"
+                        }
+                    },
+                    {
+                        "@type": "Thesis",
+                        "@id": "https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518",
+                        "name": "Edge Computing Security for IoT: A Systematic Literature Review",
+                        "headline": "Edge Computing Security for IoT: A Systematic Literature Review",
+                        "inLanguage": "en",
+                        "author": {
+                            "@id": "https://adamnordling.se/#person"
+                        },
+                        "datePublished": "2023",
+                        "url": "https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518",
+                        "inSupportOf": "Bachelor of Science in Network Security",
+                        "sourceOrganization": {
+                            "@type": "CollegeOrUniversity",
+                            "name": "Linnaeus University",
+                            "alternateName": "Linnéuniversitetet",
+                            "url": "https://lnu.se"
+                        }
+                    }
+                ]
+            }
+        </script>
+
+        <!-- 11. SCHEMA.ORG (Breadcrumbs) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://adamnordling.se/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Projects",
+                        "item": "https://adamnordling.se/#projects-panel"
+                    }
+                ]
             }
         </script>
     </head>
@@ -319,9 +387,10 @@
                                         srcset="
                                             ./assets/profile-200.webp 200w,
                                             ./assets/profile-300.webp 300w,
-                                            ./assets/profile-400.webp 400w
+                                            ./assets/profile-400.webp 400w,
+                                            ./assets/profile-600.webp 600w
                                         "
-                                        sizes="(max-width: 480px) 150px, (max-width: 956px) 175px, 250px"
+                                        sizes="(max-width: 480px) 150px, (max-width: 956px) 175px, 220px"
                                         alt="Adam Nordling Profile Portrait"
                                         class="profile-img"
                                         width="300"
@@ -412,7 +481,7 @@
                                 <a
                                     href="https://github.com/adamnordling"
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="noopener noreferrer me"
                                     class="contact-btn-1"
                                     aria-label="GitHub Profile (opens in new tab)"
                                 >
@@ -562,7 +631,7 @@
                             </span>
                         </div>
 
-                        <div class="bio-expandable" data-nosnippet>
+                        <div class="bio-expandable">
                             <div class="bio-expandable-content">
                                 <div lang="en">
                                     <p>
@@ -1697,7 +1766,7 @@
                             </div>
 
                             <!-- Byt klass & aria-label för att kringgå uBlock/Brave Annoyance-filter -->
-                            <a href="#top" class="return-to-top" aria-label="Scroll to top of page">
+                            <a href="#top" class="back-to-top" aria-label="Scroll to top of page">
                                 <svg
                                     class="back-to-top-icon"
                                     width="11"
@@ -2312,18 +2381,22 @@
                                     </h3>
                                     <p>
                                         <span lang="en"
-                                            >Master's thesis research exploring when and how to augment spatio-temporal
-                                            trajectories. Replaces naive random sampling with active selection
-                                            strategies (Outlierness, Uncertainty, Diversity), backed by Optuna
-                                            optimization, 72-D kinematic feature extraction, and UMAP topological
-                                            manifold analysis.</span
+                                            >Master's thesis research (<em
+                                                >"A Systematic Approach for Selecting Trajectories for Data
+                                                Augmentation"</em
+                                            >) exploring when and how to augment spatio-temporal trajectories. Replaces
+                                            naive random sampling with active selection strategies (Outlierness,
+                                            Uncertainty, Diversity), backed by Optuna optimization, 72-D kinematic
+                                            feature extraction, and UMAP topological manifold analysis.</span
                                         >
                                         <span lang="sv"
-                                            >Masterexamensforskning som undersöker när och hur geospatiala trajektorier
-                                            bör augmenteras. Ersätter slumpmässig sampling med aktiva urvalsstrategier
-                                            (Outlierness, Uncertainty, Diversity), understött av Optuna-optimering,
-                                            72-dimensionell kinematisk feature extraction och topologisk
-                                            UMAP-analys.</span
+                                            >Masterexamensforskning (<em
+                                                >"A Systematic Approach for Selecting Trajectories for Data
+                                                Augmentation"</em
+                                            >) som undersöker när och hur geospatiala trajektorier bör augmenteras.
+                                            Ersätter slumpmässig sampling med aktiva urvalsstrategier (Outlierness,
+                                            Uncertainty, Diversity), understött av Optuna-optimering, 72-dimensionell
+                                            kinematisk feature extraction och topologisk UMAP-analys.</span
                                         >
                                     </p>
                                     <div class="app-links">
@@ -2527,7 +2600,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                         <span class="meta-label-mobile">CF EDGE</span>
                     </span>
                 </div>
-                <a href="#top" class="return-to-top" aria-label="Scroll to top of page">
+                <a href="#top" class="back-to-top" aria-label="Scroll to top of page">
                     <svg
                         class="back-to-top-icon"
                         width="11"
@@ -2762,10 +2835,17 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
         </footer>
 
         <!-- CV MODAL PREVIEW -->
-        <div class="cv-modal-overlay" id="cv-modal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div
+            class="cv-modal-overlay"
+            id="cv-modal"
+            aria-hidden="true"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cv-modal-heading"
+        >
             <div class="cv-modal-window">
                 <div class="cv-modal-header">
-                    <div class="cv-modal-title">
+                    <div class="cv-modal-title" id="cv-modal-heading">
                         <span lang="en">Adam Nordling — CV</span>
                         <span lang="sv">Adam Nordling — CV</span>
                     </div>

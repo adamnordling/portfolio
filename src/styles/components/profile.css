@@ -12,7 +12,9 @@
         padding: 6px 0 0 6px; /* 6px clearance so top/left shadows never clip */
     }
 
-    /* 220px Circular Container on Desktop */
+    /* =========================================================================
+       1. PROFILE HEADER LOCKUP (Behåll alla dina snygga skuggor och effekter)
+       ========================================================================= */
     .profile-card-container {
         flex: 0 0 220px;
         width: 220px;
@@ -62,7 +64,7 @@
 
     /* Circular Tab Targeting (100% Round Halo without Outline Clipping) */
     .profile-card-inner:focus-visible {
-        outline: none !important; /* Eliminates square browser outline artifacts */
+        outline: none !important;
         border-radius: 50% !important;
         box-shadow:
             0 0 0 3px var(--bg-color),
@@ -91,6 +93,9 @@
         image-rendering: -webkit-optimize-contrast;
     }
 
+    /* =========================================================================
+       RESPONSIVA BRYTPUNKTER (Håller alltid 1:1 kvadrat på alla enheter)
+       ========================================================================= */
     .spotlight {
         position: absolute;
         inset: 0;
